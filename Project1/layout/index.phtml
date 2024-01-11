@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+body, h2, ul, li {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+header {
+    font-size: 20px;
+    color: #0000FF;
+
+}
+
+nav {
+    margin-top: 10px;
+}
+
+
+
+
+</style>
+<head>
+  <!--Setting the page to phone scale and zoom at 100% -->  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ <title> First page</title>
+</head>
+ <body>
+  
+ <header>
+ <h1>Welcome Page</h1> 
+ <nav>
+  <ul>             
+  <div class="button">
+                    <a href="<?php echo Helper::createLink('user', ['view' => 'signup']);?>">Signup</a>
+                    <a href="<?php echo Helper::createLink('user', ['view' => 'login']);?>">login</a>
+</div>                
+  </ul>
+  </nav>              
+   </header>
+   
+ <?php
+
+ require $template;
+ # this is the homepage default page
+ #we don't code here for now it'll display all pages
+ ?>
+
+</body>
+</html>

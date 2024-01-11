@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> <!--This meta tag sets the character encoding for the document-->
+    <!--provides instructions  on how to control the page's dimensions and scaling on different devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Java Website</title>
+
+ <style>
+       {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+   .container {
+            max-width: 800px; /* maximum width for container*/
+            margin: 0 auto; /* outer spacing of the container.*/
+            padding: 20px; /* amount of space between the content inside of the container*/
+            background-color: #fff;
+            border-radius: 10px; /* rounds the corners of the container*/
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /*shadow effect to the container* 0hori 0 verti8blur*/
+        } 
+        
+        h1 {
+            color: #333;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #285483;
+        }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to My Java Website</h1>
+        <p>Click the button to display a message:</p>
+        <button onclick="displayMessage()">Click Me</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        function displayMessage() {
+            document.getElementById('message').textContent = 'Welcome to the logging system please login in';
+        }
+    </script>
+</body>
+
+</html>

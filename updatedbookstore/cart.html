@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Your existing styles go here */
+
+        .cart-item {
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 0;
+        }
+
+        .cart-item img {
+            max-width: 50px;
+            margin-right: 10px;
+        }
+
+        .remove-btn {
+            color: #dc3545;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            text-decoration: underline;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <h1>Shopping Cart</h1>
+
+    <div class="container text-left">
+        <h2>Items in Cart</h2>
+
+        <!-- Display each item in the cart -->
+        <div class="cart-item">
+            <img src="images/I'm david.jpg" alt="Item 1">
+            <span>Item 1</span>
+            <span class="quantity">Quantity: 2</span>
+            <span class="price">Price: $50.00</span>
+            <span class="remove-btn" onclick="removeItem(1)">Remove</span>
+        </div>
+
+        <div class="cart-item">
+            <img src="images/A_Night_to_Remember_1955_edition_cover.jpg" alt="Item 2">
+            <span>Item 2</span>
+            <span class="quantity">Quantity: 1</span>
+            <span class="price">Price: $30.00</span>
+            <span class="remove-btn" onclick="removeItem(2)">Remove</span>
+        </div>
+        <!-- Add more items as needed -->
+
+        <!-- Total Price Section -->
+        <div class="total-price" id="totalPrice">Total: $80.00</div>
+
+        <button class="btn btn-primary">Proceed to Checkout</button>
+
+        <p><a href="index.html">Continue Shopping</a></p>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js links (required for some Bootstrap features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for removing items from the cart and calculating total price -->
+    <script>
+        function removeItem(itemId) {
+            alert("Item removed from the cart: " + itemId);
+            calculateTotalPrice();
+        }
+
+        function calculateTotalPrice() {
+            var prices = document.querySelectorAll('.cart-item .price');
+            var total = 0;
+
+            prices.forEach(function (priceElement) {
+                var priceString = priceElement.textContent.replace('Price: $', '');
+                var price = parseFloat(priceString);
+                total += price;
+            });
+
+            document.getElementById('totalPrice').textContent = 'Total: $' + total.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Bus Booking System - Booking</title>
+    <style>
+        .navbar {
+            background-color: #00529f;
+            /* Barcelona blue background */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important;
+            /* White text color for the navbar links */
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffffff !important;
+            /* White hover text color for the navbar links */
+        }
+
+        /* Container styles */
+        .container {
+            color: #000000;
+            /* Black text color for the container content */
+            margin-top: 20px;
+            /* Add some space at the top */
+        }
+
+        /* Button styles */
+        .btn-success {
+            background-color: #0079e7;
+            /* Barcelona blue background for success buttons */
+            color: #ffffff;
+            /* White text color for success buttons */
+        }
+
+        .btn-success:hover {
+            background-color: #00529f;
+            /* Darker blue background on hover for success buttons */
+        }
+
+        /* Price display styles */
+        #priceDisplay {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+         /* Add new styles for days and times */
+         .form-group-day,
+        .form-group-time {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#"> Asambeni mkhaya</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Bus Booking</h2>
+        <form oninput="calculatePrice()">
+            <div class="form-group">
+                <label for="busType">Coach Company</label>
+                <select class="form-control" id="busType">
+                    <option value="greyhound">GREYHOUND</option>
+                    <option value="intercape">INTERCAPE</option>
+                    <option value="intercity">INTERCITY</option>
+                    <option value="eldocoach">ELDOCOACHES</option>
+                    <option value="drd">DRD LUXURY COACHES</option>
+                    <option value="tourlines">TOURLINES</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="source">Source</label>
+                <input type="text" class="form-control" id="source" placeholder="Enter source location">
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="text" class="form-control" id="destination" placeholder="Enter destination location">
+            </div>
+            <div class="form-group">
+                <label for="date">Date of Travel</label>
+                <input type="date" class="form-control" id="date">
+            </div>
+            <div class="form-group">
+                <label for="numChildren">Number of Children</label>
+                <input type="number" class="form-control" id="numChildren" min="0">
+            </div>
+            <div class="form-group">
+                <label for="numAdults">Number of Adults</label>
+                <input type="number" class="form-control" id="numAdults" min="1">
+            </div>
+            
+              <!-- Display bus time and price -->
+              <div id="busInfo"></div>
+
+              <!-- Display calculated price -->
+              <div id="priceDisplay" class="form-group">
+                  <label for="priceDisplay">Total Price</label>
+                  <input type="text" class="form-control" id="totalPrice" readonly>
+              </div>
+            
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function updateBusInfo() {
+            var busType = document.getElementById("busType").value;
+
+            // Fetch bus information from the server using AJAX
+            $.ajax({
+                url: 'booking.php',
+                type: 'POST',
+                data: { busType: busType },
+                success: function(response) {
+                    // Display bus time and price
+                    document.getElementById('busInfo').innerHTML = response;
+                    // Recalculate total price when bus information changes
+                    calculatePrice();
+                },
+                error: function(error) {
+                    console.log('Error fetching bus information:', error);
+                }
+            });
+        }
+
+        function calculatePrice() {
+            var numChildren = parseInt(document.getElementById("numChildren").value) || 0;
+            var numAdults = parseInt(document.getElementById("numAdults").value) || 0;
+
+            // Get the price per adult from the displayed bus information
+            var pricePerAdult = parseFloat(document.getElementById("pricePerAdult").value) || 0;
+
+            // Calculate total price
+            var totalPrice = (numChildren * pricePerAdult * 0.85) + (numAdults * pricePerAdult);
+
+            // Display the calculated total price
+            document.getElementById("totalPrice").value = '$' + totalPrice.toFixed(2);
+        }
+    </script>
+    
+</body>
+
+</html>
+op

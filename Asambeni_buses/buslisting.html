@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Bus Booking System - Home</title>
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: #a50044 !important;
+            /* FC Barcelona primary color */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffcc29 !important;
+            /* FC Barcelona secondary color */
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background-color: #a50044 !important;
+            /* FC Barcelona primary color */
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffcc29 !important;
+            /* FC Barcelona secondary color */
+        }
+
+        /* Additional styles for available buses section */
+        .available-buses {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Semi-transparent white background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card styles */
+        .bus-card {
+            margin-bottom: 20px;
+        }
+
+        .bus-logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Style for the star */
+        .star {
+            color: #f1c40f;
+            /* Star color (yellow) */
+            font-size: 1.2em;
+            /* Adjust the size as needed */
+            margin-right: 2px;
+            /* Optional: Adjust the spacing */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="d-flex justify-content-between w-100">
+            <a class="navbar-brand" href="#home">Asambeni mkhaya</a>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bus-listing">Bus Listing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#booking">Booking</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="container mt-5">
+        <h2>Available Buses</h2>
+        <p>Explore the list of available buses and choose your preferred option.</p>
+        <a href="#booking" class="btn btn-primary">Book Now</a>
+    </div>
+
+    <!-- Section for Available Buses -->
+    <div id="bus-listing" class="container available-buses">
+        <h3>Featured Bus Operators</h3>
+        <div class="row">
+            <div class="card-body">
+                <img src="images/greyhound.jpeg" alt=" Greyhound logo" class="card-img-top bus-logo">
+                <h3 class="card-title">Greyhound</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Routes: Nationwide</li>
+                    <li class="list-group-item">Luxury Options: Yes</li>
+                    <li class="list-group-item">Reviews: <span class="star" id="starRating1"></span></li>
+                </ul>
+                <a href="#greyhound-details" class="btn btn-primary">Learn More</a>
+            </div>
+            
+
+            <div class="col-sm-4">
+                <div class="card bus-card">
+                    <img src="images/intercape.jpeg" alt="Intercape Logo" class="card-img-top bus-logo">
+                    <div class="card-body">
+                        <h3 class="card-title">Intercape</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Routes: Nationwide</li>
+                            <li class="list-group-item">Luxury Options: Yes</li>
+                            <li class="list-group-item">Reviews: <span class="star" id="starRating2"></span></li>
+                        </ul>
+                        <a href="#intercape-details" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-4">
+                <div class="card bus-card">
+                    <img src="images/intercity.jpeg" alt="Intercity Logo" class="card-img-top bus-logo">
+                    <div class="card-body">
+                        <h3 class="card-title">Intercity</h3>
+                         <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Routes: Nationwide</li>
+                                <li class="list-group-item">Luxury Options: Yes</li>
+                                <li class="list-group-item">Reviews: <span class="star" id="starRating3"></span></li>
+                            </ul>
+                            <a href="intercity.html" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card bus-card">
+                    <img src="images/eldocoach.jpeg" alt="Eldo Coaches Logo" class="card-img-top bus-logo">
+                    <div class="card-body">
+                        <h5 class="card-title">Eldo Coaches</h5>
+                         <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Routes: Nationwide</li>
+                                <li class="list-group-item">Luxury Options: Yes</li>
+                                <li class="list-group-item">Reviews: <span class="star" id="starRating4"></span></li>
+                            </ul>
+                            <a href="eldocoaches.html" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card bus-card">
+                    <img src="images/drdluxury.jpeg" alt="DRD Luxury Logo" class="card-img-top bus-logo">
+                    <div class="card-body">
+                        <h5 class="card-title">DRD Luxury</h5>
+                        <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Routes: Johannnesburg Pretoria Harare</li>
+                                <li class="list-group-item">Luxury Options: No</li>
+                                <li class="list-group-item">Reviews: <span class="star" id="starRating5"></span></li>
+                            </ul>
+                            <a href="drdluxury.html" class="btn btn-primary">Learn More</a>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card bus-card">
+                    <img src="images/tourliner.jpg" alt="Tourliner Logo" class="card-img-top bus-logo">
+                    <div class="card-body">
+                        <h5 class="card-title">Tourliner</h5>
+                         <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Routes: For special Hire</li>
+                                <li class="list-group-item">Luxury Options: Yes</li>
+                                <li class="list-group-item">Reviews: <span class="star" id="starRating6"></span></li>
+                            </ul>
+                            <a href="tourliner.html" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get all anchor links with a hash (#)
+            var anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+            // Add click event listener to each anchor link
+            anchorLinks.forEach(function(anchor) {
+                anchor.addEventListener("click", function(event) {
+                    event.preventDefault();
+
+                    // Get the target section's ID from the href attribute
+                    var targetId = this.getAttribute("href").substring(1);
+                    var targetSection = document.getElementById(targetId);
+
+                    // Scroll to the target section with smooth behavior
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: "smooth" });
+                    }
+                });
+            });
+        });
+
+        // Calculate star rating based on numeric value
+        function setStarRating(rating, containerId) {
+            const starContainer = document.getElementById(containerId);
+            starContainer.innerHTML = ''; // Clear previous content
+
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+
+            // Add full stars
+            for (let i = 0; i < fullStars; i++) {
+                starContainer.innerHTML += '★';
+            }
+
+            // Add half star if applicable
+            if (hasHalfStar) {
+                starContainer.innerHTML += '☆'; // Unicode character for half-filled star
+            }
+        }
+
+        // Set the initial ratings for each bus 
+        setStarRating(4.8, 'starRating1'); // Greyhound
+        setStarRating(4.8, 'starRating2'); // Intercape
+        setStarRating(4.2, 'starRating3'); // Intercity
+        setStarRating(4.0, 'starRating4'); // Eldo Coaches
+        setStarRating(3.5, 'starRating5'); // DRD Luxury
+        setStarRating(5.0, 'starRating6'); // Tourliner
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

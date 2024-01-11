@@ -1,0 +1,14 @@
+look for page view
+
+create a process template
+don't output from php file
+look at access point and not template
+address bar not looking at file it should look at
+
+
+
+bad company
+
+remove require so you could call classes 
+when we populate code we populate it in class array
+declare all the libraries 

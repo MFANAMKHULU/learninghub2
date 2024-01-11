@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+
+    <style>
+    
+
+        .form-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="process_form.php" method="post" class="container">
+        <!-- Bootstrap Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <!-- Add your existing menu items here if needed -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    
+                    <li class="nav-item dropdown">
+                        <a class="bx bx-menu" href="#" id="menu-icon" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#about">About Us</a>
+                            <a class="dropdown-item" href="#contact">Contact Us</a>
+                            <a class="dropdown-item" href="#T&C's">Terms and Conditions</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        
+        
+        
+        <!-- Bootstrap Form Container -->
+        <div class="form-container">
+            <label for="name" class="required">Name:</label>
+<input type="text" name="name" class="form-control" required placeholder="Enter your name">
+
+
+            <label for="lastname" class="required">Last Name:</label>
+            <input type="text" name="lastname" class="form-control" required>
+
+            <label for="name" class="required">Identity Number:</label>
+            <input type="text" name="ID" class="form-control" required>
+            
+            <label for="email" class="required">Email:</label>
+            <input type="email" name="email" class="form-control" required>
+
+            <label for="cellnumber">Phone:</label>
+            <input type="text" name="cellnumber" class="form-control">
+
+            <label for="password" class="required">Password:</label>
+            <input type="password" name="password" class="form-control" required>
+
+            <label for="password2" class="required">Password Confirm:</label>
+            <input type="password" name="password2" class="form-control" required>
+
+            <label for="role">Sign up as:</label>
+            <select id="role" name="role" class="form-control">
+                <option value="attendee">Employee</option>
+                <option value="organizer">Mentor</option>
+                <option value="organizer">Manager </option>
+            </select>
+            <br>
+            
+
+            <div class="button-container">
+                <input type="submit" value="Submit" class="btn btn-primary">
+                <input type="submit" value="Login" class="btn btn-secondary">
+            </div>
+
+            <label class="form-check-label">
+                <input type="checkbox" name="terms" class="form-check-input"> I accept the terms and conditions
+            </label>
+        </div>
+    </form>
+
+    <!-- Bootstrap JS and Popper.js (required for some Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

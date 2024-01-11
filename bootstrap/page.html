@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Bootstrap Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <H1> Enter your information </H1>
+
+     <style>
+
+        body {
+            background-color: #004d98; 
+            color: #ffffff; 
+            
+        }
+
+        .container {
+            background-color: #a50044;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+         input {
+            background-color: #ffffff;
+            border: 1px solid #004d98; 
+            color: #000000; 
+        }
+
+        label {
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background-color: #004d98; 
+            color: #ffffff; 
+        }
+
+        .btn-secondary {
+            background-color: #a50044; 
+            color: #ffffff; 
+        }
+        
+        
+        h1 {
+            color: #a50044;
+            text-align: center;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff; 
+        }
+
+         .navbar-dark .navbar-toggler:focus, .navbar-dark .navbar-toggler:hover {
+            background-color: #ffffff; 
+        }
+
+        .navbar-dark .navbar-toggler {
+            border-color: #ffffff; 
+        }   
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-toggler-icon-bar {
+            background-color: #ffffff; 
+        }
+
+        .navbar-dark .navbar-collapse, .navbar-dark .navbar-toggler {
+            background-color: #004d98; 
+        }
+     </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">More Information</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+   <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+</nav> 
+
+
+
+    <div class="container" > <!--container class to create a responsive container-->
+        <div class="form-group"><!--form-group class for form styling-->
+            <label for="name" class="required">Name:</label> <!-- input fields for consistent styling.-->
+            <input type="text" class="form-control" name="name" required>
+            <div class="invalid-feedback">Please enter your name.</div>  <!--form validation for checking if name is entered-->
+        </div>
+
+        <div class="form-group">
+            <label for="lastname" class="required">LastName:</label>
+            <input type="text" class="form-control" name="lastname" required>
+            <div class="invalid-feedback">Please enter your lastname.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="required">Email:</label>
+            <input type="email" class="form-control" name="email" required>
+            <div class="invalid-feedback">Please enter your email.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="Identification" class="required">Identification:</label>
+            <select class="form-control" id="identity" name="identity"> <!--dropdown-->
+                <option>South African ID</option> <!--available options-->
+                <option>Passport</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="IDNUMBER" class="required">IdentityNumber/Passport :</label>
+            <input type="text" class="form-control" name="idenitynumber" required>
+            <div class="invalid-feedback">Please enter your identity number.</div>
+        </div>
+
+        <!--Bootstrap provides utility classes for layout-->
+      <label for="jobtype" class="required">Job Description:</label>
+      <div class="d-flex">  <!--flexbox-->
+    <div class="form-check mr-3"> <!--mr-3 class for right margin-->
+        <input class="form-check-input" type="radio" name="jobDescription" id="Mentor" value="Mentor" >
+        <label class="form-check-label" for="job1">Mentor</label>
+    </div>
+    
+    <div class="form-check mr-3">
+        <input class="form-check-input" type="radio" name="jobDescription" id="Employee" value="Employee">
+        <label class="form-check-label" for="job2">Employee</label>
+    </div>
+    
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="jobDescription" id="Manager" value="Manager">
+        <label class="form-check-label" for="job3">Manager</label>
+    </div>
+</div>
+
+        <br>
+        
+        <div class="form-group">
+            <label for="password" class="required">Password:</label>
+            <input type="password" class="form-control" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password2" class="required">password2:</label>
+            <input type="password" class="form-control" name="password2" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+
+
+    <!-- Bootstrap JS and Popper.js (required for some Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><!--reference to the jQuery library hosted on the content delivery network (CDN) provided by jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

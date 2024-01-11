@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore - Contact</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f9f9f9; /* Light gray background */
+        }
+
+        .navbar-dark {
+            background-color: #004D98 !important; /* Barcelona's teal/navy blue */
+        }
+
+        .navbar-dark .navbar-brand,
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff !important; /* White text */
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #fff; /* White toggler icon */
+        }
+
+        h1, h2, h3 {
+            color: #004D98; /* Barcelona's teal/navy blue header text */
+        }
+
+        .list-group-item a {
+            color: #004D98 !important; /* Barcelona's teal/navy blue category links */
+        }
+
+        footer.bg-dark {
+            background-color: #004D98 !important; /* Blue footer background */
+            color: #fff; /* White footer text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Bookstore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.phtml">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="catalog.phtml">Catalog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="contact.phtml">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Connect with Us Section -->
+    <div class="container mt-5">
+        <h3>Connect with Us</h3>
+        <a href="https://www.facebook.com/YourBookstore" target="_blank"
+            class="btn btn-primary btn-social mx-2">
+            <i class="fab fa-facebook-f" style="font-size: 3em;"></i> Facebook
+        </a>
+        <a href="https://twitter.com/YourBookstore" target="_blank" class="btn btn-info btn-social mx-2">
+            <i class="fab fa-twitter" style="font-size: 3em;"></i> Twitter
+        </a>
+        <a href="https://www.instagram.com/YourBookstore" target="_blank"
+            class="btn btn-danger btn-social mx-2">
+            <i class="fab fa-instagram" style="font-size: 3em;"></i> Instagram
+        </a>
+    </div>
+
+    <!-- Leave a Review Section -->
+    <div class="container mt-5 mb-5">
+        <h3>Leave a Review</h3>
+        <form id="reviewForm">
+            <div class="form-group">
+                <label for="userName">Your Name:</label>
+                <input type="text" class="form-control" id="userName" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Rating:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rating" id="rating5" value="5" required>
+                    <label class="form-check-label" for="rating5">
+                        5 stars
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rating" id="rating4" value="4" required>
+                    <label class="form-check-label" for="rating4">
+                        4 stars
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rating" id="rating3" value="3" required>
+                    <label class="form-check-label" for="rating3">
+                        3 stars
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rating" id="rating2" value="2" required>
+                    <label class="form-check-label" for="rating2">
+                        2 stars
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rating" id="rating1" value="1" required>
+                    <label class="form-check-label" for="rating1">
+                        1 star
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="comment">Your Review:</label>
+              <textarea class="form-control" id="comment" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
+  </div>
+
+  <!-- Footer -->
+<footer class="bg-dark text-white fixed-bottom" style="height: 20px;">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+              <p>&copy; 2023 Your Bookstore</p>
+          </div>
+          <div class="col-md-6 text-right">
+              <a href="privacy.html" class="text-white">Privacy Policy</a> |
+              <a href="terms.html" class="text-white">Terms of Service</a>
+          </div>
+      </div>
+  </div>
+</footer>
+  
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
