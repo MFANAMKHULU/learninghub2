@@ -81,8 +81,13 @@ VALUES
 ('DRD Luxury', 'Harare to Pretoria', 'Harare', 'Pretoria', '22:00:00'),
 ('DRD Luxury', 'Harare to Johannesburg', 'Harare', 'Johannesburg', '23:30:00'),
 
+('Eldo Coaches', 'Johannesburg to Durban', 'Johannesburg', 'Durban', '08:00:00'),
+('Eldo Coaches', 'Johannesburg to Cape Town', 'Johannesburg', 'Cape Town', '10:30:00'),
+('Eldo Coaches', 'Johannesburg to Polokwane', 'Johannesburg', 'Polokwane', '12:45:00'),
+('Eldo Coaches', 'Johannesburg to Bloemfontein', 'Johannesburg', 'Bloemfontein', '15:15:00'),
 ('Eldo Coaches', 'Polokwane to Kimberley', 'Polokwane', 'Kimberley', '18:30:00'),
 ('Eldo Coaches', 'Cape Town to Durban', 'Cape Town', 'Durban', '20:00:00'),
+
 ('Tourliner', 'Special Hire', 'City K', 'City L', '20:30:00');
 
 
