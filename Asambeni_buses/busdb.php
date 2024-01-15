@@ -100,7 +100,7 @@ if ($conn->query($insert_intercape_routes) === TRUE) {
     echo "Error inserting data for Intercape routes - " . $conn->error . "\n";
 }
 
-// // Insert Intercity routes
+// Insert Intercity routes
 $insert_intercity_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, price, company_id) VALUES 
 ('Intercity Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 60.00, 3),
 ('Intercity Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 11:30:00', '2024-01-17 00:30:00', 70.00, 3),
