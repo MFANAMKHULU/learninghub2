@@ -39,7 +39,7 @@ if ($conn->query($sql_bus_companies) === TRUE) {
 }
 
 // Insert bus companies
-$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches"];
+$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches", "DRDLuxury" , "Tourliner"];
 foreach ($bus_companies as $company) {
     $insert_company = "INSERT INTO bus_companies (company_name) VALUES ('$company')";
     if ($conn->query($insert_company) === TRUE) {
@@ -66,74 +66,98 @@ if ($conn->query($sql_routes) === TRUE) {
     echo "Error creating table 'routes': " . $conn->error . "\n";
 }
 
-// Insert Greyhound routes
-$insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
-    ('Greyhound Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
-    ('Greyhound Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1),
-    ('Greyhound Route 3', 'Johannesburg/Pretoria', 'Cape Town', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1),
-    ('Greyhound Route 4', 'Johannesburg/Pretoria', 'Polokwane', '2024-01-16 09:00:00', '2024-01-16 15:00:00',  1),
-    ('Greyhound Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
-    ('Greyhound Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1),
-    ('Greyhound Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-17 21:00:00',  1),
-    ('Greyhound Route 8', 'Polokwane', 'Johannesburg/Pretoria', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
+// Get the current date
+$currentDate = date('Y-m-d');
 
+// Define the number of days to add for each route
+$daysToAdd = array(0, 1, 2, 3, 0, 1, 2, 3);
+
+// Function to calculate the new date based on the current date and days to add
+function calculateNewDate($currentDate, $daysToAdd) {
+    return date('Y-m-d H:i:s', strtotime($currentDate . ' +' . $daysToAdd . ' days'));
+}
+
+// Insert Greyhound routes
+$insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES ";
+
+// Define the number of days to add for each route
+$daysToAdd = array(0, 1, 2, 3, 0, 1, 2, 3);
+
+// Function to calculate the new date based on the current date and days to add
+function calculateNewDate($currentDate, $daysToAdd) {
+    return date('Y-m-d H:i:s', strtotime($currentDate . ' +' . $daysToAdd . ' days'));
+}
+
+// Define routes for Johannesburg to Durban, Cape Town, and Durban to Johannesburg
+for ($i = 1; $i <= 8; $i++) {
+    $departureDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
+    $arrivalDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
+    $insert_greyhound_routes .= "('Greyhound Route $i', 'Johannesburg/Pretoria', 'Durban', '$departureDate', '$arrivalDate', 1),";
+}
+
+// Define routes for Johannesburg to Cape Town
+$departureDateCT = calculateNewDate($currentDate, 2);
+$arrivalDateCT = calculateNewDate($currentDate, 2);
+$insert_greyhound_routes .= "('Greyhound Route 9', 'Johannesburg/Pretoria', 'Cape Town', '$departureDateCT', '$arrivalDateCT', 1),";
+
+// Define routes for Durban to Johannesburg
+$departureDateDBN = calculateNewDate($currentDate, 1);
+$arrivalDateDBN = calculateNewDate($currentDate, 1);
+$insert_greyhound_routes .= "('Greyhound Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 1),";
+
+$insert_greyhound_routes = rtrim($insert_greyhound_routes, ''); 
+
+// Execute the query
 if ($conn->query($insert_greyhound_routes) === TRUE) {
     echo "Inserted data for Greyhound routes\n";
 } else {
     echo "Error inserting data for Greyhound routes - " . $conn->error . "\n";
 }
 
-// Insert Intercape routes 
-$insert_intercape_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
-    ('Intercape Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 2),
-    ('Intercape Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 11:30:00', '2024-01-17 00:30:00', 2),
-    ('Intercape Route 3', 'Johannesburg/Pretoria', 'Cape Town', '2024-01-16 11:30:00', '2024-01-17 22:30:00',  2),
-    ('Intercape Route 4', 'Johannesburg/Pretoria', 'Polokwane', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  2),
-    ('Intercape Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 2),
-    ('Intercape Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 00:30:00',2),
-    ('Intercape Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 22:30:00',2),
-    ('Intercape Route 8', 'Polokwane', 'Johannesburg/Pretoria', '2024-01-16 10:30:00', '2024-01-16 16:30:00',2)";
+// Insert Intercape routes
+$insert_intercape_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES ";
 
+// Define routes for Johannesburg to Durban, Bloemfontein, and Durban to Johannesburg
+for ($i = 1; $i <= 8; $i++) {
+    $departureDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
+    $arrivalDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
+    $insert_intercape_routes .= "('Intercape Route $i', 'Johannesburg/Pretoria', 'Durban', '$departureDate', '$arrivalDate', 2),";
+}
+
+// Define routes for Johannesburg to Bloemfontein
+$departureDateBFN = calculateNewDate($currentDate, 2);
+$arrivalDateBFN = calculateNewDate($currentDate, 2);
+$insert_intercape_routes .= "('Intercape Route 9', 'Johannesburg/Pretoria', 'Bloemfontein', '$departureDateBFN', '$arrivalDateBFN', 2),";
+
+// Define routes for Durban to Johannesburg
+$departureDateDBN = calculateNewDate($currentDate, 1);
+$arrivalDateDBN = calculateNewDate($currentDate, 1);
+$insert_intercape_routes .= "('Intercape Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 2),";
+
+$insert_intercape_routes = rtrim($insert_intercape_routes, ','); // Remove the trailing comma
+
+// Execute the query
 if ($conn->query($insert_intercape_routes) === TRUE) {
     echo "Inserted data for Intercape routes\n";
 } else {
     echo "Error inserting data for Intercape routes - " . $conn->error . "\n";
 }
 
-// Insert Intercity routes
-$insert_intercity_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
-('Intercity Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 3),
-('Intercity Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
-('Intercity Route 3', 'Johannesburg/Pretoria', 'Cape Town', '2024-01-16 11:30:00', '2024-01-17 22:30:00',  3),
-('Intercity Route 4', 'Johannesburg/Pretoria', 'kimberly', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  3),
-('Intercity Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 09:30:00', '2024-01-15 18:30:00',  3),
-('Intercity Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
-('Intercity Route 7', 'Kimberely', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 22:30:00', 3),
-('Intercity Route 8', 'Harrismith', 'Johannesburg/Pretoria', '2024-01-16 10:30:00', '2024-01-16 16:30:00', 3)";
 
-
-if ($conn->query($insert_intercity_routes) === TRUE) {
-    echo "Inserted data for Intercity routes\n";
+// Create 'reviews' table
+$sql_reviews = "CREATE TABLE IF NOT EXISTS reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    date_posted DATETIME NOT NULL,
+    comment TEXT NOT NULL,
+    FOREIGN KEY (route_id) REFERENCES routes(route_id)
+)";
+if ($conn->query($sql_reviews) === TRUE) {
+    echo "Table 'reviews' created successfully\n";
 } else {
-    echo "Error inserting data for Intercity routes - " . $conn->error . "\n";
-}
-
-// Insert eldocoaches routes
-$insert_eldocoaches_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
-('Eldocoach Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 3),
-('Eldocoach Route 2', 'Johannesburg/Pretoria', 'PortElizabeth', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
-('Eldocoach Route 3', 'Durban', 'Cape Town', '2024-01-16 11:30:00', '2024-01-17 22:30:00',  3),
-('Eldocoach Route 4', 'Johannesburg/Pretoria', 'EastLondon', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  3),
-('Eldocoach Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 09:30:00', '2024-01-15 18:30:00',  3),
-('Eldocoach Route 6', 'PortElizabeth', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
-('Eldocoach Route 7', 'Cape Town', 'Durban', '2024-01-16 11:30:00', '2024-01-17 22:30:00', 3),
-('Intercity Route 8', 'East london', 'Johannesburg/Pretoria', '2024-01-16 10:30:00', '2024-01-16 16:30:00', 3)";
-
-
-if ($conn->query($insert_eldocoaches_routes) === TRUE) {
-    echo "Inserted data for eldocoaches routes\n";
-} else {
-    echo "Error inserting data for eldocoaches routes - " . $conn->error . "\n";
+    echo "Error creating table 'reviews': " . $conn->error . "\n";
 }
 
 
