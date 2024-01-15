@@ -69,20 +69,19 @@ if ($conn->query($sql_routes) === TRUE) {
 // Insert routes for Greyhound
 $insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
     ('Greyhound Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
-    ('Greyhound Route 2', 'Johannesburg//Pretoria', 'Bloemfontein', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1)";
-     ('Greyhound Route 3', 'Johannesburg//Pretoria', 'Cape Town', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1)";
-     ('Greyhound Route 4', 'Johannesburg//Pretoria', 'Polokwane', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
-     ('Greyhound Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
-     ('Greyhound Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1)";
-      ('Greyhound Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1)";
-      ('Greyhound Route 8', 'Polokwane', 'Johannesburg/Pretoria', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
-     if ($conn->query($insert_greyhound_routes) === TRUE) {
+    ('Greyhound Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1),
+    ('Greyhound Route 3', 'Johannesburg/Pretoria', 'Cape Town', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1),
+    ('Greyhound Route 4', 'Johannesburg/Pretoria', 'Polokwane', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1),
+    ('Greyhound Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
+    ('Greyhound Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1),
+    ('Greyhound Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1),
+    ('Greyhound Route 8', 'Polokwane', 'Johannesburg/Pretoria', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
+
+if ($conn->query($insert_greyhound_routes) === TRUE) {
     echo "Inserted data for Greyhound routes\n";
 } else {
     echo "Error inserting data for Greyhound routes - " . $conn->error . "\n";
 }
-
-
 
 // Close the connection
 $conn->close();
