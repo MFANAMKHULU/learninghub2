@@ -105,17 +105,35 @@ $insert_intercity_routes = "INSERT INTO routes (route_name, departure_city, arri
 ('Intercity Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 3),
 ('Intercity Route 2', 'Johannesburg/Pretoria', 'Bloemfontein', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
 ('Intercity Route 3', 'Johannesburg/Pretoria', 'Cape Town', '2024-01-16 11:30:00', '2024-01-17 22:30:00',  3),
-('Intercity Route 4', 'Johannesburg/Pretoria', 'Harrismith', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  3),
+('Intercity Route 4', 'Johannesburg/Pretoria', 'kimberly', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  3),
 ('Intercity Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 09:30:00', '2024-01-15 18:30:00',  3),
 ('Intercity Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
-('Intercity Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 22:30:00', 3),
+('Intercity Route 7', 'Kimberely', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 22:30:00', 3),
 ('Intercity Route 8', 'Harrismith', 'Johannesburg/Pretoria', '2024-01-16 10:30:00', '2024-01-16 16:30:00', 3)";
 
 
-if ($conn->query($insert_intercape_routes) === TRUE) {
-    echo "Inserted data for Intercape routes\n";
+if ($conn->query($insert_intercity_routes) === TRUE) {
+    echo "Inserted data for Intercity routes\n";
 } else {
-    echo "Error inserting data for Intercape routes - " . $conn->error . "\n";
+    echo "Error inserting data for Intercity routes - " . $conn->error . "\n";
+}
+
+// Insert eldocoaches routes
+$insert_eldocoaches_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
+('Eldocoach Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 09:30:00', '2024-01-15 18:30:00', 3),
+('Eldocoach Route 2', 'Johannesburg/Pretoria', 'PortElizabeth', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
+('Eldocoach Route 3', 'Durban', 'Cape Town', '2024-01-16 11:30:00', '2024-01-17 22:30:00',  3),
+('Eldocoach Route 4', 'Johannesburg/Pretoria', 'EastLondon', '2024-01-16 10:30:00', '2024-01-16 16:30:00',  3),
+('Eldocoach Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 09:30:00', '2024-01-15 18:30:00',  3),
+('Eldocoach Route 6', 'PortElizabeth', 'Johannesburg/Pretoria', '2024-01-16 11:30:00', '2024-01-17 00:30:00',  3),
+('Eldocoach Route 7', 'Cape Town', 'Durban', '2024-01-16 11:30:00', '2024-01-17 22:30:00', 3),
+('Intercity Route 8', 'East london', 'Johannesburg/Pretoria', '2024-01-16 10:30:00', '2024-01-16 16:30:00', 3)";
+
+
+if ($conn->query($insert_eldocoaches_routes) === TRUE) {
+    echo "Inserted data for eldocoaches routes\n";
+} else {
+    echo "Error inserting data for eldocoaches routes - " . $conn->error . "\n";
 }
 
 
