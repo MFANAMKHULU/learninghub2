@@ -97,7 +97,7 @@ function calculateNewDate($currentDate, $daysToAdd) {
 $insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES ";
 
 // Define routes for Johannesburg to Durban, Cape Town, and Durban to Johannesburg
-for ($i = 1; $i <= 8; $i++) {
+for ($i = 1; $i <= 4; $i++) {
     $departureDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
     $arrivalDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
     $insert_greyhound_routes .= "('Greyhound Route $i', 'Johannesburg/Pretoria', 'Durban', '$departureDate', '$arrivalDate', 1),";
@@ -126,7 +126,7 @@ if ($conn->query($insert_greyhound_routes) === TRUE) {
 $insert_intercape_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES ";
 
 // Define routes for Johannesburg to Durban, Bloemfontein, and Durban to Johannesburg
-for ($i = 1; $i <= 8; $i++) {
+for ($i = 1; $i <= 4; $i++) {
     $departureDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
     $arrivalDate = calculateNewDate($currentDate, $daysToAdd[$i - 1]);
     $insert_intercape_routes .= "('Intercape Route $i', 'Johannesburg/Pretoria', 'Durban', '$departureDate', '$arrivalDate', 2),";
@@ -145,4 +145,12 @@ $insert_intercape_routes .= "('Intercape Route 10', 'Durban', 'Johannesburg/Pret
 $insert_intercape_routes = rtrim($insert_intercape_routes, ',');
 
 // Execute the query
-if ($conn->query($insert_intercape_routes) ===
+if ($conn->query($insert_intercape_routes) === TRUE) {
+    echo "Inserted data for Intercape routes\n";
+} else {
+    echo "Error inserting data for Intercape routes - " . $conn->error . "\n";
+}
+
+// Close the connection
+$conn->close();
+?>
