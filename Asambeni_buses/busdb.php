@@ -39,7 +39,7 @@ if ($conn->query($sql_bus_companies) === TRUE) {
 }
 
 // Insert bus companies
-$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches", "DRDLuxury" , "Tourliner"];
+$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches", "DRDLuxury", "Tourliner"];
 foreach ($bus_companies as $company) {
     $insert_company = "INSERT INTO bus_companies (company_name) VALUES ('$company')";
     if ($conn->query($insert_company) === TRUE) {
@@ -66,6 +66,22 @@ if ($conn->query($sql_routes) === TRUE) {
     echo "Error creating table 'routes': " . $conn->error . "\n";
 }
 
+// Create 'reviews' table
+$sql_reviews = "CREATE TABLE IF NOT EXISTS reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    date_posted DATETIME NOT NULL,
+    comment TEXT NOT NULL,
+    FOREIGN KEY (route_id) REFERENCES routes(route_id)
+)";
+if ($conn->query($sql_reviews) === TRUE) {
+    echo "Table 'reviews' created successfully\n";
+} else {
+    echo "Error creating table 'reviews': " . $conn->error . "\n";
+}
+
 // Get the current date
 $currentDate = date('Y-m-d');
 
@@ -79,14 +95,6 @@ function calculateNewDate($currentDate, $daysToAdd) {
 
 // Insert Greyhound routes
 $insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES ";
-
-// Define the number of days to add for each route
-$daysToAdd = array(0, 1, 2, 3, 0, 1, 2, 3);
-
-// Function to calculate the new date based on the current date and days to add
-function calculateNewDate($currentDate, $daysToAdd) {
-    return date('Y-m-d H:i:s', strtotime($currentDate . ' +' . $daysToAdd . ' days'));
-}
 
 // Define routes for Johannesburg to Durban, Cape Town, and Durban to Johannesburg
 for ($i = 1; $i <= 8; $i++) {
@@ -103,9 +111,9 @@ $insert_greyhound_routes .= "('Greyhound Route 9', 'Johannesburg/Pretoria', 'Cap
 // Define routes for Durban to Johannesburg
 $departureDateDBN = calculateNewDate($currentDate, 1);
 $arrivalDateDBN = calculateNewDate($currentDate, 1);
-$insert_greyhound_routes .= "('Greyhound Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 1),";
+$insert_greyhound_routes .= "('Greyhound Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 1)";
 
-$insert_greyhound_routes = rtrim($insert_greyhound_routes, ''); 
+$insert_greyhound_routes = rtrim($insert_greyhound_routes, ',');
 
 // Execute the query
 if ($conn->query($insert_greyhound_routes) === TRUE) {
@@ -132,35 +140,9 @@ $insert_intercape_routes .= "('Intercape Route 9', 'Johannesburg/Pretoria', 'Blo
 // Define routes for Durban to Johannesburg
 $departureDateDBN = calculateNewDate($currentDate, 1);
 $arrivalDateDBN = calculateNewDate($currentDate, 1);
-$insert_intercape_routes .= "('Intercape Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 2),";
+$insert_intercape_routes .= "('Intercape Route 10', 'Durban', 'Johannesburg/Pretoria', '$departureDateDBN', '$arrivalDateDBN', 2)";
 
-$insert_intercape_routes = rtrim($insert_intercape_routes, ','); // Remove the trailing comma
+$insert_intercape_routes = rtrim($insert_intercape_routes, ',');
 
 // Execute the query
-if ($conn->query($insert_intercape_routes) === TRUE) {
-    echo "Inserted data for Intercape routes\n";
-} else {
-    echo "Error inserting data for Intercape routes - " . $conn->error . "\n";
-}
-
-
-// Create 'reviews' table
-$sql_reviews = "CREATE TABLE IF NOT EXISTS reviews (
-    review_id INT AUTO_INCREMENT PRIMARY KEY,
-    route_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    date_posted DATETIME NOT NULL,
-    comment TEXT NOT NULL,
-    FOREIGN KEY (route_id) REFERENCES routes(route_id)
-)";
-if ($conn->query($sql_reviews) === TRUE) {
-    echo "Table 'reviews' created successfully\n";
-} else {
-    echo "Error creating table 'reviews': " . $conn->error . "\n";
-}
-
-
-// Close the connection
-$conn->close();
-?>
+if ($conn->query($insert_intercape_routes) ===
