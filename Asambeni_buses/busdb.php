@@ -39,7 +39,7 @@ if ($conn->query($sql_bus_companies) === TRUE) {
 }
 
 // Insert bus companies
-$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches", "DRD", "Tourlines"];
+$bus_companies = ["Greyhound", "Intercape", "Intercity", "Eldocoaches"];
 foreach ($bus_companies as $company) {
     $insert_company = "INSERT INTO bus_companies (company_name) VALUES ('$company')";
     if ($conn->query($insert_company) === TRUE) {
@@ -66,21 +66,23 @@ if ($conn->query($sql_routes) === TRUE) {
     echo "Error creating table 'routes': " . $conn->error . "\n";
 }
 
-// Create 'tickets' table
-$sql_tickets = "CREATE TABLE IF NOT EXISTS tickets (
-    ticket_id INT AUTO_INCREMENT PRIMARY KEY,
-    route_id INT NOT NULL,
-    company_id INT NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    booking_date DATETIME NOT NULL,
-    FOREIGN KEY (route_id) REFERENCES routes(route_id),
-    FOREIGN KEY (company_id) REFERENCES bus_companies(company_id)
-)";
-if ($conn->query($sql_tickets) === TRUE) {
-    echo "Table 'tickets' created successfully\n";
+// Insert routes for Greyhound
+$insert_greyhound_routes = "INSERT INTO routes (route_name, departure_city, arrival_city, departure_time, arrival_time, company_id) VALUES 
+    ('Greyhound Route 1', 'Johannesburg/Pretoria', 'Durban', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
+    ('Greyhound Route 2', 'Johannesburg//Pretoria', 'Bloemfontein', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1)";
+     ('Greyhound Route 3', 'Johannesburg//Pretoria', 'Cape Town', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1)";
+     ('Greyhound Route 4', 'Johannesburg//Pretoria', 'Polokwane', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
+     ('Greyhound Route 5', 'Durban', 'Johannesburg/Pretoria', '2024-01-15 08:00:00', '2024-01-15 17:00:00', 1),
+     ('Greyhound Route 6', 'Bloemfontein', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-16 21:00:00', 1)";
+      ('Greyhound Route 7', 'Cape Town', 'Johannesburg/Pretoria', '2024-01-16 10:00:00', '2024-01-17 21:00:00', 1)";
+      ('Greyhound Route 8', 'Polokwane', 'Johannesburg/Pretoria', '2024-01-16 09:00:00', '2024-01-16 15:00:00', 1)";
+     if ($conn->query($insert_greyhound_routes) === TRUE) {
+    echo "Inserted data for Greyhound routes\n";
 } else {
-    echo "Error creating table 'tickets': " . $conn->error . "\n";
+    echo "Error inserting data for Greyhound routes - " . $conn->error . "\n";
 }
+
+
 
 // Close the connection
 $conn->close();
