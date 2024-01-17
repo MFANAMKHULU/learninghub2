@@ -143,8 +143,25 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
-        
+   function calculatePrice() {
+        var numChildren = parseInt(document.getElementById("numChildren").value) || 0;
+        var numAdults = parseInt(document.getElementById("numAdults").value) || 0;
+
+        // Get the price per adult from the displayed bus information
+        var pricePerAdult = parseFloat(document.getElementById("pricePerAdult").value) || 0;
+
+        // Apply a 15% discount for children
+        var discount = 0.15;
+        var discountedPrice = pricePerAdult - (pricePerAdult * discount);
+
+        // Calculate total price with discount
+        var totalPrice = (numChildren * discountedPrice) + (numAdults * pricePerAdult);
+
+        // Display the calculated total price
+        document.getElementById("totalPrice").value = '$' + totalPrice.toFixed(2);
+    }     
     </script>
 
 </body>
