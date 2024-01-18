@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Hire a Bus</title>
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: #00529f; /* Barcelona blue background */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important; /* White text color for the navbar links */
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffffff !important; /* White hover text color for the navbar links */
+        }
+
+        /* Container styles */
+        .container {
+            color: #000000; /* Black text color for the container content */
+            margin-top: 20px; /* Add some space at the top */
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background-color: #00529f; /* Barcelona blue background for primary buttons */
+            color: #ffffff; /* White text color for primary buttons */
+        }
+
+        .btn-primary:hover {
+            background-color: #003366; /* Darker blue background on hover for primary buttons */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#"> Asambeni mkhaya</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Hire a Bus</h2>
+        <form>
+            <!-- Company dropdown -->
+            <div class="form-group">
+                <label for="company">Select Company:</label>
+                <select class="form-control" id="company">
+                    <option value="greyhound">Greyhound</option>
+                    <option value="intercape">Intercape</option>
+                    <option value="eldocoach">EldoCoaches</option>
+                    <option value="intercity">Intercity</option>
+                    <option value="drdluxury">DRD Luxury</option>
+                
+                </select>
+            </div>
+
+            <!-- Bus type dropdown -->
+            <div class="form-group">
+                <label for="busType">Select Bus Type:</label>
+                <select class="form-control" id="busType">
+                    <option value="luxury">Luxury</option>
+                    <option value="standard">Standard</option>
+                    <!-- Add other bus types as needed -->
+                </select>
+            </div>
+
+            <!-- Source location input -->
+            <div class="form-group">
+                <label for="source">Source Location:</label>
+                <input type="text" class="form-control" id="source" placeholder="Enter source location">
+            </div>
+
+            <!-- Destination input -->
+            <div class="form-group">
+                <label for="destination">Destination:</label>
+                <input type="text" class="form-control" id="destination" placeholder="Enter destination">
+            </div>
+
+            <!-- Date inputs -->
+            <div class="form-group">
+                <label for="departureDate">Departure Date:</label>
+                <input type="date" class="form-control" id="departureDate">
+            </div>
+
+            <div class="form-group">
+                <label for="returnDate">Return Date:</label>
+                <input type="date" class="form-control" id="returnDate">
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
