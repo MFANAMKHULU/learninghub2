@@ -14,3 +14,5 @@ created a hirebus.html
 added fields at hirebus 
 styled the page
 Added javascript functions to calculate price for hiring a bus
+created and styled a payment.html page
+added a payment.php with functions to validate data
