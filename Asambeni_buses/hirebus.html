@@ -60,7 +60,7 @@
 
     <div class="container mt-5">
         <h2>Hire a Bus</h2>
-        <form>
+        <form oninput="calculatePrice()">
             <!-- Company dropdown -->
             <div class="form-group">
                 <label for="company">Select Company:</label>
@@ -98,6 +98,12 @@
                 <input type="text" class="form-control" id="destination" placeholder="Enter destination">
             </div>
 
+            <!-- Distance input -->
+            <div class="form-group">
+                <label for="distance">Distance (in km):</label>
+                <input type="number" class="form-control" id="distance" placeholder="Enter distance">
+            </div>
+
             <!-- Date inputs -->
             <div class="form-group">
                 <label for="departureDate">Departure Date:</label>
@@ -109,6 +115,12 @@
                 <input type="date" class="form-control" id="returnDate">
             </div>
 
+            <!-- Price display -->
+            <div class="form-group">
+                <label for="priceDisplay">Estimated Price:</label>
+                <input type="text" class="form-control" id="priceDisplay" readonly>
+            </div>
+
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -117,7 +129,58 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function calculatePrice() {
+            // Get the selected bus type
+            const busType = document.getElementById('busType').value;
 
+            // Assign a luxury factor based on the selected bus type (replace with your own logic)
+            let luxuryFactor;
+            switch (busType) {
+                case 'luxury1':
+                    luxuryFactor = 1.5;
+                    break;
+                case 'luxury2':
+                    luxuryFactor = 2.0;
+                    break;
+                case 'luxury3':
+                    luxuryFactor = 2.5;
+                    break;
+                case 'luxury4':
+                    luxuryFactor = 3.0;
+                    break;
+                default:
+                    luxuryFactor = 1.0; // Default factor for unknown types
+            }
+
+            const distance = parseFloat(document.getElementById('distance').value) || 0;
+            const companyFactor = getCompanyFactor();
+
+            // Calculate the estimated price
+            const estimatedPrice = distance * luxuryFactor * companyFactor;
+
+            // Display the estimated price
+            document.getElementById('priceDisplay').value = estimatedPrice.toFixed(2);
+        }
+
+        function getCompanyFactor() {
+            const company = document.getElementById('company').value;
+            switch (company) {
+                case 'greyhound':
+                    return 3.9;
+                case 'intercape':
+                    return 3.7;
+                case 'eldocoach':
+                    return 3.0;
+                case 'intercity':
+                    return 2.9;
+                case 'drdluxury':
+                    return 2.4;
+                default:
+                    return 1.0; 
+            }
+        }
+    </script>
 </body>
 
 </html>

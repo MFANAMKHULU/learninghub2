@@ -13,3 +13,4 @@ added styles for the carousel
 created a hirebus.html
 added fields at hirebus 
 styled the page
+Added javascript functions to calculate price for hiring a bus
