@@ -11,3 +11,5 @@ completed erd
 added hire and submit review buttons on buses on buslisting.html
 added styles for the carousel
 created a hirebus.html
+added fields at hirebus 
+styled the page
