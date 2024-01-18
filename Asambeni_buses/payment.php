@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Process the form data or perform additional actions if needed
+    
 
     // Display a success message
     echo "Payment successful! Thank you for your purchase.";
