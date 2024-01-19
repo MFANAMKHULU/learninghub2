@@ -84,7 +84,8 @@
 
             <div class="form-group">
                 <label for="review">Your Review:</label>
-                <textarea class="form-control" id="review" name="review" rows="5" required></textarea>
+                <textarea class="form-control" id="review" name="review" rows="5" required oninput="updateWordCount()"></textarea>
+                <small id="wordCount" class="form-text text-muted">0 words</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit Review</button>
@@ -94,6 +95,19 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to update word count
+        function updateWordCount() {
+            const reviewTextarea = document.getElementById('review');
+            const wordCountElement = document.getElementById('wordCount');
+
+            const words = reviewTextarea.value.trim().split(/\s+/);
+            const wordCount = words.length;
+
+            wordCountElement.innerText = wordCount + (wordCount === 1 ? ' word' : ' words');
+        }
+    </script>
 
 </body>
 
