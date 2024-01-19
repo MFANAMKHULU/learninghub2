@@ -22,49 +22,9 @@ function isCardNumberValid($cardNumber) {
     return (strlen($cardNumber) == 16 && is_numeric($cardNumber));
 }
 
-function isExpiryDateValid($expiryDate) {
-    // Check if the expiry date is in the future
-    $currentDate = date('Y-m');
-    return ($expiryDate >= $currentDate);
-}
-
 function isCVVValid($cvv) {
     // Check if the CVV is exactly 3 numbers
     return (strlen($cvv) == 3 && is_numeric($cvv));
-}
-
-function isFormDataComplete($postData) {
-    // Define an array of required fields
-    $requiredFields = ["cardNumber", "cardholderName", "billingAddress", "email", "phoneNumber", "expiryDate", "cvv"];
-
-    // Check if all required fields are present and not empty
-    foreach ($requiredFields as $field) {
-        if (!isset($postData[$field]) || empty($postData[$field])) {
-            return false; // Field is missing or empty
-        }
-    }
-
-    // Check if cardholderName is valid
-    if (!isNameValid($postData["cardholderName"])) {
-        return false; // Invalid name
-    }
-
-    // Check if cardNumber is valid
-    if (!isCardNumberValid($postData["cardNumber"])) {
-        return false; // Invalid card number
-    }
-
-    // Check if expiryDate is valid
-    if (!isExpiryDateValid($postData["expiryDate"])) {
-        return false; // Expired card
-    }
-
-    // Check if CVV is valid
-    if (!isCVVValid($postData["cvv"])) {
-        return false; // Invalid CVV
-    }
-
-    return true; // All required fields are present and valid
 }
 
 // Check if the form is submitted
@@ -79,15 +39,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $expiryDate = $_POST["expiryDate"];
     $cvv = $_POST["cvv"];
 
-    // Check if all required fields are entered and valid
-    if (!isFormDataComplete($_POST) || !isEmailValid($email)) {
+    
+    // Check if cardholderName is valid
+    if (!isNameValid($cardholderName)) {
         // Display an error message and redirect
-        echo "Please enter valid information in all fields.";
+        echo "Please enter a valid name.";
         header("Refresh: 3; URL=payment.html"); // Redirect after 3 seconds
         exit();
     }
 
-    
+    // Check if cardNumber is valid
+    if (!isCardNumberValid($cardNumber)) {
+        // Display an error message and redirect
+        echo "Please enter a valid card number.";
+        header("Refresh: 3; URL=payment.html"); // Redirect after 3 seconds
+        exit();
+    }
+
+    // Check if CVV is valid
+    if (!isCVVValid($cvv)) {
+        // Display an error message and redirect
+        echo "Please enter a valid CVV.";
+        header("Refresh: 3; URL=payment.html"); // Redirect after 3 seconds
+        exit();
+    }
+
+    // Check if email is valid
+    if (!isEmailValid($email)) {
+        // Display an error message and redirect
+        echo "Please enter a valid email address.";
+        header("Refresh: 3; URL=payment.html"); // Redirect after 3 seconds
+        exit();
+    }
 
     // Display a success message
     echo "Payment successful! Thank you for your purchase.";

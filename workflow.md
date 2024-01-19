@@ -16,3 +16,7 @@ styled the page
 Added javascript functions to calculate price for hiring a bus
 created and styled a payment.html page
 added a payment.php with functions to validate data
+
+19/01/2023
+validated data for payment 
+added the button on home.html
