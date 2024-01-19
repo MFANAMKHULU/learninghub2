@@ -21,3 +21,4 @@ added a payment.php with functions to validate data
 validated data for payment 
 added the button on home.html
 created a review page and styled it
+creat a review.php and added functions for it
