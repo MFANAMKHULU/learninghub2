@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Review Coach Company</title>
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: #00529f; /* Barcelona blue background */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important; /* White text color for the navbar links */
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffffff !important; /* White hover text color for the navbar links */
+        }
+
+        /* Container styles */
+        .container {
+            color: #000000; /* Black text color for the container content */
+            margin-top: 20px; /* Add some space at the top */
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background-color: #00529f; /* Barcelona blue background for primary buttons */
+            color: #ffffff; /* White text color for primary buttons */
+        }
+
+        .btn-primary:hover {
+            background-color: #003366; /* Darker blue background on hover for primary buttons */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#"> Asambeni mkhaya</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Review Coach Company</h2>
+
+        <!-- Review form placeholder -->
+        <form action="submit_review.php" method="post">
+            <div class="form-group">
+                <label for="company">Select Coach Company:</label>
+                <select class="form-control" id="company" name="company" required>
+                    <option value="greyhound">Greyhound</option>
+                    <option value="intercape">InterCape</option>
+                    <option value="intercity">InterCity</option>
+                    <option value="eldocoaches">EldoCoaches</option>
+                    <option value="drdluxury">DRD Luxury Coaches</option>
+                    
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email Address:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+            </div>
+
+            <div class="form-group">
+                <label for="review">Your Review:</label>
+                <textarea class="form-control" id="review" name="review" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

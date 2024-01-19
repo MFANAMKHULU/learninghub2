@@ -20,3 +20,4 @@ added a payment.php with functions to validate data
 19/01/2023
 validated data for payment 
 added the button on home.html
+created a review page and styled it
