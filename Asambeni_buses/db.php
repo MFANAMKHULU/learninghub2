@@ -51,13 +51,23 @@ class BusBookingSystem
                 ('Intercity'),
                 ('EldoCoaches'),
                 ('DRD Luxury');",
+"CREATE TABLE IF NOT EXISTS Routes (
+    route_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_name VARCHAR(255) NOT NULL,
+    company_id INT,
+    FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
+)",
 
-            "CREATE TABLE IF NOT EXISTS Routes (
-                route_id INT AUTO_INCREMENT PRIMARY KEY,
-                route_name VARCHAR(255) NOT NULL,
-                company_id INT,
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-            )",
+"INSERT INTO Routes (route_name, company_id) VALUES
+    ('Johannesburg/Pretoria to Durban', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
+    ('Johannesburg/Pretoria to Bloemfontein', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
+    ('Johannesburg/Pretoria to Cape Town', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
+    ('Johannesburg/Pretoria to Polokwane', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
+    ('Johannesburg/Pretoria to Nelspruit', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
+    ('Johannesburg/Pretoria to Richards Bay', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1))",
+
+
+
 
             "CREATE TABLE IF NOT EXISTS Times (
                 time_id INT AUTO_INCREMENT PRIMARY KEY,
