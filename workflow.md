@@ -23,3 +23,7 @@ added the button on home.html
 created a review page and styled it
 created a review.php and added functions for it
 added javascript on review.html
+
+22/01/2023
+created a database file
+Added tables on the database

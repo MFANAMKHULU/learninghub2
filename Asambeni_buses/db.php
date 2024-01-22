@@ -5,9 +5,8 @@ class BusBookingSystem
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'Asambeni_buses';
+    private $databasename = 'asambeni_buses';
     private $charset = 'utf8mb4';
-
     private $pdo;
 
     public function __construct()
@@ -18,7 +17,7 @@ class BusBookingSystem
     private function connect()
     {
         try {
-            $dsn = "mysql:host={$this->host};dbname={$this->database};charset={$this->charset}";
+            $dsn = "mysql:host={$this->host};dbname={$this->databasename};charset={$this->charset}";
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -34,7 +33,7 @@ class BusBookingSystem
     public function createDatabase()
     {
         try {
-            $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$this->database}");
+            $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$this->databasename}");
             echo "Database created or already exists.\n";
         } catch (PDOException $e) {
             die("Error creating database: " . $e->getMessage());
@@ -44,44 +43,44 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            "CREATE TABLE IF NOT EXISTS Bus_Companies (
-                company_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_name VARCHAR(255) NOT NULL
+            "CREATE TABLE IF NOT EXISTS BusCompanies (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
             )",
 
             "CREATE TABLE IF NOT EXISTS Routes (
-                route_id INT AUTO_INCREMENT PRIMARY KEY,
-                route_name VARCHAR(255) NOT NULL
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
             )",
 
             "CREATE TABLE IF NOT EXISTS Times (
-                time_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
                 route_id INT,
                 departure_time TIME,
                 arrival_time TIME,
-                FOREIGN KEY (company_id) REFERENCES Bus_Companies(company_id),
-                FOREIGN KEY (route_id) REFERENCES Routes(route_id)
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
+                FOREIGN KEY (route_id) REFERENCES Routes(id)
+            )",
+
+            "CREATE TABLE IF NOT EXISTS Reviews (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
+                rating INT,
+                comment TEXT,
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id)
             )",
 
             "CREATE TABLE IF NOT EXISTS Payments (
-                payment_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
                 route_id INT,
                 time_id INT,
                 amount DECIMAL(10, 2),
                 payment_date DATE,
-                FOREIGN KEY (company_id) REFERENCES Bus_Companies(company_id),
-                FOREIGN KEY (route_id) REFERENCES Routes(route_id),
-                FOREIGN KEY (time_id) REFERENCES Times(time_id)
-            )",
-
-            "CREATE TABLE IF NOT EXISTS Reviews (
-                review_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
-                rating INT,
-                comment TEXT,
-                FOREIGN KEY (company_id) REFERENCES Bus_Companies(company_id)
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
+                FOREIGN KEY (route_id) REFERENCES Routes(id),
+                FOREIGN KEY (time_id) REFERENCES Times(id)
             )",
         ];
 
