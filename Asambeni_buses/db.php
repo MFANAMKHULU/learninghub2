@@ -33,7 +33,7 @@ class BusBookingSystem
             // Switch to the specified database
             $this->pdo->exec("USE {$this->databasename}");
         } catch (PDOException $e) {
-            die("Error: " . $e->getMessage());
+            die("Connection failed: " . $e->getMessage());
         }
     }
 
@@ -41,53 +41,61 @@ class BusBookingSystem
     {
         $queries = [
             "CREATE TABLE IF NOT EXISTS BusCompanies (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL
+                company_id INT AUTO_INCREMENT PRIMARY KEY,
+                company_name VARCHAR(255) NOT NULL
             )",
-        
+
+            "INSERT INTO BusCompanies (company_name) VALUES
+                ('Greyhound'),
+                ('Intercape'),
+                ('Intercity'),
+                ('EldoCoaches'),
+                ('DRD Luxury');",
+
             "CREATE TABLE IF NOT EXISTS Routes (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL
+                route_id INT AUTO_INCREMENT PRIMARY KEY,
+                route_name VARCHAR(255) NOT NULL,
+                company_id INT,
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
             )",
-        
+
             "CREATE TABLE IF NOT EXISTS Times (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                time_id INT AUTO_INCREMENT PRIMARY KEY,
                 bus_company_id INT,
                 route_id INT,
                 departure_time TIME,
                 arrival_time TIME,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
-                FOREIGN KEY (route_id) REFERENCES Routes(id)
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id),
+                FOREIGN KEY (route_id) REFERENCES Routes(route_id)
             )",
-        
+
             "CREATE TABLE IF NOT EXISTS Reviews (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                review_id INT AUTO_INCREMENT PRIMARY KEY,
                 bus_company_id INT,
                 rating INT,
                 comment TEXT,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id)
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
             )",
-        
+
             "CREATE TABLE IF NOT EXISTS Payments (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                payment_id INT AUTO_INCREMENT PRIMARY KEY,
                 bus_company_id INT,
                 route_id INT,
                 time_id INT,
                 amount DECIMAL(10, 2),
                 payment_date DATE,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
-                FOREIGN KEY (route_id) REFERENCES Routes(id),
-                FOREIGN KEY (time_id) REFERENCES Times(id)
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id),
+                FOREIGN KEY (route_id) REFERENCES Routes(route_id),
+                FOREIGN KEY (time_id) REFERENCES Times(time_id)
             )",
         ];
-        
 
         foreach ($queries as $query) {
             try {
                 $this->pdo->exec($query);
                 echo "Table created or already exists.\n";
             } catch (PDOException $e) {
-                die("Error creating table: " . $e->getMessage());
+                die("Error executing query: " . $e->getMessage());
             }
         }
     }
