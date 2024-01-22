@@ -40,8 +40,47 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            
+            "CREATE TABLE IF NOT EXISTS BusCompanies (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
+            )",
+        
+            "CREATE TABLE IF NOT EXISTS Routes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
+            )",
+        
+            "CREATE TABLE IF NOT EXISTS Times (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
+                route_id INT,
+                departure_time TIME,
+                arrival_time TIME,
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
+                FOREIGN KEY (route_id) REFERENCES Routes(id)
+            )",
+        
+            "CREATE TABLE IF NOT EXISTS Reviews (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
+                rating INT,
+                comment TEXT,
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id)
+            )",
+        
+            "CREATE TABLE IF NOT EXISTS Payments (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
+                route_id INT,
+                time_id INT,
+                amount DECIMAL(10, 2),
+                payment_date DATE,
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(id),
+                FOREIGN KEY (route_id) REFERENCES Routes(id),
+                FOREIGN KEY (time_id) REFERENCES Times(id)
+            )",
         ];
+        
 
         foreach ($queries as $query) {
             try {
