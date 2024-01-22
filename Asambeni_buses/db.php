@@ -40,7 +40,7 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            // (unchanged)
+            
         ];
 
         foreach ($queries as $query) {
