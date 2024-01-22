@@ -27,3 +27,4 @@ added javascript on review.html
 22/01/2023
 created a database file
 Added tables on the database
+Added a connection to database

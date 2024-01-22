@@ -91,9 +91,20 @@ class BusBookingSystem
             }
         }
     }
+
+    public function testConnection()
+    {
+        try {
+            $this->connect();
+            echo "Database connection successful.\n";
+        } catch (PDOException $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
 }
 
 // Usage
 $busBookingSystem = new BusBookingSystem();
+$busBookingSystem->testConnection();
 $busBookingSystem->createTables();
 ?>
