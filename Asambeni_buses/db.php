@@ -24,16 +24,19 @@ class BusBookingSystem
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ];
-
+    
             $this->pdo = new PDO($dsn, $this->username, $this->password, $options);
-
+    
+            // Create the database if it doesn't exist
+            $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$this->databasename}");
+    
             // Switch to the specified database
             $this->pdo->exec("USE {$this->databasename}");
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
     }
-
+    
     public function createTables()
     {
         $queries = [
@@ -47,7 +50,7 @@ class BusBookingSystem
                 ('Intercape'),
                 ('Intercity'),
                 ('EldoCoaches'),
-                ('DRD Luxury');",
+                ('DRD Luxury')", // Removed semicolon here
 
             "CREATE TABLE IF NOT EXISTS Routes (
                 route_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -57,12 +60,7 @@ class BusBookingSystem
             )",
 
             "INSERT INTO Routes (route_name, company_id) VALUES
-                ('Johannesburg/Pretoria to Durban', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
-                ('Johannesburg/Pretoria to Bloemfontein', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
-                ('Johannesburg/Pretoria to Cape Town', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
-                ('Johannesburg/Pretoria to Polokwane', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
-                ('Johannesburg/Pretoria to Nelspruit', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1)),
-                ('Johannesburg/Pretoria to Richards Bay', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1))",
+                ('Johannesburg/Pretoria to Durban', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1))",
 
             "CREATE TABLE IF NOT EXISTS Times (
                 time_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,12 +73,7 @@ class BusBookingSystem
             )",
 
             "INSERT INTO Times (bus_company_id, route_id, departure_time, arrival_time) VALUES
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '12:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Bloemfontein' LIMIT 1), '09:00', '14:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Cape Town' LIMIT 1), '07:30', '18:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Polokwane' LIMIT 1), '10:00', '13:30'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Nelspruit' LIMIT 1), '11:30', '16:45'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Richards Bay' LIMIT 1), '13:15', '19:30')",
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '12:00')",
 
             "CREATE TABLE IF NOT EXISTS Reviews (
                 review_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,13 +83,12 @@ class BusBookingSystem
                 FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
             )",
 
-         "CREATE TABLE IF NOT EXISTS ImageNames (
-            image_id INT AUTO_INCREMENT PRIMARY KEY,
-            bus_company_id INT,
-            image_name VARCHAR(255) NOT NULL,
-            FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
-         )",
-
+            "CREATE TABLE IF NOT EXISTS ImageNames (
+                image_id INT AUTO_INCREMENT PRIMARY KEY,
+                bus_company_id INT,
+                image_name VARCHAR(255) NOT NULL,
+                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
+            )",
 
             "CREATE TABLE IF NOT EXISTS Payments (
                 payment_id INT AUTO_INCREMENT PRIMARY KEY,
