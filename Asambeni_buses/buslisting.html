@@ -83,66 +83,50 @@
         </div>
     </nav>
 
-    <h2>Upload Image</h2>
-    <form action="uploadimage.php" method="post" enctype="multipart/form-data">
-        <label for="image">Select Image:</label>
-        <input type="file" name="image" id="image" required>
-        
-        <label for="imageName">Image Name:</label>
-        <input type="text" name="imageName" id="imageName" required>
+    <div id="home" class="container mt-5">
+        <h2>Available Buses</h2>
+        <p>Explore the list of available buses and choose your preferred option.</p>
+        <a href="booking.html" class="btn btn-primary">Book Now</a>
+    </div>
 
-        <label for="busCompanyId">Bus Company ID:</label>
-        <input type="text" name="busCompanyId" id="busCompanyId" required>
+  <!-- Section for Available Buses -->
+<div class="available-buses" id="busImagesContainer">
+    <!-- Images will be dynamically added here using JavaScript -->
+</div>
 
-        <button type="submit">Upload Image</button>
-    </form>
+<script>
+    // Function to fetch images from the PHP file
+    function fetchImages() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "uploadimage.php", true);
 
-    <hr>
-
-    <h2>Display Image</h2>
-    <form action="uploadimage.php" method="get">
-        <label for="displayBusCompanyId">Bus Company ID:</label>
-        <input type="text" name="displayBusCompanyId" id="displayBusCompanyId" required>
-
-        <button type="submit">Display Image</button>
-    </form>
-
-   
-
-    
-
-   
-
-    <script>
-        // Calculate star rating based on numeric value
-    /*    function setStarRating(rating, containerId) {
-            const starContainer = document.getElementById(containerId);
-            starContainer.innerHTML = ''; // Clear previous content
-
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 !== 0;
-
-            // Add full stars
-            for (let i = 0; i < fullStars; i++) {
-                starContainer.innerHTML += '★';
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var images = JSON.parse(xhr.responseText);
+                displayImages(images);
             }
+        };
 
-            // Add half star if applicable
-            if (hasHalfStar) {
-                starContainer.innerHTML += '☆'; // Unicode character for half-filled star
-            }
-        }
+        xhr.send();
+    }
 
-        // Set the initial ratings for each bus
-        setStarRating(4.8, 'starRating1'); // Greyhound
-        setStarRating(4.8, 'starRating2'); // Intercape
-        setStarRating(4.2, 'starRating3'); // Intercity
-        setStarRating(4.0, 'starRating4'); // Eldo Coaches
-        setStarRating(3.5, 'starRating5'); // DRD Luxury*/
+    // Function to dynamically display images on the HTML page
+    function displayImages(images) {
+        var container = document.getElementById("busImagesContainer");
 
-   
+        images.forEach(function (imagePath) {
+            var img = document.createElement("img");
+            img.src = imagePath;
+            img.alt = "Bus Image";
+            img.className = "bus-image";
+            container.appendChild(img);
+        });
+    }
 
-    </script>
+    // Call the function to fetch and display images
+    fetchImages();
+</script>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

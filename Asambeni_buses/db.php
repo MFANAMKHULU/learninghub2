@@ -50,7 +50,7 @@ class BusBookingSystem
                 ('Intercape'),
                 ('Intercity'),
                 ('EldoCoaches'),
-                ('DRD Luxury')", // Removed semicolon here
+                ('DRD Luxury')", 
 
             "CREATE TABLE IF NOT EXISTS Routes (
                 route_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,6 +89,10 @@ class BusBookingSystem
                 image_name VARCHAR(255) NOT NULL,
                 FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
             )",
+
+          "INSERT INTO ImageNames (bus_company_id, image_name) VALUES
+         (1, 'C:\\xampp\\htdocs\\learninghub2\\Asambeni_buses\\images\\greyhound.jpg')",
+
 
             "CREATE TABLE IF NOT EXISTS Payments (
                 payment_id INT AUTO_INCREMENT PRIMARY KEY,
