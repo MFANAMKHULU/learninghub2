@@ -120,7 +120,7 @@ class BusBookingSystem
     {
         try {
             $this->connect();
-            $this->createTables(); // Add this line to create tables after testing connection
+            $this->createTables(); 
             echo "Database connection successful.\n";
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
