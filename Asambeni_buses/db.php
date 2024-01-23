@@ -27,9 +27,6 @@ class BusBookingSystem
 
             $this->pdo = new PDO($dsn, $this->username, $this->password, $options);
 
-            // Create the database if it doesn't exist
-            $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$this->databasename}");
-
             // Switch to the specified database
             $this->pdo->exec("USE {$this->databasename}");
         } catch (PDOException $e) {
@@ -78,12 +75,12 @@ class BusBookingSystem
             )",
 
             "INSERT INTO Times (bus_company_id, route_id, departure_time, arrival_time) VALUES
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '19:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Bloemfontein' LIMIT 1), '09:00', '16:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Cape Town' LIMIT 1), '07:30', '11:00'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Polokwane' LIMIT 1), '08:00', '15:30'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Nelspruit' LIMIT 1), '11:30', '20:45'),
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Richards Bay' LIMIT 1), '09:15', '20:30')",
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '12:00'),
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Bloemfontein' LIMIT 1), '09:00', '14:00'),
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Cape Town' LIMIT 1), '07:30', '18:00'),
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Polokwane' LIMIT 1), '10:00', '13:30'),
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Nelspruit' LIMIT 1), '11:30', '16:45'),
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Richards Bay' LIMIT 1), '13:15', '19:30')",
 
             "CREATE TABLE IF NOT EXISTS Reviews (
                 review_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -92,6 +89,14 @@ class BusBookingSystem
                 comment TEXT,
                 FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
             )",
+
+         "CREATE TABLE IF NOT EXISTS ImageNames (
+            image_id INT AUTO_INCREMENT PRIMARY KEY,
+            bus_company_id INT,
+            image_name VARCHAR(255) NOT NULL,
+            FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
+         )",
+
 
             "CREATE TABLE IF NOT EXISTS Payments (
                 payment_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -120,7 +125,7 @@ class BusBookingSystem
     {
         try {
             $this->connect();
-            $this->createTables(); 
+            $this->createTables();
             echo "Database connection successful.\n";
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
