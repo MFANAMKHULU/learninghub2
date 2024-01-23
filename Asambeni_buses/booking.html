@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
     <title>Bus Booking System - Booking</title>
     <style>
         .navbar {
@@ -91,7 +92,11 @@
                     <option value="drd">DRD LUXURY COACHES</option>
                 </select>
 
-                
+                <div class="form-group">
+                    <label for="route">Bus Route</label>
+                    <select class="form-control" id="route"></select>
+                </div>
+
             </div>
             <div class="form-group">
                 <label for="source">Source</label>
@@ -151,6 +156,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
    function calculatePrice() {
@@ -170,6 +176,29 @@
         // Display the calculated total price
         document.getElementById("totalPrice").value = '$' + totalPrice.toFixed(2);
     }
+
+     // Wait for the document to be ready
+     $(document).ready(function () {
+        // Event listener for bus company selection
+        $('#busType').on('change', function () {
+            // Get the selected bus company
+            var selectedBusCompany = $(this).val();
+
+            // Make an AJAX request to fetch routes for the selected company
+            $.ajax({
+                url: 'fetchroutes.php',  // Replace with the actual server-side script to fetch routes
+                type: 'POST',
+                data: {busCompany: selectedBusCompany},
+                success: function (response) {
+                    // Populate the route dropdown with the fetched routes
+                    $('#route').html(response);
+                },
+                error: function () {
+                    console.error('Error fetching routes');
+                }
+            });
+        });
+    });
     
  
     </script>
