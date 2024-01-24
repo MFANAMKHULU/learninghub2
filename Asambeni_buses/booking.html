@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <title>Bus Booking System - Booking</title>
     <style>
@@ -110,6 +111,10 @@
 
 </div>
 
+<p id="departureTime">Departure Time: </p>
+<p id="arrivalTime">Arrival Time: </p>
+
+
 
 <div class="form-group">
     <label for="numChildren">Number of Children</label>
@@ -161,7 +166,7 @@
                 // Get the selected bus company
                 var selectedBusCompany = $(this).val();
     
-                // Make an AJAX request to fetch routes and times for the selected company
+                // Make an AJAX request to fetch routes for the selected company
                 $.ajax({
                     url: 'fetchroutes.php',
                     type: 'POST',
@@ -174,12 +179,21 @@
                         console.error('Error fetching routes');
                     }
                 });
+            });
     
-                // Make an AJAX request to fetch times for the selected bus company
+            // Event listener for route selection
+            $('#route').on('change', function () {
+                // Get the selected route
+                var selectedBusCompany = $(this).val();
+    
+                // Make an AJAX request to fetch times for the selected route and bus company
                 $.ajax({
                     url: 'gettime.php',
                     type: 'POST',
-                    data: { busCompany: selectedBusCompany },
+                    data: {
+                        busCompany: $('#busType').val(),
+        
+                    },
                     dataType: 'json',
                     success: function (response) {
                         // Check if the response contains departureTime and arrivalTime properties
@@ -187,6 +201,7 @@
                             // Update the HTML elements with the received times
                             $('#departureTime').text('Departure Time: ' + response.departureTime);
                             $('#arrivalTime').text('Arrival Time: ' + response.arrivalTime);
+
                         } else {
                             console.error('Invalid response format');
                         }
@@ -196,21 +211,11 @@
                     }
                 });
             });
-        </script>
+        });
+    </script>
     
     
     
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
