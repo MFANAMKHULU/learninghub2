@@ -17,22 +17,25 @@ if ($mysqli->connect_error) {
 // Get the selected bus company from the POST request
 $selectedBusCompany = $_POST['busCompany'];
 
-// Prepare and execute a query to fetch departure and arrival times for the selected bus company
-$query = "SELECT departure_time, arrival_time FROM departingtimes WHERE company_id = (
+// Prepare and execute a query to fetch all data for the selected bus company
+$query = "SELECT time_id, departure_time, arrival_time FROM departingtimes WHERE company_id = (
     SELECT company_id FROM BusCompanies WHERE company_name = ? LIMIT 1
 )";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("s", $selectedBusCompany);
 $stmt->execute();
-$stmt->bind_result($departureTime, $arrivalTime);
+$stmt->bind_result($timeId, $departureTime, $arrivalTime);
 
-// Fetch the first row
-$stmt->fetch();
+// Fetch all rows
+$data = array();
+while ($stmt->fetch()) {
+    $data[] = array('timeId' => $timeId, 'departureTime' => $departureTime, 'arrivalTime' => $arrivalTime);
+}
 
 // Close the statement and database connection
 $stmt->close();
 $mysqli->close();
 
-// Return the departure and arrival times as JSON
-echo json_encode(['departureTime' => $departureTime, 'arrivalTime' => $arrivalTime]);
+// Return the data as JSON
+echo json_encode($data);
 ?>
