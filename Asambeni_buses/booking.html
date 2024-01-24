@@ -111,8 +111,8 @@
 
 </div>
 
-<p id="departureTime">Departure Time: </p>
-<p id="arrivalTime">Arrival Time: </p>
+    <p id="departureTime">Departure Time: </p>
+    <p id="arrivalTime">Arrival Time: </p>
 
 
 
@@ -159,59 +159,53 @@
     </div>
 
     <script>
-        // Wait for the document to be ready
-        $(document).ready(function () {
-            // Event listener for bus company selection
-            $('#busType').on('change', function () {
-                // Get the selected bus company
-                var selectedBusCompany = $(this).val();
-    
-                // Make an AJAX request to fetch routes for the selected company
-                $.ajax({
-                    url: 'fetchroutes.php',
-                    type: 'POST',
-                    data: { busCompany: selectedBusCompany },
-                    success: function (response) {
-                        // Populate the route dropdown with the fetched routes
-                        $('#route').html(response);
-                    },
-                    error: function () {
-                        console.error('Error fetching routes');
-                    }
-                });
-            });
-    
-            // Event listener for route selection
-            $('#route').on('change', function () {
-                // Get the selected route
-                var selectedBusCompany = $(this).val();
-    
-                // Make an AJAX request to fetch times for the selected route and bus company
-                $.ajax({
-                    url: 'gettime.php',
-                    type: 'POST',
-                    data: {
-                        busCompany: $('#busType').val(),
-        
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        // Check if the response contains departureTime and arrivalTime properties
-                        if (response && response.departureTime && response.arrivalTime) {
-                            // Update the HTML elements with the received times
-                            $('#departureTime').text('Departure Time: ' + response.departureTime);
-                            $('#arrivalTime').text('Arrival Time: ' + response.arrivalTime);
+       // Wait for the document to be ready
+$(document).ready(function () {
+    // Event listener for bus company selection
+    $('#busType').on('change', function () {
+        // Get the selected bus company
+        var selectedBusCompany = $(this).val();
 
-                        } else {
-                            console.error('Invalid response format');
-                        }
-                    },
-                    error: function () {
-                        console.error('Error in AJAX request');
-                    }
-                });
-            });
+        // Make an AJAX request to fetch routes and times for the selected company
+        $.ajax({
+            url: 'fetchroutes.php',
+            type: 'POST',
+            data: { busCompany: selectedBusCompany },
+            success: function (response) {
+                // Populate the route dropdown with the fetched routes
+                $('#route').html(response);
+            },
+            error: function () {
+                console.error('Error fetching routes');
+            }
         });
+
+        // Make an AJAX request to fetch times for the selected bus company
+        $.ajax({
+            url: 'gettime.php',
+            type: 'POST',
+            data: { busCompany: selectedBusCompany },
+            dataType: 'json',
+            success: function (response) {
+                // Check if the response contains valid time data
+                if (Array.isArray(response) && response.length > 0) {
+                    // Assuming you want to display the first time's departure and arrival
+                    var firstTime = response[0];
+                    $('#departureTime').text('Departure Time: ' + firstTime.departureTime);
+                    $('#arrivalTime').text('Arrival Time: ' + firstTime.arrivalTime);
+                } else {
+                    console.error('Invalid response format or no time data');
+                }
+            },
+            error: function () {
+                console.error('Error in AJAX request');
+            }
+        });
+    });
+
+    
+});
+
     </script>
     
     
