@@ -97,88 +97,111 @@
                     <option value="drd">DRD LUXURY COACHES</option>
                 </select>
             </div>
+<div class="form-group">
+    <label for="route">Bus Route</label>
+    <select class="form-control" id="route"></select>
+</div>
 
-            <div class="form-group">
-                <label for="route">Bus Route</label>
-                <select class="form-control" id="route"></select>
-            </div>
+<div class="form-group">
+    <label for="date">Date of Travel</label>
+    <input type="date" class="form-control" id="date">
+</div>
 
-            <div class="form-group">
-                <label for="date">Date of Travel</label>
-                <input type="date" class="form-control" id="date">
-            </div>
+<!-- Your options should be inside a <select> element -->
+<div class="form-group">
+    <label for="time">Time</label>
+    <select class="form-control" id="time">
+        <!-- Options will be dynamically added here using JavaScript -->
+    </select>
+</div>
 
-            <div class="form-group">
-                <label for="time">Time</label>
-                <select class="form-control" id="time"></select>
-            </div>
+<div class="form-group">
+    <label for="numChildren">Number of Children</label>
+    <input type="number" class="form-control" id="numChildren" min="0">
+</div>
 
-            <div class="form-group">
-                <label for="numChildren">Number of Children</label>
-                <input type="number" class="form-control" id="numChildren" min="0">
-            </div>
+<div class="form-group">
+    <label for="numAdults">Number of Adults</label>
+    <input type="number" class="form-control" id="numAdults" min="1">
+</div>
 
-            <div class="form-group">
-                <label for="numAdults">Number of Adults</label>
-                <input type="number" class="form-control" id="numAdults" min="1">
-            </div>
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+</div>
 
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter your name">
-            </div>
+<div class="form-group">
+    <label for="surname">Surname</label>
+    <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
+</div>
 
-            <div class="form-group">
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
-            </div>
+<div class="form-group">
+    <label for="id">ID Number</label>
+    <input type="text" class="form-control" id="id" placeholder="Enter your ID number">
+</div>
 
-            <div class="form-group">
-                <label for="id">ID Number</label>
-                <input type="text" class="form-control" id="id" placeholder="Enter your ID number">
-            </div>
+<div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+</div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
-            </div>
+<!-- Display bus time and price -->
+<div id="busInfo"></div>
 
-            <!-- Display bus time and price -->
-            <div id="busInfo"></div>
+<!-- Display calculated price -->
+<div id="priceDisplay" class="form-group">
+    <label for="priceDisplay">Total Price</label>
+    <input type="text" class="form-control" id="totalPrice" readonly>
+</div>
 
-            <!-- Display calculated price -->
-            <div id="priceDisplay" class="form-group">
-                <label for="priceDisplay">Total Price</label>
-                <input type="text" class="form-control" id="totalPrice" readonly>
-            </div>
         </form>
     </div>
 
     <script>
         // Wait for the document to be ready
-    $(document).ready(function () {
-        // Event listener for bus company selection
-        $('#busType').on('change', function () {
-            // Get the selected bus company
-            var selectedBusCompany = $(this).val();
-
-            // Make an AJAX request to fetch routes for the selected company
-            $.ajax({
-                url: 'fetchroutes.php',
-                type: 'POST',
-                data: { busCompany: selectedBusCompany },
-                success: function (response) {
-                    // Populate the route dropdown with the fetched routes
-                    $('#route').html(response);
-                },
-                error: function () {
-                    console.error('Error fetching routes');
-                }
+        $(document).ready(function () {
+            // Event listener for bus company selection
+            $('#busType').on('change', function () {
+                // Get the selected bus company
+                var selectedBusCompany = $(this).val();
+    
+                // Make an AJAX request to fetch routes for the selected company
+                $.ajax({
+                    url: 'fetchroutes.php',
+                    type: 'POST',
+                    data: { busCompany: selectedBusCompany },
+                    success: function (response) {
+                        // Populate the route dropdown with the fetched routes
+                        $('#route').html(response);
+                    },
+                    error: function () {
+                        console.error('Error fetching routes');
+                    }
+                });
+            });
+    
+            // Event listener for bus route selection
+            $('#route').on('change', function () {
+                var selectedRouteId = $(this).val();
+    
+                $.ajax({
+                    url: 'gettime.php',
+                    type: 'POST',
+                    data: { routeId: selectedRouteId },
+                    success: function (response) {
+                        // Populate the time dropdown with the fetched times
+                        $('#time').html(response);
+                        // Set the "Time" field as readonly
+                        $('#time').prop('readonly', true);
+                    },
+                    error: function () {
+                        console.error('Error fetching times');
+                    }
+                });
             });
         });
-    });
     </script>
-
+    
 </body>
 
 </html>
