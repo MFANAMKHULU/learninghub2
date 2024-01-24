@@ -88,74 +88,85 @@
         <h2>Bus Booking</h2>
 
         <form>
-            <div class="form-group">
-                <label for="busType">Coach Company</label>
-                <select class="form-control" id="busType">
-                    <option value="greyhound">GREYHOUND</option>
-                    <option value="intercape">INTERCAPE</option>
-                    <option value="intercity">INTERCITY</option>
-                    <option value="eldocoach">ELDOCOACHES</option>
-                    <option value="drd">DRD LUXURY COACHES</option>
-                </select>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="busType">Coach Company</label>
+                    <select class="form-control" id="busType">
+                        <option value="greyhound">GREYHOUND</option>
+                        <option value="intercape">INTERCAPE</option>
+                        <option value="intercity">INTERCITY</option>
+                        <option value="eldocoach">ELDOCOACHES</option>
+                        <option value="drd">DRD LUXURY COACHES</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="route">Bus Route</label>
+                    <select class="form-control" id="route"></select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="date">Date of Travel</label>
+                    <input type="date" class="form-control" id="date">
+                </div>
             </div>
-<div class="form-group">
-    <label for="route">Bus Route</label>
-    <select class="form-control" id="route"></select>
-</div>
+        
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label id="departureLabel" for="departureTime">Departure Time:</label>
+                    <div id="departureTime"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label id="arrivalLabel" for="arrivalTime">Arrival Time:</label>
+                    <div id="arrivalTime"></div>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="numChildren">Number of Children</label>
+                    <input type="number" class="form-control" id="numChildren" min="0">
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="numAdults">Number of Adults</label>
+                    <input type="number" class="form-control" id="numAdults" min="1">
+                </div>
 
-<div class="form-group">
-    <label for="date">Date of Travel</label>
-    <input type="date" class="form-control" id="date">
-</div>
+                <div class="form-group col-md-4">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="surname">Surname</label>
+                    <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
+                </div>
 
+                <div class="form-group col-md-4">
+                    <label for="id">ID Number</label>
+                    <input type="text" class="form-control" id="id" placeholder="Enter your ID number">
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
 
-</div>
-
-    <p id="departureTime">Departure Time: </p>
-    <p id="arrivalTime">Arrival Time: </p>
-
-
-
-<div class="form-group">
-    <label for="numChildren">Number of Children</label>
-    <input type="number" class="form-control" id="numChildren" min="0">
-</div>
-
-<div class="form-group">
-    <label for="numAdults">Number of Adults</label>
-    <input type="number" class="form-control" id="numAdults" min="1">
-</div>
-
-<div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter your name">
-</div>
-
-<div class="form-group">
-    <label for="surname">Surname</label>
-    <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
-</div>
-
-<div class="form-group">
-    <label for="id">ID Number</label>
-    <input type="text" class="form-control" id="id" placeholder="Enter your ID number">
-</div>
-
-<div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter your email">
-</div>
-
-<!-- Display bus time and price -->
-<div id="busInfo"></div>
-
-<!-- Display calculated price -->
-<div id="priceDisplay" class="form-group">
-    <label for="priceDisplay">Total Price</label>
-    <input type="text" class="form-control" id="totalPrice" readonly>
-</div>
-
+            </div>
+        
+            
+          
+            
+            
+            
+            
+        
+            <!-- Display calculated price -->
+            <div class="form-group">
+                <label for="priceDisplay">Total Price</label>
+                <input type="text" class="form-control" id="totalPrice" readonly>
+            </div>
         </form>
+        
     </div>
 
     <script>
