@@ -64,44 +64,44 @@ class BusBookingSystem
 
             "CREATE TABLE IF NOT EXISTS Times (
                 time_id INT AUTO_INCREMENT PRIMARY KEY,
-                bus_company_id INT,
+                company_id INT,
                 route_id INT,
                 departure_time TIME,
                 arrival_time TIME,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id),
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id),
                 FOREIGN KEY (route_id) REFERENCES Routes(route_id)
             )",
 
-            "INSERT INTO Times (bus_company_id, route_id, departure_time, arrival_time) VALUES
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '12:00')",
+            "INSERT INTO Times (company_id, route_id, departure_time, arrival_time) VALUES
+                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '18:00')",
 
             "CREATE TABLE IF NOT EXISTS Reviews (
                 review_id INT AUTO_INCREMENT PRIMARY KEY,
-                bus_company_id INT,
+                company_id INT,
                 rating INT,
                 comment TEXT,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
             )",
 
             "CREATE TABLE IF NOT EXISTS ImageNames (
                 image_id INT AUTO_INCREMENT PRIMARY KEY,
-                bus_company_id INT,
+                company_id INT,
                 image_name VARCHAR(255) NOT NULL,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id)
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
             )",
 
-          "INSERT INTO ImageNames (bus_company_id, image_name) VALUES
+          "INSERT INTO ImageNames (company_id, image_name) VALUES
          (1, 'C:\\xampp\\htdocs\\learninghub2\\Asambeni_buses\\images\\greyhound.jpg')",
 
 
             "CREATE TABLE IF NOT EXISTS Payments (
                 payment_id INT AUTO_INCREMENT PRIMARY KEY,
-                bus_company_id INT,
+                company_id INT,
                 route_id INT,
                 time_id INT,
                 amount DECIMAL(10, 2),
                 payment_date DATE,
-                FOREIGN KEY (bus_company_id) REFERENCES BusCompanies(company_id),
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id),
                 FOREIGN KEY (route_id) REFERENCES Routes(route_id),
                 FOREIGN KEY (time_id) REFERENCES Times(time_id)
             )",
