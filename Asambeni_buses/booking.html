@@ -107,13 +107,17 @@
     <input type="date" class="form-control" id="date">
 </div>
 
-<!-- Your options should be inside a <select> element -->
+
 <div class="form-group">
-    <label for="time">Time</label>
-    <select class="form-control" id="time">
-        <!-- Options will be dynamically added here using JavaScript -->
-    </select>
+    <label for="departureTime">Departure Time</label>
+    <input type="text" class="form-control" id="departureTime" readonly>
 </div>
+
+<div class="form-group">
+    <label for="arrivalTime">Arrival Time</label>
+    <input type="text" class="form-control" id="arrivalTime" readonly>
+</div>
+
 
 <div class="form-group">
     <label for="numChildren">Number of Children</label>
@@ -180,26 +184,26 @@
                 });
             });
     
-            // Event listener for bus route selection
             $('#route').on('change', function () {
-                var selectedRouteId = $(this).val();
-    
-                $.ajax({
-                    url: 'gettime.php',
-                    type: 'POST',
-                    data: { routeId: selectedRouteId },
-                    success: function (response) {
-                        // Populate the time dropdown with the fetched times
-                        $('#time').html(response);
-                        // Set the "Time" field as readonly
-                        $('#time').prop('readonly', true);
-                    },
-                    error: function () {
-                        console.error('Error fetching times');
-                    }
-                });
+            var selectedRouteId = $(this).val();
+            var selectedCompanyId = $('#busType').val(); // Assuming busType is the ID of your bus company dropdown
+
+            $.ajax({
+                url: 'gettime.php',
+                type: 'POST',
+                data: { routeId: selectedRouteId, companyId: selectedCompanyId },
+                dataType: 'json', // Expect JSON response
+                success: function (response) {
+                    // Display the departure and arrival times
+                    $('#departureTime').val(response.departureTime);
+                    $('#arrivalTime').val(response.arrivalTime);
+                },
+                error: function () {
+                    console.error('Error fetching times');
+                }
             });
         });
+    });
     </script>
     
 </body>
