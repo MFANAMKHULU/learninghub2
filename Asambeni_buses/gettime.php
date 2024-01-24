@@ -14,30 +14,24 @@ if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 
-// Get the selected route from the POST request
+// Get the selected route and company from the POST request
 $selectedRouteId = $_POST['routeId'];
+$selectedCompanyId = $_POST['companyId'];
 
-// Prepare and execute a query to fetch departure and arrival times for the selected route
-$query = "SELECT time_id, departure_time, arrival_time FROM Times WHERE route_id = ?";
+// Prepare and execute a query to fetch departure and arrival times for the selected route and company
+$query = "SELECT departure_time, arrival_time FROM Times WHERE route_id = ? AND bus_company_id = ?";
 $stmt = $mysqli->prepare($query);
-$stmt->bind_param("i", $selectedRouteId);
+$stmt->bind_param("ii", $selectedRouteId, $selectedCompanyId);
 $stmt->execute();
-$stmt->bind_result($timeId, $departureTime, $arrivalTime);
+$stmt->bind_result($departureTime, $arrivalTime);
 
-// Build HTML options for the time dropdown
-$options = '';
-while ($stmt->fetch()) {
-    // Add options for departure time
-    $options .= "<option value='$timeId'>Departure: $departureTime</option>";
-
-    // Add options for arrival time
-    $options .= "<option value='$timeId'>Arrival: $arrivalTime</option>";
-}
+// Fetch the first row 
+$stmt->fetch();
 
 // Close the statement and database connection
 $stmt->close();
 $mysqli->close();
 
-// Return the HTML options for the time dropdown
-echo $options;
+// Return JSON response with departure and arrival times
+echo json_encode(['departureTime' => $departureTime, 'arrivalTime' => $arrivalTime]);
 ?>
