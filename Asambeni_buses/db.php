@@ -40,7 +40,7 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            "CREATE TABLE IF NOT EXISTS BusCompanies (
+       /*     "CREATE TABLE IF NOT EXISTS BusCompanies (
                 company_id INT AUTO_INCREMENT PRIMARY KEY,
                 company_name VARCHAR(255) NOT NULL
             )",
@@ -62,7 +62,18 @@ class BusBookingSystem
             "INSERT INTO Routes (route_name, company_id) VALUES
                 ('Johannesburg/Pretoria to Durban', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1))",
 
-            "CREATE TABLE IF NOT EXISTS Times (
+
+              "CREATE TABLE RoutePricing (
+              route_id INT PRIMARY KEY,
+              price_per_child DECIMAL(10, 2),
+              price_per_adult DECIMAL(10, 2),
+             FOREIGN KEY (route_id) REFERENCES Routes(route_id)
+              )",*/
+
+            "INSERT INTO RoutePricing (route_id, price_per_child, price_per_adult) VALUES
+            (1, 55.00, 70.00)",
+
+  /*          "CREATE TABLE IF NOT EXISTS Times (
                 time_id INT AUTO_INCREMENT PRIMARY KEY,
                 company_id INT,
                 route_id INT,
@@ -104,7 +115,7 @@ class BusBookingSystem
                 FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id),
                 FOREIGN KEY (route_id) REFERENCES Routes(route_id),
                 FOREIGN KEY (time_id) REFERENCES Times(time_id)
-            )",
+            )",*/
         ];
 
         foreach ($queries as $query) {

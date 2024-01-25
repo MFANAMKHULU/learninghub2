@@ -153,13 +153,6 @@
 
             </div>
         
-            
-          
-            
-            
-            
-            
-        
             <!-- Display calculated price -->
             <div class="form-group">
                 <label for="priceDisplay">Total Price</label>
@@ -216,6 +209,30 @@ $(document).ready(function () {
 
     
 });
+
+// Function to calculate the total price
+    function calculateTotalPrice() {
+        // Get values from input fields
+        var numChildren = parseInt($('#numChildren').val()) || 0;
+        var numAdults = parseInt($('#numAdults').val()) || 0;
+
+        // Calculate the total price based on your pricing logic
+        var pricePerChild = 55; 
+        var pricePerAdult = 70; 
+
+        var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
+
+        // Update the total price display
+        $('#totalPrice').val(totalPrice);
+    }
+
+    // Attach the function to the input change events
+    $('#numChildren, #numAdults').on('change', function () {
+        calculateTotalPrice();
+    });
+
+    // Call the function initially to set the default total price
+    calculateTotalPrice();
 
     </script>
     
