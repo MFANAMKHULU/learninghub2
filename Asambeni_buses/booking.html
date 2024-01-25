@@ -210,29 +210,57 @@ $(document).ready(function () {
     
 });
 
-// Function to calculate the total price
-    function calculateTotalPrice() {
-        // Get values from input fields
-        var numChildren = parseInt($('#numChildren').val()) || 0;
-        var numAdults = parseInt($('#numAdults').val()) || 0;
+function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
+        // Pricing logic based on bus company and route
+        var pricePerChild;
+        var pricePerAdult;
 
-        // Calculate the total price based on your pricing logic
-        var pricePerChild = 55; 
-        var pricePerAdult = 70; 
+        // Set pricing based on bus company and route (customize as needed)
+        if (busCompany === 'greyhound' && routeId === '1') {
+            pricePerChild = 450;
+            pricePerAdult = 500;
+        }
 
+        // Calculate the total price
         var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
 
-        // Update the total price display
+        // Display the total price
         $('#totalPrice').val(totalPrice);
+        $('#priceDisplay').html('Total Price: $' + totalPrice).show();
     }
 
-    // Attach the function to the input change events
-    $('#numChildren, #numAdults').on('change', function () {
-        calculateTotalPrice();
-    });
+    // Wait for the document to be ready
+    $(document).ready(function () {
+        // Event listener for bus company selection
+        $('#busType').on('change', function () {
+            // Clear and hide the price display when bus company changes
+            $('#priceDisplay').empty().hide();
+        });
 
-    // Call the function initially to set the default total price
-    calculateTotalPrice();
+        // Event listener for route selection
+        $('#route').on('change', function () {
+            // Get the selected values
+            var numChildren = parseInt($('#numChildren').val()) || 0;
+            var numAdults = parseInt($('#numAdults').val()) || 0;
+            var busCompany = $('#busType').val();
+            var routeId = $(this).val();
+
+            // Call the function to calculate and display the total price
+            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+        });
+
+        // Event listener for number of children and adults changes
+        $('#numChildren, #numAdults').on('change', function () {
+            // Get the selected values
+            var numChildren = parseInt($('#numChildren').val()) || 0;
+            var numAdults = parseInt($('#numAdults').val()) || 0;
+            var busCompany = $('#busType').val();
+            var routeId = $('#route').val();
+
+            // Call the function to calculate and display the total price
+            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+        });
+    });
 
     </script>
     
