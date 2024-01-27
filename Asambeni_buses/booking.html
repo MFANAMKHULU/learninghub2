@@ -87,7 +87,7 @@
     <div class="container">
         <h2>Bus Booking</h2>
 
-        <form method="post" action="booking.html">
+        <form>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="busType">Coach Company</label>
@@ -165,109 +165,145 @@
     </div>
 
     <script>
-       // Wait for the document to be ready
-$(document).ready(function () {
-    // Event listener for bus company selection
-    $('#busType').on('change', function () {
-        // Get the selected bus company
-        var selectedBusCompany = $(this).val();
-
-        // Make an AJAX request to fetch routes and times for the selected company
-        $.ajax({
-            url: 'fetchroutes.php',
-            type: 'POST',
-            data: { busCompany: selectedBusCompany },
-            success: function (response) {
-                // Populate the route dropdown with the fetched routes
-                $('#route').html(response);
-            },
-            error: function () {
-                console.error('Error fetching routes');
-            }
-        });
-
-        // Make an AJAX request to fetch times for the selected bus company
-        $.ajax({
-            url: 'gettime.php',
-            type: 'POST',
-            data: { busCompany: selectedBusCompany },
-            dataType: 'json',
-            success: function (response) {
-                // Check if the response contains valid time data
-                if (Array.isArray(response) && response.length > 0) {
-                    // Assuming you want to display the first time's departure and arrival
-                    var firstTime = response[0];
-                    $('#departureTime').text('Departure Time: ' + firstTime.departureTime);
-                    $('#arrivalTime').text('Arrival Time: ' + firstTime.arrivalTime);
-                } else {
-                    console.error('Invalid response format or no time data');
+        $(document).ready(function () {
+            // Event listener for bus company selection
+            $('#busType').on('change', function () {
+                var selectedBusCompany = $(this).val();
+    
+                // Make an AJAX request to fetch routes and times for the selected company
+                $.ajax({
+                    url: 'fetchroutes.php',
+                    type: 'POST',
+                    data: { busCompany: selectedBusCompany },
+                    success: function (response) {
+                        $('#route').html(response);
+                    },
+                    error: function () {
+                        console.error('Error fetching routes');
+                    }
+                });
+    
+                // Make an AJAX request to fetch times for the selected bus company
+                $.ajax({
+                    url: 'gettime.php',
+                    type: 'POST',
+                    data: { busCompany: selectedBusCompany },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (Array.isArray(response) && response.length > 0) {
+                            var firstTime = response[0];
+                            $('#departureTime').text('Departure Time: ' + firstTime.departureTime);
+                            $('#arrivalTime').text('Arrival Time: ' + firstTime.arrivalTime);
+                        } else {
+                            console.error('Invalid response format or no time data');
+                        }
+                    },
+                    error: function () {
+                        console.error('Error in AJAX request');
+                    }
+                });
+    
+                // Clear and hide the price display when bus company changes
+                $('#priceDisplay').empty().hide();
+            });
+    
+            // Function to calculate total price
+            function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
+                var pricePerChild;
+                var pricePerAdult;
+    
+                // Set pricing based on bus company and route 
+                if (busCompany === 'greyhound' && routeId === '1') {
+                    pricePerChild = 450;
+                    pricePerAdult = 500;
                 }
-            },
-            error: function () {
-                console.error('Error in AJAX request');
+    
+                var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
+    
+                // Display the total price
+                $('#totalPrice').val(totalPrice);
+                $('#priceDisplay').html('Total Price: $' + totalPrice).show();
             }
-        });
-    });
-
     
-});
-
-function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
-        // Pricing logic based on bus company and route
-        var pricePerChild;
-        var pricePerAdult;
-
-        // Set pricing based on bus company and route (customize as needed)
-        if (busCompany === 'greyhound' && routeId === '1') {
-            pricePerChild = 450;
-            pricePerAdult = 500;
-        }
-
-        // Calculate the total price
-        var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
-
-        // Display the total price
-        $('#totalPrice').val(totalPrice);
-        $('#priceDisplay').html('Total Price: $' + totalPrice).show();
-    }
-
-    // Wait for the document to be ready
-    $(document).ready(function () {
-        // Event listener for bus company selection
-        $('#busType').on('change', function () {
-            // Clear and hide the price display when bus company changes
-            $('#priceDisplay').empty().hide();
+            // Event listener for route selection
+            $('#route').on('change', function () {
+                var numChildren = parseInt($('#numChildren').val()) || 0;
+                var numAdults = parseInt($('#numAdults').val()) || 0;
+                var busCompany = $('#busType').val();
+                var routeId = $(this).val();
+    
+                calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+            });
+    
+            // Event listener for number of children and adults changes
+            $('#numChildren, #numAdults').on('change', function () {
+                var numChildren = parseInt($('#numChildren').val()) || 0;
+                var numAdults = parseInt($('#numAdults').val()) || 0;
+                var busCompany = $('#busType').val();
+                var routeId = $('#route').val();
+    
+                calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+            });
+    
+            // Function to validate name
+            function isValidName(name) {
+                return /^[a-zA-Z]+$/.test(name);
+            }
+    
+            // Function to validate South African ID number
+            function isValidSAID(id) {
+                return /^\d{13}$/.test(id);
+            }
+    
+            // Function to validate the form
+            function validateForm() {
+                var busType = $('#busType').val();
+                var route = $('#route').val();
+                var date = $('#date').val();
+                var numChildren = $('#numChildren').val();
+                var numAdults = $('#numAdults').val();
+                var name = $('#name').val();
+                var surname = $('#surname').val();
+                var id = $('#id').val();
+                var email = $('#email').val();
+    
+                // Validate name
+                if (!isValidName(name)) {
+                    alert("Invalid name. Please enter a valid name.");
+                    return false;
+                }
+    
+                // Validate surname
+                if (!isValidName(surname)) {
+                    alert("Invalid surname. Please enter a valid surname.");
+                    return false;
+                }
+    
+                // Validate South African ID number
+                if (!isValidSAID(id)) {
+                    alert("Invalid South African ID number. Please enter a valid ID number.");
+                    return false;
+                }
+    
+                // Validate number of adults
+                if (numAdults < 1) {
+                    alert("Number of adults must be at least 1.");
+                    return false;
+                }
+    
+                // Redirect to payment.html
+                window.location.href = "payment.html";
+                return true;
+            }
+    
+            // Attach the validateForm function to the form's submit event
+            $('form').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+                validateForm(); // Call the validation function
+            });
         });
-
-        // Event listener for route selection
-        $('#route').on('change', function () {
-            // Get the selected values
-            var numChildren = parseInt($('#numChildren').val()) || 0;
-            var numAdults = parseInt($('#numAdults').val()) || 0;
-            var busCompany = $('#busType').val();
-            var routeId = $(this).val();
-
-            // Call the function to calculate and display the total price
-            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-        });
-
-        // Event listener for number of children and adults changes
-        $('#numChildren, #numAdults').on('change', function () {
-            // Get the selected values
-            var numChildren = parseInt($('#numChildren').val()) || 0;
-            var numAdults = parseInt($('#numAdults').val()) || 0;
-            var busCompany = $('#busType').val();
-            var routeId = $('#route').val();
-
-            // Call the function to calculate and display the total price
-            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-        });
-    });
-
     </script>
-    
-    
-    
+        
 </body>
 
 </html>
