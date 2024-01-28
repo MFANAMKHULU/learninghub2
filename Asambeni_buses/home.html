@@ -38,13 +38,6 @@
         .list-inline-item a:hover {
             color: #999999; /* Light gray hover color */
         }
-
-        /* Adjust carousel image size */
-        .carousel-item img {
-            max-height: 400px;
-            width: auto;
-            margin: 10px;
-        }
     </style>
 </head>
 <body>
@@ -66,16 +59,15 @@
     </div>
 </nav>
 
+<!-- Container for the image -->
+<div id="image-container"></div>
 
-    </div>
-   
-   <!-- Buttons -->
-   <div class="d-flex justify-content-center mt-3">
+<!-- Buttons -->
+<div class="d-flex justify-content-center mt-3">
     <a href="booking.html" class="btn btn-primary mr-2">Book Now</a>
     <a href="buslisting.html" class="btn btn-primary mr-2">View More</a>
     <a href="hirebus.html" class="btn btn-primary">Hire Bus</a>
 </div>
-    
 
 <!-- Footer Section -->
 <footer>
@@ -91,5 +83,34 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Fetch the image path using JavaScript
+    fetch('Asambeni_buses/getimage.php') // Use a forward slash here
+        .then(response => response.text())
+        .then(imagePath => {
+            // Create an Image object
+            const image = new Image();
+
+            // Set the source to the fetched image path
+            image.src = imagePath;
+
+            // Set the width to 100% of the container
+            image.style.width = '100%';
+
+            // Log container width and height
+            console.log('Container Width:', document.getElementById('image-container').clientWidth);
+            console.log('Container Height:', document.getElementById('image-container').clientHeight);
+
+            // Append the image to the container
+            document.getElementById('image-container').appendChild(image);
+
+            // Log a message indicating successful image display
+            console.log('Image displayed successfully!');
+        })
+        .catch(error => console.error('Error fetching image:', error));
+</script>
+
+
 </body>
 </html>

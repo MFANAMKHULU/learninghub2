@@ -87,44 +87,16 @@
         <h2>Available Buses</h2>
         <p>Explore the list of available buses and choose your preferred option.</p>
         <a href="booking.html" class="btn btn-primary">Book Now</a>
+        <a href="hirebus.html" class="btn btn-primary">Hire Bus</a>
     </div>
 
   <!-- Section for Available Buses -->
 <div class="available-buses" id="busImagesContainer">
-    <!-- Images will be dynamically added here using JavaScript -->
+
 </div>
 
 <script>
-    // Function to fetch images from the PHP file
-    function fetchImages() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "uploadimage.php", true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var images = JSON.parse(xhr.responseText);
-                displayImages(images);
-            }
-        };
-
-        xhr.send();
-    }
-
-    // Function to dynamically display images on the HTML page
-    function displayImages(images) {
-        var container = document.getElementById("busImagesContainer");
-
-        images.forEach(function (imagePath) {
-            var img = document.createElement("img");
-            img.src = imagePath;
-            img.alt = "Bus Image";
-            img.className = "bus-image";
-            container.appendChild(img);
-        });
-    }
-
-    // Call the function to fetch and display images
-    fetchImages();
+    
 </script>
 
 
