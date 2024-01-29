@@ -86,31 +86,37 @@
 
 <script>
     // Fetch the image path using JavaScript
-    fetch('Asambeni_buses/getimage.php', { method: 'POST', body: new URLSearchParams({ 'busCompany': 'your-selected-bus-company' }) })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Image fetch failed. HTTP status ' + response.status);
-            }
-            return response.text();
-        })
-        .then(imagePath => {
-            // Create an Image object
-            const image = new Image();
+    fetch('Asambeni_buses/getimage.php', {
+        method: 'POST',
+        body: new URLSearchParams({ 'busCompany': 'your-selected-bus-company' })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Image fetch failed. HTTP status ' + response.status);
+        }
+        return response.text();
+    })
+    .then(imagePath => {
+        console.log('Image path:', imagePath);
 
-            // Set the source to the fetched image path
-            image.src = imagePath;
+        // Create an Image object
+        const image = new Image();
 
-            // Set the width to 100% of the viewport
-            image.style.width = '100vw';
+        // Set the source to the fetched image path
+        image.src = imagePath;
 
-            // Append the image to the body
-            document.getElementById('image-container').appendChild(image);
+        // Set the width to 100% of the viewport
+        image.style.width = '100vw';
 
-            // Log a message indicating successful image display
-            console.log('Image displayed successfully!');
-        })
-        .catch(error => console.error('Error fetching image:', error));
+        // Append the image to the body
+        document.getElementById('image-container').appendChild(image);
+
+        // Log a message indicating successful image display
+        console.log('Image displayed successfully!');
+    })
+    .catch(error => console.error('Error fetching image:', error));
 </script>
+
 
 </body>
 </html>
