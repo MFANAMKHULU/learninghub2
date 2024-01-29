@@ -17,24 +17,22 @@ if ($mysqli->connect_error) {
 // Get the selected bus company from the POST request
 $selectedBusCompany = $_POST['busCompany'];
 
-// Prepare and execute a query to fetch image file names for the selected bus company
-$query = "SELECT image_filename FROM BusCompanies WHERE company_name = ? LIMIT 1";
+// Prepare and execute a query to fetch all image file names for the selected bus company
+$query = "SELECT image_filename FROM BusCompanies WHERE company_name = ?";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("s", $selectedBusCompany);
 $stmt->execute();
 $stmt->bind_result($imageFilename);
-$stmt->fetch(); // Fetch the image filename
-
-// Close the statement
-$stmt->close();
 
 // Fetch all image filenames for the selected bus company
 $imagePaths = array();
-if ($imageFilename) {
-
+while ($stmt->fetch()) {
     $imagePath = "Asambeni_buses/images/" . $imageFilename;
     $imagePaths[] = $imagePath;
 }
+
+// Close the statement
+$stmt->close();
 
 // Return JSON-encoded array of image paths
 echo json_encode($imagePaths);
