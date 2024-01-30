@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="fetchroutes.js"></script>
 
     <title>Bus Booking System - Booking</title>
     <style>
@@ -102,7 +102,7 @@
 
                 <div class="form-group col-md-4">
                     <label for="route">Bus Route</label>
-                    <select class="form-control" id="route"></select>
+                    <select class="form-control" id="routeDropdown"></select>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -130,7 +130,7 @@
                     <label for="numAdults">Number of Adults</label>
                     <input type="number" class="form-control" id="numAdults" min="1">
                 </div>
-
+    
                 <div class="form-group col-md-4">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter your name">
@@ -152,7 +152,7 @@
                 </div>
 
             </div>
-        
+            <div id="routeContainer"></div>
             <!-- Display calculated price -->
             <div class="form-group">
                 <label for="priceDisplay">Total Price</label>
@@ -167,42 +167,8 @@
     <script>
         $(document).ready(function () {
             // Event listener for bus company selection
-            $('#busType').on('change', function () {
-                var selectedBusCompany = $(this).val();
-    
-                // Make an AJAX request to fetch routes and times for the selected company
-                $.ajax({
-                    url: 'fetchroutes.php',
-                    type: 'POST',
-                    data: { busCompany: selectedBusCompany },
-                    success: function (response) {
-                        $('#route').html(response);
-                    },
-                    error: function () {
-                        console.error('Error fetching routes');
-                    }
-                });
-    
-                // Make an AJAX request to fetch times for the selected bus company
-                $.ajax({
-                    url: 'gettime.php',
-                    type: 'POST',
-                    data: { busCompany: selectedBusCompany },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (Array.isArray(response) && response.length > 0) {
-                            var firstTime = response[0];
-                            $('#departureTime').text('Departure Time: ' + firstTime.departureTime);
-                            $('#arrivalTime').text('Arrival Time: ' + firstTime.arrivalTime);
-                        } else {
-                            console.error('Invalid response format or no time data');
-                        }
-                    },
-                    error: function () {
-                        console.error('Error in AJAX request');
-                    }
-                });
-    
+          
+
                 // Clear and hide the price display when bus company changes
                 $('#priceDisplay').empty().hide();
             });
