@@ -85,42 +85,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-    // Fetch the array of image paths using JavaScript
-    fetch('Asambeni_buses/getimage.php', {
-        method: 'POST',
-        body: new URLSearchParams({ 'busCompany': 'your-selected-bus-company' })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Image fetch failed. HTTP status ' + response.status);
-        }
-        return response.json();
-    })
-    .then(imagePaths => {
-        console.log('Image paths:', imagePaths);
-
-        // Create a container div
-        const imageContainer = document.getElementById('image-container');
-
-        // Loop through the image paths and create img elements
-        imagePaths.forEach(imagePath => {
-            // Create an Image object
-            const image = new Image();
-
-            // Set the source to the fetched image path
-            image.src = imagePath;
-
-            // Set the width to 100% of the viewport
-            image.style.width = '100vw';
-
-            // Append the image to the container
-            imageContainer.appendChild(image);
-        });
-
-        // Log a message indicating successful image display
-        console.log('Images displayed successfully!');
-    })
-    .catch(error => console.error('Error fetching images:', error));
+  
 </script>
 
 

@@ -40,61 +40,18 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-           /* "CREATE TABLE IF NOT EXISTS BusCompanies (
+            "CREATE TABLE IF NOT EXISTS BusCompanies (
                 company_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_name VARCHAR(255) NOT NULL
+                company_name VARCHAR(255) NOT NULL,
+                company_image VARCHAR(255) NOT NULL
             )",
     
-            "INSERT INTO BusCompanies (company_name) VALUES
-                ('Greyhound'),
-                ('Intercape'),
-                ('Intercity'),
-                ('EldoCoaches'),
-                ('DRD Luxury')", 
-    
-            "CREATE TABLE IF NOT EXISTS Routes (
-                route_id INT AUTO_INCREMENT PRIMARY KEY,
-                route_name VARCHAR(255) NOT NULL,
-                company_id INT,
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-            )",
-    
-            "INSERT INTO Routes (route_name, company_id) VALUES
-                ('Johannesburg/Pretoria to Durban', (SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1))",
-    
-            
-            "CREATE TABLE IF NOT EXISTS Times (
-                time_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
-                route_id INT,
-                departure_time TIME,
-                arrival_time TIME,
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id),
-                FOREIGN KEY (route_id) REFERENCES Routes(route_id)
-            )",
-    
-            "INSERT INTO Times (company_id, route_id, departure_time, arrival_time) VALUES
-                ((SELECT company_id FROM BusCompanies WHERE company_name = 'Greyhound' LIMIT 1), (SELECT route_id FROM Routes WHERE route_name = 'Johannesburg/Pretoria to Durban' LIMIT 1), '07:00', '18:00')",
-    
-            "CREATE TABLE IF NOT EXISTS Reviews (
-                review_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
-                rating INT,
-                comment TEXT,
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-            )",
-            
-    
-            "CREATE TABLE IF NOT EXISTS ImageNames (
-                image_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
-                image_name VARCHAR(255) NOT NULL,
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-            )",*/
-
-            
-           "INSERT INTO ImageNames (company_id, image_name) VALUES (1, 'asambeni_buses/images/greyhound.jpg')",
-
+            "INSERT INTO BusCompanies (company_name, company_image) VALUES
+                ('Greyhound', 'Asmabeni_buses/images/greyhound.jpg'),
+                ('Intercape', 'Asmabeni_buses/images/intercape.jpg'),
+                ('Intercity', 'Asmabeni_buses/images/intercity.jpg'),
+                ('EldoCoaches', 'Asmabeni_buses/images/eldocoach.jpg'),
+                ('DRD Luxury', 'Asmabeni_buses/images/drdluxury.jpg')", 
         ];
     
         foreach ($queries as $query) {
