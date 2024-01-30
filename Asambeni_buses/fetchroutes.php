@@ -16,8 +16,19 @@ try {
 
     $pdo = new PDO($dsn, $username, $password, $options);
 
-    // Query to select all route information
-    $stmt = $pdo->query("SELECT * FROM Routes");
+    // Get the selected bus type from the query parameters
+    $selectedBusType = isset($_GET['busType']) ? $_GET['busType'] : null;
+
+    // Query to select routes based on the selected bus type
+    $stmt = $pdo->prepare("SELECT * FROM Routes WHERE company_id = (
+        SELECT company_id FROM BusCompanies WHERE company_name = :busType
+    )");
+
+    // Bind the parameter
+    $stmt->bindParam(':busType', $selectedBusType, PDO::PARAM_STR);
+
+    // Execute the query
+    $stmt->execute();
 
     // Fetch the data as an associative array
     $routes = $stmt->fetchAll();
