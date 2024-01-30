@@ -35,6 +35,16 @@ learninghub2/Asambeni_buses
 Added a time tag on booking.html
 added time for greyhound
 
+24/01/2024
+ I was able to store the image name on the database and retrieve it 
+ inserted time and route of which I am able to retrieve and display the route
+  display the time
+
+29/01/2024
+Attempted to display pictures created various files but deleted all of them
 
 30/01/2024 
 created a new database 
+populated to database
+used php and javascript to fetch from database
+displayed the images and routes for various buses
