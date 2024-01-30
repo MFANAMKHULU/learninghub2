@@ -1,5 +1,4 @@
 <?php
-
 try {
     $host = 'localhost';
     $username = 'root';
@@ -21,13 +20,10 @@ try {
     $stmt = $pdo->query("SELECT company_image FROM BusCompanies");
     $imageFilenames = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    // Display the images
-    foreach ($imageFilenames as $filename) {
-        echo "<img src='Asmabeni_buses/images/$filename' alt='Bus Image'>";
-        echo "<br>";
-    }
+    // Output JSON data
+    header('Content-Type: application/json');
+    echo json_encode(['image_filenames' => $imageFilenames]);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-
 ?>
