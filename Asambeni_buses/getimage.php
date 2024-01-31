@@ -23,7 +23,7 @@ try {
     // Loop through image filenames and encode images as base64
     $imageData = [];
     foreach ($imageFilenames as $filename) {
-        $imagePath = "/Asambeni_buses/images/$filename"; // Update the path accordingly
+        $imagePath = "/Asambeni_buses/images/$filename"; 
         $imageContent = base64_encode(file_get_contents($imagePath));
         $imageData[$filename] = $imageContent;
     }
