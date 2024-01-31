@@ -40,6 +40,13 @@ added time for greyhound
  inserted time and route of which I am able to retrieve and display the route
   display the time
 
+  25/01/2024
+  connected the booking.html with the payment.html
+
+26/01/2024
+  display the times stored on the database however I could only do that using the company_id
+  nsert the function to calculate the price according to number of people
+
 29/01/2024
 Attempted to display pictures created various files but deleted all of them
 

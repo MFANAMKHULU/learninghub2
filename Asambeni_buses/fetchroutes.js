@@ -9,6 +9,15 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchRoutes(selectedBusType);
     });
 
+    // Route Dropdown Change Event
+    $('#routeDropdown').change(function () {
+        // Get the selected route ID
+        const selectedRouteId = $(this).val();
+
+        // Fetch departure and arrival times for the selected route
+        fetchTimes(selectedRouteId);
+    });
+
     // Function to fetch and display routes
     function fetchRoutes(busType) {
         // Fetch route data from the PHP script based on the selected bus type
@@ -30,5 +39,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             })
             .catch(error => console.error('Error fetching routes:', error));
+    }
+
+    // Function to fetch departure and arrival times
+    function fetchTimes(routeId) {
+        // Fetch time data from the PHP script based on the selected route
+        fetch('gettime.php?routeId=' + routeId)
+            .then(response => response.json())
+            .then(data => {
+                // Update departure time
+                $('#departureTime').text(`Departure Time: ${data.departure_time}`);
+
+                // Update arrival time
+                $('#arrivalTime').text(`Arrival Time: ${data.arrival_time}`);
+            })
+            .catch(error => console.error('Error fetching times:', error));
     }
 });

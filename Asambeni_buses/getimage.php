@@ -20,9 +20,17 @@ try {
     $stmt = $pdo->query("SELECT company_image FROM BusCompanies");
     $imageFilenames = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+    // Loop through image filenames and encode images as base64
+    $imageData = [];
+    foreach ($imageFilenames as $filename) {
+        $imagePath = "/Asambeni_buses/images/$filename"; // Update the path accordingly
+        $imageContent = base64_encode(file_get_contents($imagePath));
+        $imageData[$filename] = $imageContent;
+    }
+
     // Output JSON data
     header('Content-Type: application/json');
-    echo json_encode(['image_filenames' => $imageFilenames]);
+    echo json_encode(['image_data' => $imageData]);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }

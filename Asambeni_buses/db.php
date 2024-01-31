@@ -50,8 +50,7 @@ class BusBookingSystem
                 ('Greyhound', 'Asmabeni_buses/images/greyhound.jpg'),
                 ('Intercape', 'Asmabeni_buses/images/intercape.jpg'),
                 ('Intercity', 'Asmabeni_buses/images/intercity.jpg'),
-                ('EldoCoaches', 'Asmabeni_buses/images/eldocoach.jpg'),
-                ('DRD Luxury', 'Asmabeni_buses/images/drdluxury.jpg')",*/
+               */
 
                 "CREATE TABLE IF NOT EXISTS Routes (
                     route_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -67,8 +66,7 @@ class BusBookingSystem
                     (1, 'Johannesburg', 'Cape Town', '08:00:00', '15:00:00'),
                     (2, 'Cape Town', 'Johannesburg', '09:00:00', '16:00:00'),
                     (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00'),
-                    (4, 'Port Elizabeth', 'Durban', '11:00:00', '19:00:00'),
-                    (5, 'Pretoria', 'Bloemfontein', '12:00:00', '20:00:00')"
+                    
 
         ];
     
@@ -98,3 +96,4 @@ class BusBookingSystem
 $busBookingSystem = new BusBookingSystem();
 $busBookingSystem->testConnection();
 ?>
+9

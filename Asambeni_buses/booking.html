@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="fetchroutes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="fetchroutes.js"></script>
 
     <title>Bus Booking System - Booking</title>
     <style>
@@ -29,7 +29,6 @@
             /* White hover text color for the navbar links */
         }
 
-        /* Container styles */
         .container {
             color: #000000;
             /* Black text color for the container content */
@@ -37,7 +36,6 @@
             /* Add some space at the top */
         }
 
-        /* Button styles */
         .btn-success {
             background-color: #0079e7;
             /* Barcelona blue background for success buttons */
@@ -50,13 +48,11 @@
             /* Darker blue background on hover for success buttons */
         }
 
-        /* Price display styles */
         #priceDisplay {
             margin-top: 10px;
             font-weight: bold;
         }
 
-        /* Add new styles for days and times */
         .form-group-day,
         .form-group-time {
             margin-top: 10px;
@@ -95,8 +91,6 @@
                         <option value="greyhound">GREYHOUND</option>
                         <option value="intercape">INTERCAPE</option>
                         <option value="intercity">INTERCITY</option>
-                        <option value="eldocoach">ELDOCOACHES</option>
-                        <option value="drd">DRD LUXURY COACHES</option>
                     </select>
                 </div>
 
@@ -110,32 +104,37 @@
                     <input type="date" class="form-control" id="date">
                 </div>
             </div>
-        
+
             <div class="form-row">
+                <!-- Departure Time -->
                 <div class="form-group col-md-4">
-                    <label id="departureLabel" for="departureTime">Departure Time:</label>
                     <div id="departureTime"></div>
                 </div>
+
+                <!-- Arrival Time -->
                 <div class="form-group col-md-4">
-                    <label id="arrivalLabel" for="arrivalTime">Arrival Time:</label>
                     <div id="arrivalTime"></div>
                 </div>
-                
+            </div>
+
+            <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="numChildren">Number of Children</label>
                     <input type="number" class="form-control" id="numChildren" min="0">
                 </div>
-                
+
                 <div class="form-group col-md-4">
                     <label for="numAdults">Number of Adults</label>
                     <input type="number" class="form-control" id="numAdults" min="1">
                 </div>
-    
+
                 <div class="form-group col-md-4">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter your name">
                 </div>
-                
+            </div>
+
+            <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="surname">Surname</label>
                     <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
@@ -145,13 +144,13 @@
                     <label for="id">ID Number</label>
                     <input type="text" class="form-control" id="id" placeholder="Enter your ID number">
                 </div>
-                
+
                 <div class="form-group col-md-4">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter your email">
                 </div>
-
             </div>
+
             <div id="routeContainer"></div>
             <!-- Display calculated price -->
             <div class="form-group">
@@ -159,117 +158,147 @@
                 <input type="text" class="form-control" id="totalPrice" readonly>
             </div>
 
-            <button type="submit"> Payment</button>
+            <button type="submit">Payment</button>
         </form>
-        
+
     </div>
 
     <script>
         $(document).ready(function () {
             // Event listener for bus company selection
-          
+            $('#busType').on('change', function () {
+                var selectedBus = $(this).val();
+                fetchRoutes(selectedBus); // Fetch routes based on the selected bus
+            });
 
-                // Clear and hide the price display when bus company changes
-                $('#priceDisplay').empty().hide();
-            });
-    
-            // Function to calculate total price
-            function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
-                var pricePerChild;
-                var pricePerAdult;
-    
-                // Set pricing based on bus company and route 
-                if (busCompany === 'greyhound' && routeId === '1') {
-                    pricePerChild = 450;
-                    pricePerAdult = 500;
-                }
-    
-                var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
-    
-                // Display the total price
-                $('#totalPrice').val(totalPrice);
-                $('#priceDisplay').html('Total Price: $' + totalPrice).show();
+            // Clear and hide the price display when the bus company changes
+            $('#priceDisplay').empty().hide();
+        });
+
+        // Function to calculate total price
+        function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
+    var pricePerChild;
+    var pricePerAdult;
+
+    // Set pricing based on bus company and route 
+    switch (busCompany) {
+        case 'greyhound':
+            switch (routeId) {
+                case '1':
+                    pricePerChild = 1650;
+                    pricePerAdult = 1200;
+                    break;
+                
             }
-    
-            // Event listener for route selection
-            $('#route').on('change', function () {
-                var numChildren = parseInt($('#numChildren').val()) || 0;
-                var numAdults = parseInt($('#numAdults').val()) || 0;
-                var busCompany = $('#busType').val();
-                var routeId = $(this).val();
-    
-                calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-            });
-    
-            // Event listener for number of children and adults changes
-            $('#numChildren, #numAdults').on('change', function () {
-                var numChildren = parseInt($('#numChildren').val()) || 0;
-                var numAdults = parseInt($('#numAdults').val()) || 0;
-                var busCompany = $('#busType').val();
-                var routeId = $('#route').val();
-    
-                calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-            });
-    
-            // Function to validate name
-            function isValidName(name) {
-                return /^[a-zA-Z]+$/.test(name);
+            break;
+        case 'intercape':
+            switch (routeId) {
+                case '2':
+                    pricePerChild = 1400;
+                    pricePerAdult = 1050;
+                    break;
+               
             }
-    
-            // Function to validate South African ID number
-            function isValidSAID(id) {
-                return /^\d{13}$/.test(id);
+            break;
+        case 'intercity':
+            switch (routeId) {
+                case '3':
+                    pricePerChild = 1350;
+                    pricePerAdult = 1000;
+                    break;
+                
             }
-    
-            // Function to validate the form
-            function validateForm() {
-                var busType = $('#busType').val();
-                var route = $('#route').val();
-                var date = $('#date').val();
-                var numChildren = $('#numChildren').val();
-                var numAdults = $('#numAdults').val();
-                var name = $('#name').val();
-                var surname = $('#surname').val();
-                var id = $('#id').val();
-                var email = $('#email').val();
-    
-                // Validate name
-                if (!isValidName(name)) {
-                    alert("Invalid name. Please enter a valid name.");
-                    return false;
-                }
-    
-                // Validate surname
-                if (!isValidName(surname)) {
-                    alert("Invalid surname. Please enter a valid surname.");
-                    return false;
-                }
-    
-                // Validate South African ID number
-                if (!isValidSAID(id)) {
-                    alert("Invalid South African ID number. Please enter a valid ID number.");
-                    return false;
-                }
-    
-                // Validate number of adults
-                if (numAdults < 1) {
-                    alert("Number of adults must be at least 1.");
-                    return false;
-                }
-    
-                // Redirect to payment.html
-                window.location.href = "payment.html";
-                return true;
+        
+            break;
+        
+    }
+
+    var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
+
+    // Display the total price
+    $('#totalPrice').val(totalPrice);
+    $('#priceDisplay').html('Total Price: $' + totalPrice).show();
+}
+
+
+        // Event listener for route selection
+        $('#routeDropdown').on('change', function () {
+            var numChildren = parseInt($('#numChildren').val()) || 0;
+            var numAdults = parseInt($('#numAdults').val()) || 0;
+            var busCompany = $('#busType').val();
+            var routeId = $(this).val();
+
+            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+        });
+
+        // Event listener for the number of children and adults changes
+        $('#numChildren, #numAdults').on('change', function () {
+            var numChildren = parseInt($('#numChildren').val()) || 0;
+            var numAdults = parseInt($('#numAdults').val()) || 0;
+            var busCompany = $('#busType').val();
+            var routeId = $('#routeDropdown').val();
+
+            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
+        });
+
+        // Function to validate name
+        function isValidName(name) {
+            return /^[a-zA-Z]+$/.test(name);
+        }
+
+        // Function to validate South African ID number
+        function isValidSAID(id) {
+            return /^\d{13}$/.test(id);
+        }
+
+        // Function to validate the form
+        function validateForm() {
+            var busType = $('#busType').val();
+            var route = $('#routeDropdown').val();
+            var date = $('#date').val();
+            var numChildren = $('#numChildren').val();
+            var numAdults = $('#numAdults').val();
+            var name = $('#name').val();
+            var surname = $('#surname').val();
+            var id = $('#id').val();
+            var email = $('#email').val();
+
+            // Validate name
+            if (!isValidName(name)) {
+                alert("Invalid name. Please enter a valid name.");
+                return false;
             }
-    
-            // Attach the validateForm function to the form's submit event
-            $('form').on('submit', function (event) {
-                event.preventDefault(); // Prevent the form from submitting
-                validateForm(); // Call the validation function
-            });
+
+            // Validate surname
+            if (!isValidName(surname)) {
+                alert("Invalid surname. Please enter a valid surname.");
+                return false;
+            }
+
+            // Validate South African ID number
+            if (!isValidSAID(id)) {
+                alert("Invalid South African ID number. Please enter a valid ID number.");
+                return false;
+            }
+
+            // Validate the number of adults
+            if (numAdults < 1) {
+                alert("Number of adults must be at least 1.");
+                return false;
+            }
+
+            // Redirect to payment.html
+            window.location.href = "payment.html";
+            return true;
+        }
+
+        // Attach the validateForm function to the form's submit event
+        $('form').on('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+            validateForm(); // Call the validation function
         });
     </script>
-        
+
 </body>
 
 </html>

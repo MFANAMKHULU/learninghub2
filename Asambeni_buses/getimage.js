@@ -1,22 +1,26 @@
 // getimage.js
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Fetch image filenames from the PHP script
-    fetch('getimage.php')
-        .then(response => response.json())
-        .then(data => {
-            // Get the container element with the correct ID
-            const imageContainer = document.getElementById('imageContainer');
-
-            // Create img elements and append them to the container
-            data.image_filenames.forEach(filename => {
-                const img = document.createElement('img');
-                img.src = 'Asmabeni_buses/images/' + filename;
-                img.alt = 'Bus Image';
-                imageContainer.appendChild(img);
-
-                const br = document.createElement('br');
-                imageContainer.appendChild(br);
-            });
-        })
-        .catch(error => console.error('Error fetching images:', error));
-});
+    // Make an AJAX call to the PHP script
+    fetch("getimage.php")
+      .then(response => response.json())
+      .then(data => displayImages(data.image_data))
+      .catch(error => console.error("Error fetching image data:", error));
+  });
+  
+  function displayImages(imageData) {
+    // Get the image container element
+    var imageContainer = document.getElementById("imageContainer");
+  
+    // Loop through the image data and create image elements
+    for (var filename in imageData) {
+      if (imageData.hasOwnProperty(filename)) {
+        var imgElement = document.createElement("img");
+        imgElement.src = "data:image/png;base64," + imageData[filename];
+        imgElement.alt = filename;
+        imgElement.className = "img-fluid";
+        imageContainer.appendChild(imgElement);
+      }
+    }
+  }
+  
