@@ -40,35 +40,33 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            /*"CREATE TABLE IF NOT EXISTS BusCompanies (
+            "CREATE TABLE IF NOT EXISTS BusCompanies (
                 company_id INT AUTO_INCREMENT PRIMARY KEY,
                 company_name VARCHAR(255) NOT NULL,
                 company_image VARCHAR(255) NOT NULL
             )",
-    
+        
             "INSERT INTO BusCompanies (company_name, company_image) VALUES
-                ('Greyhound', 'Asmabeni_buses/images/greyhound.jpg'),
-                ('Intercape', 'Asmabeni_buses/images/intercape.jpg'),
-                ('Intercity', 'Asmabeni_buses/images/intercity.jpg'),
-               */
-
-                "CREATE TABLE IF NOT EXISTS Routes (
-                    route_id INT AUTO_INCREMENT PRIMARY KEY,
-                    company_id INT,
-                    departing_city VARCHAR(255) NOT NULL,
-                    destination_city VARCHAR(255) NOT NULL,
-                    departure_time TIME NOT NULL,
-                    arrival_time TIME NOT NULL,
-                    FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-                )",
-            
-                "INSERT INTO Routes (company_id, departing_city, destination_city, departure_time, arrival_time) VALUES
-                    (1, 'Johannesburg', 'Cape Town', '08:00:00', '15:00:00'),
-                    (2, 'Cape Town', 'Johannesburg', '09:00:00', '16:00:00'),
-                    (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00'),
-                    
-
+                ('Greyhound', 'Asambeni_buses/images/greyhound.jpg'),
+                ('Intercape', 'Asambeni_buses/images/intercape.jpg'),
+                ('Intercity', 'Asambeni_buses/images/intercity.jpg')",
+        
+           /* "CREATE TABLE IF NOT EXISTS Routes (
+                route_id INT AUTO_INCREMENT PRIMARY KEY,
+                company_id INT,
+                departing_city VARCHAR(255) NOT NULL,
+                destination_city VARCHAR(255) NOT NULL,
+                departure_time TIME NOT NULL,
+                arrival_time TIME NOT NULL,
+                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
+            )",
+        
+            "INSERT INTO Routes (company_id, departing_city, destination_city, departure_time, arrival_time) VALUES
+                (1, 'Johannesburg', 'Cape Town', '08:00:00', '15:00:00'),
+                (2, 'Cape Town', 'Johannesburg', '09:00:00', '16:00:00'),
+                (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00')"*/
         ];
+        
     
         foreach ($queries as $query) {
             try {
