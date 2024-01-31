@@ -1,4 +1,6 @@
 <?php
+//echo getcwd(); 
+
 try {
     $host = 'localhost';
     $username = 'root';
@@ -23,21 +25,26 @@ try {
     // Loop through image filenames and encode images as base64
     $imageData = [];
     foreach ($imageFilenames as $filename) {
-        $imagePath = "C:/xampp/htdocs/learninghub2/Asambeni_buses/images/$filename";
-        // Manually specify MIME type based on file extension
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $mime_type = ($extension === 'png') ? 'image/png' : (($extension === 'jpg' || $extension === 'jpeg') ? 'image/jpeg' : '');
+        $imagePath = $filename; // Use the column value directly
 
-        // Read and encode image content
-        $imageContent = @base64_encode(file_get_contents($imagePath));
+        if (file_exists($imagePath)) {
+            // Manually specify MIME type based on file extension
+            $extension = pathinfo($filename, PATHINFO_EXTENSION);
+            $mime_type = ($extension === 'png') ? 'image/png' : (($extension === 'jpg' || $extension === 'jpeg') ? 'image/jpeg' : '');
 
-        if ($imageContent !== false) {
-            $imageData[$filename] = [
-                'mime_type' => $mime_type,
-                'base64_data' => $imageContent,
-            ];
+            // Read and encode image content
+            $imageContent = @base64_encode(file_get_contents($imagePath));
+
+            if ($imageContent !== false) {
+                $imageData[$filename] = [
+                    'mime_type'   => $mime_type,
+                    'base64_data' => $imageContent,
+                ];
+            } else {
+                throw new Exception("Error reading image file: $filename");
+            }
         } else {
-            throw new Exception("Error reading image file: $filename");
+            throw new Exception("Image file not found: $imagePath");
         }
     }
 
