@@ -23,8 +23,7 @@ try {
     // Loop through image filenames and encode images as base64
     $imageData = [];
     foreach ($imageFilenames as $filename) {
-        $imagePath = "/learninghub2/Asambeni_buses/images/$filename"; // Update the path accordingly
-
+        $imagePath = "C:/xampp/htdocs/learninghub2/Asambeni_buses/images/$filename";
         // Manually specify MIME type based on file extension
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $mime_type = ($extension === 'png') ? 'image/png' : (($extension === 'jpg' || $extension === 'jpeg') ? 'image/jpeg' : '');
