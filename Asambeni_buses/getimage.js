@@ -1,5 +1,3 @@
-// getimage.js
-
 document.addEventListener("DOMContentLoaded", function () {
     // Make an AJAX call to the PHP script
     fetch("getimage.php")
@@ -10,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   function displayImages(imageData) {
     // Get the image container element
-    var imageContainer = document.getElementById("imageContainer");
+    var imageContainer = document.getElementById("imageContainer"); 
   
     // Loop through the image data and create image elements
     for (var filename in imageData) {

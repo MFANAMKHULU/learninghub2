@@ -23,9 +23,23 @@ try {
     // Loop through image filenames and encode images as base64
     $imageData = [];
     foreach ($imageFilenames as $filename) {
-        $imagePath = "/Asambeni_buses/images/$filename"; 
-        $imageContent = base64_encode(file_get_contents($imagePath));
-        $imageData[$filename] = $imageContent;
+        $imagePath = "/learninghub2/Asambeni_buses/images/$filename"; // Update the path accordingly
+
+        // Manually specify MIME type based on file extension
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $mime_type = ($extension === 'png') ? 'image/png' : (($extension === 'jpg' || $extension === 'jpeg') ? 'image/jpeg' : '');
+
+        // Read and encode image content
+        $imageContent = @base64_encode(file_get_contents($imagePath));
+
+        if ($imageContent !== false) {
+            $imageData[$filename] = [
+                'mime_type' => $mime_type,
+                'base64_data' => $imageContent,
+            ];
+        } else {
+            throw new Exception("Error reading image file: $filename");
+        }
     }
 
     // Output JSON data
@@ -33,5 +47,7 @@ try {
     echo json_encode(['image_data' => $imageData]);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>
