@@ -62,10 +62,19 @@
     </nav>
 
     <div class="container">
-        <!-- Your homepage content goes here -->
         <h1>Welcome to the Bus Booking System - Available Buses</h1>
+        <div class="form-group">
+            <label for="busDropdown">Select a Bus:</label>
+            <select class="form-control" id="busDropdown">
+                <!-- Populate the dropdown with bus options dynamically -->
+                <option value="1">Greyhound</option>
+                <option value="2">Intercape</option>
+                <option value="3">Intercity</option>
+            </select>
+        </div>
+
         <div class="available-buses row">
-            <!-- Your available buses content goes here -->
+            <!-- Images will be displayed here -->
         </div>
     </div>
 
@@ -79,13 +88,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-        // Fetch images using JavaScript
-        fetch('getimage.php')
+    // Fetch images using JavaScript when the dropdown selection changes
+    document.getElementById('busDropdown').addEventListener('change', function () {
+        const selectedBusId = this.value;
+
+        // Fetch images for the selected bus
+        fetch(`getimage.php?company_id=${selectedBusId}`)
             .then(response => response.json())
             .then(images => {
-                // Handle the fetched JSON data
                 const availableBusesContainer = document.querySelector('.available-buses');
-    
+                availableBusesContainer.innerHTML = ''; // Clear previous images
+
                 if (images.error) {
                     console.error('Error fetching images:', images.error);
                 } else {
@@ -93,9 +106,7 @@
                     images.forEach(item => {
                         const imgElement = document.createElement(item.type === 'image' ? 'img' : 'a');
                         imgElement.href = item.url;  
-                        
-                        imgElement.src = 'learninghub2/Asambeni_buses/images' + item.url;
-                        
+                        imgElement.src = 'learninghub2/Asambeni_buses/images/' + item.url;
                         imgElement.alt = `Company ${item.company_id} ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}`;
                         imgElement.classList.add('col-md-4', 'mb-3');
     
@@ -105,9 +116,9 @@
                 }
             })
             .catch(error => console.error('Fetch error:', error));
-    </script>
-    
-    
+    });
+</script>
+
     
 </body>
 </html>

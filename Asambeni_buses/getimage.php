@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+header('Content-Type: application/json');
+
 class BusBookingSystem
 {
     private $pdo;
@@ -47,6 +49,5 @@ class BusBookingSystem
 $busBookingSystem = new BusBookingSystem();
 $images = $busBookingSystem->getCompanyImages();
 
-
-
+echo json_encode($images);
 ?>
