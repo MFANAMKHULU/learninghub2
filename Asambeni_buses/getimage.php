@@ -1,6 +1,4 @@
 <?php
-//echo getcwd(); 
-
 try {
     $host = 'localhost';
     $username = 'root';
@@ -18,42 +16,17 @@ try {
 
     $pdo = new PDO($dsn, $username, $password, $options);
 
-    // Query to select all image filenames
-    $stmt = $pdo->query("SELECT company_image FROM BusCompanies");
-    $imageFilenames = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    // Prepare and execute a query to fetch only the company_image column
+    $query = "SELECT company_image FROM BusCompanies";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
 
-    // Loop through image filenames and encode images as base64
-    $imageData = [];
-    foreach ($imageFilenames as $filename) {
-        $imagePath = $filename; // Use the column value directly
-
-        if (file_exists($imagePath)) {
-            // Manually specify MIME type based on file extension
-            $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $mime_type = ($extension === 'png') ? 'image/png' : (($extension === 'jpg' || $extension === 'jpeg') ? 'image/jpeg' : '');
-
-            // Read and encode image content
-            $imageContent = @base64_encode(file_get_contents($imagePath));
-
-            if ($imageContent !== false) {
-                $imageData[$filename] = [
-                    'mime_type'   => $mime_type,
-                    'base64_data' => $imageContent,
-                ];
-            } else {
-                throw new Exception("Error reading image file: $filename");
-            }
-        } else {
-            throw new Exception("Image file not found: $imagePath");
-        }
+    // Output image tags directly
+    while ($row = $stmt->fetch()) {
+        $imagePath = "Asambeni_buses/images/" . $row['company_image'];
+        echo '<img src="' . $imagePath . '" alt="Bus Image" class="img-fluid" />';
     }
-
-    // Output JSON data
-    header('Content-Type: application/json');
-    echo json_encode(['image_data' => $imageData]);
 } catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-} catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+    echo "Error: " . $e->getMessage();
 }
 ?>
