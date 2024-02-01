@@ -79,6 +79,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
-</body>
+    <script>
+        // Fetch images using JavaScript
+        fetch('getimage.php')
+            .then(response => response.json())
+            .then(images => {
+                // Handle the fetched JSON data
+                if (images.error) {
+                    console.error('Error fetching images:', images.error);
+                } else {
+                    // Loop through the images array and display them
+                    const availableBusesContainer = document.querySelector('.available-buses');
 
+                    images.forEach(image => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = image.image_url;
+                        imgElement.alt = `Company ${image.company_id} Image`;
+
+                        // Append the image to the container
+                        availableBusesContainer.appendChild(imgElement);
+                    });
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    </script>
+
+
+</body>
 </html>
