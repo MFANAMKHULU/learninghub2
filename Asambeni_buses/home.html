@@ -32,7 +32,6 @@
             background-color: #ffcc29 !important; /* FC Barcelona secondary color */
         }
     
-       
         /* Footer styles */
         footer {
             background-color: #333;
@@ -65,13 +64,13 @@
     <div class="container">
         <!-- Your homepage content goes here -->
         <h1>Welcome to the Bus Booking System - Available Buses</h1>
-        <div class="available-buses">
+        <div class="available-buses row">
             <!-- Your available buses content goes here -->
         </div>
     </div>
 
     <!-- Footer -->
-   <!-- <footer>
+    <!-- <footer>
         &copy; 2024 Asambeni mkhaya Bus Booking System
     </footer> -->
 
@@ -85,25 +84,30 @@
             .then(response => response.json())
             .then(images => {
                 // Handle the fetched JSON data
+                const availableBusesContainer = document.querySelector('.available-buses');
+    
                 if (images.error) {
                     console.error('Error fetching images:', images.error);
                 } else {
                     // Loop through the images array and display them
-                    const availableBusesContainer = document.querySelector('.available-buses');
-
-                    images.forEach(image => {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = image.image_url;
-                        imgElement.alt = `Company ${image.company_id} Image`;
-
-                        // Append the image to the container
+                    images.forEach(item => {
+                        const imgElement = document.createElement(item.type === 'image' ? 'img' : 'a');
+                        imgElement.href = item.url;  
+                        
+                        imgElement.src = 'learninghub2/Asambeni_buses/images' + item.url;
+                        
+                        imgElement.alt = `Company ${item.company_id} ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}`;
+                        imgElement.classList.add('col-md-4', 'mb-3');
+    
+                        // Append the element to the container
                         availableBusesContainer.appendChild(imgElement);
                     });
                 }
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
-
-
+    
+    
+    
 </body>
 </html>

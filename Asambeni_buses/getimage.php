@@ -24,46 +24,29 @@ class BusBookingSystem
             ];
     
             $this->pdo = new PDO($dsn, $username, $password, $options);
-    
-            // Debug output
-            echo "Connected to the database successfully.";
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
     }
     
-    public function fetchImagesAsJSON()
+    public function getCompanyImages()
     {
         try {
-            $query = "SELECT company_id, image_name, image_extension FROM CompanyImages";
-            $result = $this->pdo->query($query);
-    
-            $images = [];
-    
-            if ($result && $result->rowCount() > 0) {
-                while ($row = $result->fetch()) {
-                    $company_id = $row['company_id'];
-                    $image_name = $row['image_name'];
-                    $image_extension = $row['image_extension'];
-    
-                    // Build an array with image information
-                    $images[] = [
-                        'company_id' => $company_id,
-                        'image_url' => "learninghub2/Asambeni_buses/images/{$image_name}.{$image_extension}",
-                    ];
-                }
-    
-                // Encode the array as JSON and return it
-                return json_encode($images);
-            } else {
-                return json_encode(['error' => 'No images found.']);
-            }
+            $query = "SELECT * FROM CompanyImages";
+            $statement = $this->pdo->query($query);
+            $images = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $images;
         } catch (PDOException $e) {
-            return json_encode(['error' => 'Error fetching images: ' . $e->getMessage()]);
+            die("Error fetching images: " . $e->getMessage());
         }
     }
     
+}
 
 // Usage
 $busBookingSystem = new BusBookingSystem();
+$images = $busBookingSystem->getCompanyImages();
+
+
+
 ?>

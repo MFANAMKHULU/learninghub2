@@ -40,7 +40,7 @@ class BusBookingSystem
     public function createTables()
     {
         $queries = [
-            "CREATE TABLE IF NOT EXISTS BusCompanies (
+            /*"CREATE TABLE IF NOT EXISTS BusCompanies (
                 company_id INT AUTO_INCREMENT PRIMARY KEY,
                 company_name VARCHAR(255) NOT NULL
             )",
@@ -48,25 +48,25 @@ class BusBookingSystem
             "INSERT INTO BusCompanies (company_name) VALUES
                 ('Greyhound'),
                 ('Intercape'),
-                ('Intercity')",
+                ('Intercity')",*/
 
-            "CREATE TABLE IF NOT EXISTS CompanyImages (
-                image_id INT AUTO_INCREMENT PRIMARY KEY,
-                company_id INT,
-                image_name VARCHAR(255) NOT NULL, -- Change to image_name
-                FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-            )",
+                "CREATE TABLE IF NOT EXISTS CompanyImages (
+                    image_id INT AUTO_INCREMENT PRIMARY KEY,
+                    company_id INT,
+                    image_name VARCHAR(255) NOT NULL, 
+                    image_extension VARCHAR(255) NOT NULL,
+                    FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
+                )",
+    
+    "INSERT INTO CompanyImages (company_id, image_name, image_extension) VALUES
+    ('1', 'learninghub2/Asambeni_buses/images/greyhound', 'jpg'),
+    ('1', 'learninghub2/Asambeni_buses/images/intercape', 'jpg'),  
+    ('2', 'learninghub2/Asambeni_buses/images/intercapedoubledeck', 'jpg'),
+    ('3', 'learninghub2/Asambeni_buses/images/intercity', 'jpg'),
+    ('3', 'learninghub2/Asambeni_buses/images/intercityexterior', 'jpg')"
 
-            "INSERT INTO CompanyImages (company_id, image_name) VALUES
-            (1, 'learninghub2/Asambeni_buses/images/greyhound.jpg'),
-            (1, 'learninghub2/Asambeni_buses/images/greyhounddouble.jpg'),  
-            (2, 'learninghub2/Asambeni_buses/images/intercape.jpg'),
-            (2, 'learninghub2/Asambeni_buses/images/intercapedoubledeck.jpg'),
-            (3, 'learninghub2/Asambeni_buses/images/intercityexterior.jpg'),
-            (3, 'learninghub2/Asambeni_buses/images/intercity.jpg')",
 
-
-            "CREATE TABLE IF NOT EXISTS Routes (
+           /* "CREATE TABLE IF NOT EXISTS Routes (
                 route_id INT AUTO_INCREMENT PRIMARY KEY,
                 company_id INT,
                 departing_city VARCHAR(255) NOT NULL,
@@ -82,7 +82,7 @@ class BusBookingSystem
                 (2, 'Cape Town', 'Johannesburg', '09:00:00', '16:00:00'),
                 (2, 'Polokwane', 'Johannesburg', '09:00:00', '14:00:00'),
                 (3, 'East London', 'Pretoria', '09:00:00', '14:00:00'),
-                (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00')"
+                (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00')"*/
         ];
         
         foreach ($queries as $query) {
