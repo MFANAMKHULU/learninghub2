@@ -55,3 +55,8 @@ created a new database
 populated to database
 used php and javascript to fetch from database
 displayed the images and routes for various buses
+
+
+
+02/04/2023
+attempted to display pictures
