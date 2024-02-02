@@ -2,8 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-header('Content-Type: application/json');
-
 class BusBookingSystem
 {
     private $pdo;
@@ -16,7 +14,7 @@ class BusBookingSystem
             $password = '';
             $databasename = 'asambeni_buses';
             $charset = 'utf8mb4';
-    
+
             // Connect to the database
             $dsn = "mysql:host=$host;dbname=$databasename;charset=$charset";
             $options = [
@@ -24,13 +22,13 @@ class BusBookingSystem
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ];
-    
+
             $this->pdo = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
     }
-    
+
     public function getCompanyImages()
     {
         try {
@@ -42,12 +40,12 @@ class BusBookingSystem
             die("Error fetching images: " . $e->getMessage());
         }
     }
-    
 }
 
 // Usage
 $busBookingSystem = new BusBookingSystem();
 $images = $busBookingSystem->getCompanyImages();
 
+header('Content-Type: application/json');
 echo json_encode($images);
 ?>
