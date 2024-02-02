@@ -7,37 +7,65 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Bus Booking System - Available Buses</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         /* Navbar styles */
         .navbar {
             background-color: #a50044 !important; /* FC Barcelona primary color */
         }
-    
+
         .navbar-brand,
         .nav-link {
             color: #fff !important;
         }
-    
+
         .navbar-brand:hover,
         .nav-link:hover {
             color: #ffcc29 !important; /* FC Barcelona secondary color */
         }
-    
+
         /* Button styles */
         .btn-primary {
             background-color: #a50044 !important; /* FC Barcelona primary color */
             color: #fff;
         }
-    
+
         .btn-primary:hover {
             background-color: #ffcc29 !important; /* FC Barcelona secondary color */
         }
-    
-        /* Footer styles */
+
+        /* Additional styles */
+        .company-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .company-image {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Sticky footer styles */
+        .container {
+            flex: 1;
+        }
+
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -70,42 +98,51 @@
     </div>
 
     <!-- Footer -->
-    <!-- <footer>
+    <footer>
         &copy; 2024 Asambeni mkhaya Bus Booking System
-    </footer> -->
+    </footer>
+
+    <script>
+        fetch('getimage.php')
+            .then(response => response.json())
+            .then(images => {
+                console.log('Fetched images:', images);
+
+                // Keep track of displayed companies to ensure only one image per company
+                const displayedCompanies = new Set();
+
+                images.forEach(item => {
+                    // Check if the company has already been displayed
+                    if (!displayedCompanies.has(item.company_id)) {
+                        // Create a container for the company
+                        const companyContainer = document.createElement('div');
+                        companyContainer.classList.add('company-container', 'mb-3');
+                        document.getElementById('imageContainer').appendChild(companyContainer);
+
+                        // Add the name of the company at the top
+                        const companyName = document.createElement('h2');
+                        companyName.textContent = item.company_name;
+                        companyName.classList.add('company-name');
+                        companyContainer.appendChild(companyName);
+
+                        // Create an image element for the first image of the company
+                        const imgElement = document.createElement('img');
+                        imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
+                        imgElement.alt = `Company ${item.company_id} Image`;
+                        imgElement.classList.add('company-image');
+                        companyContainer.appendChild(imgElement);
+
+                        // Add the company to the set of displayed companies
+                        displayedCompanies.add(item.company_id);
+                    }
+                });
+            })
+            .catch(error => console.error('Fetch error:', error));
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-
-    <script>
-       fetch('getimage.php')
-    .then(response => response.json())
-    .then(images => {
-        console.log('Fetched images:', images);
-
-        const availableBusesContainer = document.getElementById('imageContainer');
-
-        if (images.error) {
-            console.error('Error fetching images:', images.error);
-        } else {
-            images.forEach(item => {
-                const imgElement = document.createElement('img');
-                // Construct the full image path using a base path and the image name
-                imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
-                imgElement.alt = `Company ${item.company_id} Image`;
-                imgElement.classList.add('col-md-4', 'mb-3');
-                availableBusesContainer.appendChild(imgElement);
-            });
-        }
-    })
-    .catch(error => console.error('Fetch error:', error));
-
-
-    </script>
-
-    
-
-    
 </body>
+
 </html>
