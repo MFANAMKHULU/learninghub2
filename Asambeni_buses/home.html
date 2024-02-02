@@ -79,10 +79,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-        fetch('getimage.php')
+       fetch('getimage.php')
     .then(response => response.json())
     .then(images => {
-        console.log('Fetched images:', images); // Log the images to the console
+        console.log('Fetched images:', images);
 
         const availableBusesContainer = document.getElementById('imageContainer');
 
@@ -91,7 +91,8 @@
         } else {
             images.forEach(item => {
                 const imgElement = document.createElement('img');
-                imgElement.src = item.image_name + '.' + item.image_extension;
+                // Construct the full image path using a base path and the image name
+                imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
                 imgElement.alt = `Company ${item.company_id} Image`;
                 imgElement.classList.add('col-md-4', 'mb-3');
                 availableBusesContainer.appendChild(imgElement);
@@ -99,6 +100,7 @@
         }
     })
     .catch(error => console.error('Fetch error:', error));
+
 
     </script>
 

@@ -59,11 +59,12 @@ class BusBookingSystem
                 )",
     
     "INSERT INTO CompanyImages (company_id, image_name, image_extension) VALUES
-    ('1', 'learninghub2/Asambeni_buses/images/greyhound', 'jpg'),
-    ('1', 'learninghub2/Asambeni_buses/images/intercape', 'jpg'),  
-    ('2', 'learninghub2/Asambeni_buses/images/intercapedoubledeck', 'jpg'),
-    ('3', 'learninghub2/Asambeni_buses/images/intercity', 'jpg'),
-    ('3', 'learninghub2/Asambeni_buses/images/intercityexterior', 'jpg')"
+    ('1', 'greyhound', 'jpeg'),
+    ('1', 'greyhounddouble', 'jpg'),
+    ('2', 'intercape', 'jpeg'),  
+    ('2', 'intercapedoubledeck', 'jpeg'),
+    ('3', 'intercity', 'jpeg'),
+    ('3', 'intercityexterior', 'jpeg')"
 
 
            /* "CREATE TABLE IF NOT EXISTS Routes (
