@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2024 at 02:37 PM
+-- Generation Time: Feb 05, 2024 at 10:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -59,11 +59,23 @@ CREATE TABLE `companyimages` (
 --
 
 INSERT INTO `companyimages` (`image_id`, `company_id`, `image_name`, `image_extension`) VALUES
-(1, 1, 'learninghub2/Asambeni_buses/images/greyhound', 'jpg'),
-(2, 1, 'learninghub2/Asambeni_buses/images/intercape', 'jpg'),
-(3, 2, 'learninghub2/Asambeni_buses/images/intercapedoubledeck', 'jpg'),
-(4, 3, 'learninghub2/Asambeni_buses/images/intercity', 'jpg'),
-(5, 3, 'learninghub2/Asambeni_buses/images/intercityexterior', 'jpg');
+(1, 1, 'greyhound', 'jpeg'),
+(2, 1, 'greyhounddouble', 'jpg'),
+(3, 2, 'intercape', 'jpeg'),
+(4, 2, 'intercapedoubledeck', 'jpeg'),
+(5, 3, 'intercity', 'jpeg'),
+(6, 3, 'intercityexterior', 'jpeg'),
+(7, 1, 'GreyhoundSingleDecker', 'jpeg'),
+(8, 1, 'greyhoundinterior', 'jpg'),
+(9, 1, 'greyhoundinteriorbus', 'jpeg'),
+(10, 2, 'intercapebus', 'jpeg'),
+(11, 2, 'intercapefleet', 'jpeg'),
+(12, 2, 'intercapeinterior', 'jpeg'),
+(13, 2, 'intercapeseats', 'jpeg'),
+(14, 3, 'intercity', 'jpeg'),
+(15, 3, 'intercityinterior', 'jpeg'),
+(16, 3, 'intercityinterior2', 'jpeg'),
+(17, 3, 'intercityexterior', 'jpeg');
 
 -- --------------------------------------------------------
 
@@ -130,7 +142,7 @@ ALTER TABLE `buscompanies`
 -- AUTO_INCREMENT for table `companyimages`
 --
 ALTER TABLE `companyimages`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `routes`
