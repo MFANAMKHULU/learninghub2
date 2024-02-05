@@ -117,12 +117,6 @@
                         companyContainer.classList.add('company-container', 'mb-3');
                         imageContainer.appendChild(companyContainer);
     
-                        // Add the name of the company at the top
-                        const companyName = document.createElement('h2');
-                        companyName.textContent = `Company ${company_id}`;
-                        companyName.classList.add('company-name');
-                        companyContainer.appendChild(companyName);
-    
                         // Create a carousel for the company
                         const carousel = document.createElement('div');
                         carousel.classList.add('carousel', 'slide');
@@ -172,6 +166,7 @@
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
+    
     
     
     
