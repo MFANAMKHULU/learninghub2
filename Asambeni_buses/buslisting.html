@@ -91,7 +91,6 @@
         &copy; 2024 Asambeni mkhaya Bus Booking System
     </footer> 
 
-    <!-- Add this script tag in the head section of your HTML -->
     <script>
         fetch('getimage.php')
             .then(response => response.json())
@@ -124,19 +123,56 @@
                         companyName.classList.add('company-name');
                         companyContainer.appendChild(companyName);
     
-                        // Create an image element for each image of the company
-                        groupedImages[company_id].forEach(item => {
+                        // Create a carousel for the company
+                        const carousel = document.createElement('div');
+                        carousel.classList.add('carousel', 'slide');
+                        carousel.setAttribute('data-ride', 'carousel');
+                        companyContainer.appendChild(carousel);
+    
+                        // Create carousel inner
+                        const inner = document.createElement('div');
+                        inner.classList.add('carousel-inner');
+                        carousel.appendChild(inner);
+    
+                        // Create carousel items for each image of the company
+                        groupedImages[company_id].forEach((item, index) => {
+                            const itemElement = document.createElement('div');
+                            itemElement.classList.add('carousel-item');
+                            if (index === 0) {
+                                itemElement.classList.add('active');
+                            }
+    
                             const imgElement = document.createElement('img');
                             imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
                             imgElement.alt = `Company ${company_id} Image`;
-                            imgElement.classList.add('company-image');
-                            companyContainer.appendChild(imgElement);
+                            imgElement.classList.add('company-image', 'd-block', 'w-100');
+    
+                            itemElement.appendChild(imgElement);
+                            inner.appendChild(itemElement);
                         });
+    
+                        // Add carousel controls
+                        const controlsPrev = document.createElement('a');
+                        controlsPrev.classList.add('carousel-control-prev');
+                        controlsPrev.href = '#' + company_id + 'Carousel';
+                        controlsPrev.setAttribute('role', 'button');
+                        controlsPrev.setAttribute('data-slide', 'prev');
+                        controlsPrev.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>';
+                        carousel.appendChild(controlsPrev);
+    
+                        const controlsNext = document.createElement('a');
+                        controlsNext.classList.add('carousel-control-next');
+                        controlsNext.href = '#' + company_id + 'Carousel';
+                        controlsNext.setAttribute('role', 'button');
+                        controlsNext.setAttribute('data-slide', 'next');
+                        controlsNext.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>';
+                        carousel.appendChild(controlsNext);
                     }
                 }
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
+    
     
     
     
