@@ -82,7 +82,8 @@
         <!-- Your homepage content goes here -->
         <h1>Welcome to the Bus Booking System - Available Buses</h1>
         
-        <div class="available-buses row" id="imageContainer">
+        <div id="carouselContainer"></div>
+
 
     </div>
 
@@ -106,22 +107,22 @@
                     groupedImages[item.company_id].push(item);
                 });
     
-                // Create a container for all images
-                const imageContainer = document.getElementById('imageContainer');
+                // Create a container for all carousels
+                const carouselContainer = document.getElementById('carouselContainer');
     
-                // Loop through each company and display images organized by company_id
+                // Loop through each company and create a carousel for each
                 for (const company_id in groupedImages) {
                     if (groupedImages.hasOwnProperty(company_id)) {
-                        // Create a container for the company
-                        const companyContainer = document.createElement('div');
-                        companyContainer.classList.add('company-container', 'mb-3');
-                        imageContainer.appendChild(companyContainer);
+                        // Create a carousel container
+                        const companyCarouselContainer = document.createElement('div');
+                        companyCarouselContainer.classList.add('company-carousel-container', 'mb-3');
+                        carouselContainer.appendChild(companyCarouselContainer);
     
                         // Create a carousel for the company
                         const carousel = document.createElement('div');
                         carousel.classList.add('carousel', 'slide');
                         carousel.setAttribute('data-ride', 'carousel');
-                        companyContainer.appendChild(carousel);
+                        companyCarouselContainer.appendChild(carousel);
     
                         // Create carousel inner
                         const inner = document.createElement('div');
@@ -166,6 +167,8 @@
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
+    
+    
     
     
     
