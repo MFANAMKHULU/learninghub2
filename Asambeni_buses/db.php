@@ -50,20 +50,29 @@ class BusBookingSystem
                 ('Intercape'),
                 ('Intercity')",*/
 
-                "CREATE TABLE IF NOT EXISTS CompanyImages (
+              /*  "CREATE TABLE IF NOT EXISTS CompanyImages (
                     image_id INT AUTO_INCREMENT PRIMARY KEY,
                     company_id INT,
                     image_name VARCHAR(255) NOT NULL, 
                     image_extension VARCHAR(255) NOT NULL,
                     FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-                )",
+                )",*/
     
     "INSERT INTO CompanyImages (company_id, image_name, image_extension) VALUES
-    ('1', 'greyhound', 'jpeg'),
-    ('1', 'greyhounddouble', 'jpg'),
-    ('2', 'intercape', 'jpeg'),  
-    ('2', 'intercapedoubledeck', 'jpeg'),
+    /*('1', 'greyhound', 'jpeg'),
+    ('1', 'greyhounddouble', 'jpg'),*/
+    ('1', 'GreyhoundSingleDecker', 'jpeg'),
+    ('1', 'greyhoundinterior', 'jpg'),
+    ('1', 'greyhoundinteriorbus', 'jpeg'),
+    /*('2', 'intercape', 'jpeg'),  
+    ('2', 'intercapedoubledeck', 'jpeg'),*/
+    ('2', 'intercapebus', 'jpeg'),  
+    ('2', 'intercapefleet', 'jpeg'),
+    ('2', 'intercapeinterior', 'jpeg'),  
+    ('2', 'intercapeseats', 'jpeg'),
     ('3', 'intercity', 'jpeg'),
+    ('3', 'intercityinterior', 'jpeg'),
+    ('3', 'intercityinterior2', 'jpeg'),
     ('3', 'intercityexterior', 'jpeg')"
 
 
