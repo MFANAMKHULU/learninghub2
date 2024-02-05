@@ -110,7 +110,7 @@
                 // Create a container for all images
                 const imageContainer = document.getElementById('imageContainer');
     
-                // Loop through each company and display all images
+                // Loop through each company and display images organized by company_id
                 for (const company_id in groupedImages) {
                     if (groupedImages.hasOwnProperty(company_id)) {
                         // Create a container for the company
@@ -120,7 +120,7 @@
     
                         // Add the name of the company at the top
                         const companyName = document.createElement('h2');
-                        companyName.textContent = groupedImages[company_id][0].company_name;
+                        companyName.textContent = `Company ${company_id}`;
                         companyName.classList.add('company-name');
                         companyContainer.appendChild(companyName);
     
@@ -137,6 +137,8 @@
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
+    
+    
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
