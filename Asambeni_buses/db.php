@@ -58,14 +58,14 @@ class BusBookingSystem
                     FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
                 )",*/
     
-    "INSERT INTO CompanyImages (company_id, image_name, image_extension) VALUES
-    /*('1', 'greyhound', 'jpeg'),
-    ('1', 'greyhounddouble', 'jpg'),*/
+    /*"INSERT INTO CompanyImages (company_id, image_name, image_extension) VALUES
+    ('1', 'greyhound', 'jpeg'),
+    ('1', 'greyhounddouble', 'jpg'),
     ('1', 'GreyhoundSingleDecker', 'jpeg'),
     ('1', 'greyhoundinterior', 'jpg'),
     ('1', 'greyhoundinteriorbus', 'jpeg'),
-    /*('2', 'intercape', 'jpeg'),  
-    ('2', 'intercapedoubledeck', 'jpeg'),*/
+    ('2', 'intercape', 'jpeg'),  
+    ('2', 'intercapedoubledeck', 'jpeg'),
     ('2', 'intercapebus', 'jpeg'),  
     ('2', 'intercapefleet', 'jpeg'),
     ('2', 'intercapeinterior', 'jpeg'),  
@@ -73,7 +73,7 @@ class BusBookingSystem
     ('3', 'intercity', 'jpeg'),
     ('3', 'intercityinterior', 'jpeg'),
     ('3', 'intercityinterior2', 'jpeg'),
-    ('3', 'intercityexterior', 'jpeg')"
+    ('3', 'intercityexterior', 'jpeg')"*/
 
 
            /* "CREATE TABLE IF NOT EXISTS Routes (
@@ -93,6 +93,18 @@ class BusBookingSystem
                 (2, 'Polokwane', 'Johannesburg', '09:00:00', '14:00:00'),
                 (3, 'East London', 'Pretoria', '09:00:00', '14:00:00'),
                 (3, 'Durban', 'Port Elizabeth', '10:00:00', '18:00:00')"*/
+
+                "CREATE TABLE reviews (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    rating INT NOT NULL,
+                    review TEXT NOT NULL,
+                    company_id INT, -- Add the company_id column
+                    FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
+                );"
+                
+                
         ];
         
         foreach ($queries as $query) {
