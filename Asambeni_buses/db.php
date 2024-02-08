@@ -96,13 +96,14 @@ class BusBookingSystem
 
                 "CREATE TABLE reviews (
                     id INT AUTO_INCREMENT PRIMARY KEY,
+                    company_id INT,
                     name VARCHAR(255) NOT NULL,
                     email VARCHAR(255) NOT NULL,
                     rating INT NOT NULL,
                     review TEXT NOT NULL,
-                    company_id INT, -- Add the company_id column
                     FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
-                );"
+                )",
+                
                 
                 
         ];
