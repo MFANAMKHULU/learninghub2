@@ -49,8 +49,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Display a thank you message
-    echo "Thank you for submitting your review!";
+    // Database connection details
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "Asambeni_buses";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Prepare and execute SQL query
+    $stmt = $conn->prepare("INSERT INTO reviews (company, name, email, rating, review) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $company, $name, $email, $rating, $review);
+
+    if ($stmt->execute()) {
+        echo "Thank you for submitting your review!";
+    } else {
+        echo "Error submitting review: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
 
 } else {
     // If the form is not submitted, redirect to the review page
