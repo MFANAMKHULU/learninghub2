@@ -58,10 +58,13 @@ displayed the images and routes for various buses
 
 
 
-02/04/2023
+02/04/2024
 attempted to display pictures
 
 
 02/08/2024
 inserted reviews to database
 moved contact and about us to home.html
+
+02/09/2024
+retrived comments from the database
