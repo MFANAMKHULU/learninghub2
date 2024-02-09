@@ -96,18 +96,13 @@
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Your homepage content goes here -->
-        <h1>Welcome to the Bus Booking System - Available Buses</h1>
-        <div class="available-buses row" id="imageContainer">
-
-        </div>
-        <!-- Add a link to review.html -->
-        <a href="review.html" class="btn btn-primary mt-3">Review</a>
-
-        <!-- Container for reviews -->
-    <div id="reviewsContainer" class="mt-4"></div>
-    </div>
+   <div class="container">
+    <!-- Your homepage content goes here -->
+    <h1>Welcome to the Bus Booking System - Available Buses</h1>
+    <div class="available-buses row" id="imageContainer"></div>
+    <!-- Add a link to review.html -->
+    <a href="review.html" class="btn btn-primary mt-3">Review</a>
+</div>
 
     <!-- Footer -->
     <footer>
@@ -115,42 +110,72 @@
     </footer>
 
     <script>
-        fetch('getimage.php')
-            .then(response => response.json())
-            .then(images => {
-                console.log('Fetched images:', images);
-
-                // Keep track of displayed companies to ensure only one image per company
-                const displayedCompanies = new Set();
-
-                images.forEach(item => {
-                    // Check if the company has already been displayed
-                    if (!displayedCompanies.has(item.company_id)) {
-                        // Create a container for the company
-                        const companyContainer = document.createElement('div');
-                        companyContainer.classList.add('company-container', 'mb-3');
-                        document.getElementById('imageContainer').appendChild(companyContainer);
-
-                        // Add the name of the company at the top
-                        const companyName = document.createElement('h2');
-                        companyName.textContent = item.company_name;
-                        companyName.classList.add('company-name');
-                        companyContainer.appendChild(companyName);
-
-                        // Create an image element for the first image of the company
-                        const imgElement = document.createElement('img');
-                        imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
-                        imgElement.alt = `Company ${item.company_id} Image`;
-                        imgElement.classList.add('company-image');
-                        companyContainer.appendChild(imgElement);
-
-                        // Add the company to the set of displayed companies
-                        displayedCompanies.add(item.company_id);
-                    }
+        // Function to display comments for a specific company
+        function displayComments(companyId, comments) {
+            const companyContainer = document.querySelector(`#imageContainer [data-company-id="${companyId}"]`);
+    
+            if (companyContainer) {
+                const commentsContainer = document.createElement('div');
+                commentsContainer.classList.add('comments-container');
+    
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
+                    commentsContainer.appendChild(commentElement);
                 });
+    
+                companyContainer.appendChild(commentsContainer);
+            }
+        }
+    
+        fetch('getreviews.php')
+            .then(response => response.json())
+            .then(comments => {
+                console.log('Fetched comments:', comments);
+    
+                // Group comments by company_id
+                const commentsByCompany = comments.reduce((acc, comment) => {
+                    if (!acc[comment.company_id]) {
+                        acc[comment.company_id] = [];
+                    }
+                    acc[comment.company_id].push(comment);
+                    return acc;
+                }, {});
+    
+                fetch('getimage.php')
+                    .then(response => response.json())
+                    .then(images => {
+                        console.log('Fetched images:', images);
+    
+                        images.forEach(item => {
+                            // Create a container for the company
+                            const companyContainer = document.createElement('div');
+                            companyContainer.classList.add('company-container', 'mb-3');
+                            companyContainer.dataset.companyId = item.company_id;
+
+    
+                            // Create an image element for the first image of the company
+                            const imgElement = document.createElement('img');
+                            imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
+                            imgElement.alt = `Company ${item.company_id} Image`;
+                            imgElement.classList.add('company-image');
+                            companyContainer.appendChild(imgElement);
+    
+                            // Display comments for the company
+                            const companyId = item.company_id;
+                            const companyComments = commentsByCompany[companyId] || [];
+                            displayComments(companyId, companyComments);
+    
+                            // Append the company container to the image container
+                            document.getElementById('imageContainer').appendChild(companyContainer);
+                        });
+                    })
+                    .catch(error => console.error('Fetch error:', error));
             })
             .catch(error => console.error('Fetch error:', error));
     </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
