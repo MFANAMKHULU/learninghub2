@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include the file containing the database connection script
-require_once('fetchroutes.php');
+require_once('db_connect.php');
 
 class BusBookingSystem
 {
@@ -27,8 +27,11 @@ class BusBookingSystem
     }
 }
 
+// Create a PDO instance
+$pdo = new PDO($dsn, $username, $password, $options);
+
 // Usage
-$busBookingSystem = new BusBookingSystem($pdo); 
+$busBookingSystem = new BusBookingSystem($pdo);
 $images = $busBookingSystem->getCompanyImages();
 
 header('Content-Type: application/json');

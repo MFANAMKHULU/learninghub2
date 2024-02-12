@@ -96,25 +96,20 @@
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Your homepage content goes here -->
+    <div class="container mt-5">
         <h1>Welcome to the Bus Booking System - Available Buses</h1>
 
-        <!-- Add a container for company carousels -->
+        <!-- Container for company carousels -->
         <div id="companyCarousels" class="mt-4"></div>
-
-        <!-- Add a button to view comments -->
-        <a href="#" class="btn btn-primary mt-3" id="viewCommentsBtn">View Comments</a>
     </div>
 
     <!-- Footer -->
     <footer>
         &copy; 2024 Asambeni mkhaya Bus Booking System
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('getimages.php')
+            fetch('getimage.php')
                 .then(response => response.json())
                 .then(images => {
                     console.log('Fetched images:', images);
@@ -144,6 +139,7 @@
                             const companyCarousel = document.createElement('div');
                             companyCarousel.classList.add('carousel', 'slide');
                             companyCarousel.setAttribute('data-ride', 'carousel');
+                            companyCarousel.id = `companyCarousel-${companyId}`; // Unique ID for each carousel
 
                             // Create inner container for carousel items
                             const carouselInner = document.createElement('div');
@@ -203,6 +199,8 @@
                 .catch(error => console.error('Fetch error:', error));
         });
     </script>
+
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

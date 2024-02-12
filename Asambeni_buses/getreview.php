@@ -2,7 +2,7 @@
 // getreviews.php
 
 // Include the database connection
-require('fetchroutes.php');
+require('db_connect.php');
 
 // Prepare and execute SQL query to fetch comments
 $sql = "SELECT * FROM reviews";
