@@ -15,27 +15,27 @@
 
         /* Navbar styles */
         .navbar {
-            background-color: #a50044 !important; /* FC Barcelona primary color */
+            background-color: #343a40 !important; /* Dark background color from home.html */
         }
 
         .navbar-brand,
         .nav-link {
-            color: #fff !important;
+            color: #ffc107 !important; /* Yellow color from home.html */
         }
 
         .navbar-brand:hover,
         .nav-link:hover {
-            color: #ffcc29 !important; /* FC Barcelona secondary color */
+            color: #007bff !important; /* Blue color from home.html */
         }
 
         /* Button styles */
         .btn-primary {
-            background-color: #a50044 !important; /* FC Barcelona primary color */
-            color: #fff;
+            background-color: #343a40 !important; /* Dark background color from home.html */
+            color: #ffc107;
         }
 
         .btn-primary:hover {
-            background-color: #ffcc29 !important; /* FC Barcelona secondary color */
+            background-color: #007bff !important; /* Blue color from home.html */
         }
 
         /* Additional styles */
@@ -48,6 +48,7 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #343a40; /* Dark background color from home.html */
         }
 
         .company-image {
@@ -61,7 +62,7 @@
         }
 
         footer {
-            background-color: #333;
+            background-color: #343a40; /* Dark background color from home.html */
             color: #fff;
             text-align: center;
             padding: 10px;
@@ -80,29 +81,31 @@
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="buslisting.html">Bus Listing</a>
+                    <a class="nav-link" href="booking.html">Booking </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="booking.html">Booking</a>
-                </li>
-               
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="review.html">Review coach company </a>
+                </li>
             </ul>
         </div>
     </nav>
 
-   <div class="container">
-    <!-- Your homepage content goes here -->
-    <h1>Welcome to the Bus Booking System - Available Buses</h1>
-    <div class="available-buses row" id="imageContainer"></div>
-    <!-- Add a link to review.html -->
-    <a href="review.html" class="btn btn-primary mt-3">Review</a>
-</div>
+    <div class="container">
+        <!-- Your homepage content goes here -->
+        <h1>Welcome to the Bus Booking System - Available Buses</h1>
+
+        <!-- Add a container for company carousels -->
+        <div id="companyCarousels" class="mt-4"></div>
+
+        <!-- Add a button to view comments -->
+        <a href="#" class="btn btn-primary mt-3" id="viewCommentsBtn">View Comments</a>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -110,72 +113,96 @@
     </footer>
 
     <script>
-        // Function to display comments for a specific company
-        function displayComments(companyId, comments) {
-            const companyContainer = document.querySelector(`#imageContainer [data-company-id="${companyId}"]`);
-    
-            if (companyContainer) {
-                const commentsContainer = document.createElement('div');
-                commentsContainer.classList.add('comments-container');
-    
-                comments.forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    commentElement.classList.add('comment');
-                    commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
-                    commentsContainer.appendChild(commentElement);
-                });
-    
-                companyContainer.appendChild(commentsContainer);
-            }
-        }
-    
-        fetch('getreviews.php')
-            .then(response => response.json())
-            .then(comments => {
-                console.log('Fetched comments:', comments);
-    
-                // Group comments by company_id
-                const commentsByCompany = comments.reduce((acc, comment) => {
-                    if (!acc[comment.company_id]) {
-                        acc[comment.company_id] = [];
-                    }
-                    acc[comment.company_id].push(comment);
-                    return acc;
-                }, {});
-    
-                fetch('getimage.php')
-                    .then(response => response.json())
-                    .then(images => {
-                        console.log('Fetched images:', images);
-    
-                        images.forEach(item => {
-                            // Create a container for the company
-                            const companyContainer = document.createElement('div');
-                            companyContainer.classList.add('company-container', 'mb-3');
-                            companyContainer.dataset.companyId = item.company_id;
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('getimages.php')
+                .then(response => response.json())
+                .then(images => {
+                    console.log('Fetched images:', images);
 
-    
-                            // Create an image element for the first image of the company
-                            const imgElement = document.createElement('img');
-                            imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + item.image_name + '.' + item.image_extension;
-                            imgElement.alt = `Company ${item.company_id} Image`;
-                            imgElement.classList.add('company-image');
-                            companyContainer.appendChild(imgElement);
-    
-                            // Display comments for the company
-                            const companyId = item.company_id;
-                            const companyComments = commentsByCompany[companyId] || [];
-                            displayComments(companyId, companyComments);
-    
-                            // Append the company container to the image container
-                            document.getElementById('imageContainer').appendChild(companyContainer);
-                        });
-                    })
-                    .catch(error => console.error('Fetch error:', error));
-            })
-            .catch(error => console.error('Fetch error:', error));
+                    // Group images by company_id
+                    const imagesByCompany = images.reduce((acc, image) => {
+                        if (!acc[image.company_id]) {
+                            acc[image.company_id] = [];
+                        }
+                        acc[image.company_id].push(image);
+                        return acc;
+                    }, {});
+
+                    // Get the container for company carousels
+                    const companyCarouselsContainer = document.getElementById('companyCarousels');
+
+                    // Iterate through each company
+                    for (const companyId in imagesByCompany) {
+                        if (imagesByCompany.hasOwnProperty(companyId)) {
+                            const companyImages = imagesByCompany[companyId];
+
+                            // Create a container for the company carousel
+                            const companyCarouselContainer = document.createElement('div');
+                            companyCarouselContainer.classList.add('company-carousel-container', 'mb-4');
+
+                            // Create a carousel for the company
+                            const companyCarousel = document.createElement('div');
+                            companyCarousel.classList.add('carousel', 'slide');
+                            companyCarousel.setAttribute('data-ride', 'carousel');
+
+                            // Create inner container for carousel items
+                            const carouselInner = document.createElement('div');
+                            carouselInner.classList.add('carousel-inner');
+
+                            // Iterate through each image for the company
+                            companyImages.forEach((image, index) => {
+                                const carouselItem = document.createElement('div');
+                                carouselItem.classList.add('carousel-item');
+
+                                // Create an image element for the company
+                                const imgElement = document.createElement('img');
+                                imgElement.src = 'http://localhost/learninghub2/Asambeni_buses/images/' + image.image_name + '.' + image.image_extension;
+                                imgElement.alt = `Company ${image.company_id} Image`;
+                                imgElement.classList.add('d-block', 'w-100');
+                                carouselItem.appendChild(imgElement);
+
+                                // Add the first item as active
+                                if (index === 0) {
+                                    carouselItem.classList.add('active');
+                                }
+
+                                // Append the carousel item to the inner container
+                                carouselInner.appendChild(carouselItem);
+                            });
+
+                            // Append the inner container to the carousel
+                            companyCarousel.appendChild(carouselInner);
+
+                            // Create controls for the carousel
+                            const prevControl = document.createElement('a');
+                            prevControl.classList.add('carousel-control-prev');
+                            prevControl.href = `#companyCarousel-${companyId}`;
+                            prevControl.role = 'button';
+                            prevControl.setAttribute('data-slide', 'prev');
+                            prevControl.innerHTML = `<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>`;
+
+                            const nextControl = document.createElement('a');
+                            nextControl.classList.add('carousel-control-next');
+                            nextControl.href = `#companyCarousel-${companyId}`;
+                            nextControl.role = 'button';
+                            nextControl.setAttribute('data-slide', 'next');
+                            nextControl.innerHTML = `<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>`;
+
+                            // Append controls to the carousel
+                            companyCarousel.appendChild(prevControl);
+                            companyCarousel.appendChild(nextControl);
+
+                            // Append the carousel to the company carousel container
+                            companyCarouselContainer.appendChild(companyCarousel);
+
+                            // Append the company carousel container to the main container
+                            companyCarouselsContainer.appendChild(companyCarouselContainer);
+                        }
+                    }
+                })
+                .catch(error => console.error('Fetch error:', error));
+        });
     </script>
-    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

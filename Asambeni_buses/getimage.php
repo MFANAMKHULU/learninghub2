@@ -2,31 +2,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Include the file containing the database connection script
+require_once('fetchroutes.php');
+
 class BusBookingSystem
 {
     private $pdo;
 
-    public function __construct()
+    public function __construct($pdo)
     {
-        try {
-            $host = 'localhost';
-            $username = 'root';
-            $password = '';
-            $databasename = 'asambeni_buses';
-            $charset = 'utf8mb4';
-
-            // Connect to the database
-            $dsn = "mysql:host=$host;dbname=$databasename;charset=$charset";
-            $options = [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
-            ];
-
-            $this->pdo = new PDO($dsn, $username, $password, $options);
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
-        }
+        $this->pdo = $pdo;
     }
 
     public function getCompanyImages()
@@ -43,7 +28,7 @@ class BusBookingSystem
 }
 
 // Usage
-$busBookingSystem = new BusBookingSystem();
+$busBookingSystem = new BusBookingSystem($pdo); 
 $images = $busBookingSystem->getCompanyImages();
 
 header('Content-Type: application/json');

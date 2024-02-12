@@ -1,22 +1,12 @@
 <?php
+// getreviews.php
 
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "Asambeni_buses";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Include the database connection
+require('fetchroutes.php');
 
 // Prepare and execute SQL query to fetch comments
 $sql = "SELECT * FROM reviews";
-$result = $conn->query($sql);
+$result = $pdo->query($sql);
 
 $comments = [];
 
@@ -31,10 +21,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Close the database connection
-$conn->close();
-
 // Return comments as JSON
 header('Content-Type: application/json');
 echo json_encode($comments);
-?>
