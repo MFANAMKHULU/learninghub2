@@ -87,19 +87,21 @@
     <script>
         // Fetch comments when the page loads
         document.addEventListener('DOMContentLoaded', fetchComments);
-
+    
         // Function to fetch and display all comments
         function fetchComments() {
             console.log('Fetching comments...');
-
+    
             // Fetch all comments
-            fetch('getreviews.php')
+            fetch('getreview.php')
                 .then(response => response.json())
                 .then(comments => {
+                    console.log('Fetched comments:', comments);
+    
                     // Display comments in the comments section
                     const commentsSection = document.getElementById('commentsSection');
                     commentsSection.innerHTML = ''; // Clear previous content
-
+    
                     if (comments.length === 0) {
                         commentsSection.innerHTML = '<p>No comments available.</p>';
                     } else {
@@ -113,6 +115,8 @@
                 .catch(error => console.error('Fetch error:', error));
         }
     </script>
+    
+    
 </body>
 
 </html>
