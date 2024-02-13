@@ -51,10 +51,6 @@
         .comment-container {
             margin-top: 20px;
         }
-
-        .comment-dropdown {
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 
@@ -67,37 +63,13 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="booking.html">Booking </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="review.html">Review coach company </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="comment.html">View comments </a>
-                </li>
+                <!-- Add other navigation links here -->
             </ul>
         </div>
     </nav>
 
     <div class="container comment-container">
         <h2>View Comments</h2>
-
-        <!-- Dropdown to select a company -->
-        <div class="comment-dropdown">
-            <label for="companySelect">Select Coach Company:</label>
-            <select class="form-control" id="companySelect" onchange="fetchComments()">
-                <option value="greyhound">Greyhound</option>
-                <option value="intercape">InterCape</option>
-                <option value="intercity">InterCity</option>
-            </select>
-        </div>
 
         <!-- Section to display comments -->
         <div id="commentsSection"></div>
@@ -116,15 +88,12 @@
         // Fetch comments when the page loads
         document.addEventListener('DOMContentLoaded', fetchComments);
 
-        // Function to fetch and display comments for the selected company
+        // Function to fetch and display all comments
         function fetchComments() {
             console.log('Fetching comments...');
 
-            const selectedCompany = document.getElementById('companySelect').value;
-            console.log('Selected Company:', selectedCompany);
-
-            // Fetch comments for the selected company
-            fetch(`getreview.php?companyId=${selectedCompany}`)
+            // Fetch all comments
+            fetch('getreviews.php')
                 .then(response => response.json())
                 .then(comments => {
                     // Display comments in the comments section
@@ -132,7 +101,7 @@
                     commentsSection.innerHTML = ''; // Clear previous content
 
                     if (comments.length === 0) {
-                        commentsSection.innerHTML = '<p>No comments available for this company.</p>';
+                        commentsSection.innerHTML = '<p>No comments available.</p>';
                     } else {
                         comments.forEach(comment => {
                             const commentElement = document.createElement('div');
