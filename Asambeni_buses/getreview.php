@@ -4,23 +4,22 @@
 // Include the database connection
 require('db_connect.php');
 
-// Prepare and execute SQL query to fetch comments
-$sql = "SELECT * FROM reviews";
-$result = $pdo->query($sql);
+try {
+    // Get the selected company ID from the query parameters
+    $selectedCompanyId = isset($_GET['companyId']) ? $_GET['companyId'] : null;
 
-$comments = [];
+    // Prepare and execute SQL query to fetch reviews for the selected company
+    $stmt = $pdo->prepare("SELECT * FROM reviews WHERE company_id = :companyId");
+    $stmt->bindParam(':companyId', $selectedCompanyId, PDO::PARAM_INT);
+    $stmt->execute();
 
-if ($result->num_rows > 0) {
-    // Fetch comments from the result set
-    while ($row = $result->fetch_assoc()) {
-        $comments[] = [
-            'company_id' => $row['company_id'],
-            'name' => $row['name'],
-            'review' => $row['review']
-        ];
-    }
+    // Fetch reviews from the result set
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Return reviews as JSON
+    header('Content-Type: application/json');
+    echo json_encode($reviews);
+} catch (PDOException $e) {
+    die("Error fetching reviews: " . $e->getMessage());
 }
-
-// Return comments as JSON
-header('Content-Type: application/json');
-echo json_encode($comments);
+?>

@@ -8,18 +8,19 @@
     <title>Review Coach Company</title>
     <style>
         /* Navbar styles */
-        .navbar {
-            background-color: #00529f; /* Barcelona blue background */
+       /* Navbar styles */
+       .navbar {
+            background-color: #343a40 !important; 
         }
 
         .navbar-brand,
         .nav-link {
-            color: #ffffff !important; /* White text color for the navbar links */
+            color: #ffc107 !important;
         }
 
         .navbar-brand:hover,
         .nav-link:hover {
-            color: #ffffff !important; /* White hover text color for the navbar links */
+            color: #007bff !important; 
         }
 
         /* Container styles */
@@ -27,27 +28,57 @@
             color: #000000; /* Black text color for the container content */
             margin-top: 20px; /* Add some space at the top */
         }
-
+    
         /* Button styles */
         .btn-primary {
-            background-color: #00529f; /* Barcelona blue background for primary buttons */
-            color: #ffffff; /* White text color for primary buttons */
+         background-color: #343a40 !important; 
+        color: #ffc107;
         }
 
         .btn-primary:hover {
-            background-color: #003366; /* Darker blue background on hover for primary buttons */
+            background-color: #007bff !important; 
+        }
+
+    
+        /* Form styles */
+        label {
+            color: #00529f; /* Barcelona blue color for labels */
+        }
+    
+        /* Word count styles */
+        .form-text {
+            color: #00529f; /* Barcelona blue color for form text */
         }
     </style>
+    
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#"> Asambeni mkhaya</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="home.html">Asambeni mkhaya</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="booking.html">Booking </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="review.html">Review coach company </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="comment.html">view comments </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container mt-5">
