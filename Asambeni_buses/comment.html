@@ -91,10 +91,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-        // Fetch comments when the page loads
-        document.addEventListener('DOMContentLoaded', fetchComments);
+// Fetch comments when the page loads
+document.addEventListener('DOMContentLoaded', fetchComments);
 
-        function fetchComments() {
+// Function to fetch and display comments for the selected company
+function fetchComments() {
     console.log('Fetching comments...');
 
     const selectedCompanyId = document.getElementById('companySelect').value;
@@ -120,11 +121,12 @@
             commentsSection.innerHTML = ''; // Clear previous content
 
             if (comments.length === 0) {
-                commentsSection.innerHTML = `<p>No comments available for this company.</p>`;
+                commentsSection.innerHTML = '<p>No comments available for this company.</p>';
             } else {
                 comments.forEach(comment => {
                     const commentElement = document.createElement('div');
-                    commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
+                    const formattedDate = new Date(comment.date).toLocaleDateString(); // Format the date
+                    commentElement.innerHTML = `<strong>${comment.name} (${formattedDate}):</strong> ${comment.review}`;
                     commentsSection.appendChild(commentElement);
                 });
             }
@@ -132,8 +134,8 @@
         .catch(error => console.error('Fetch error:', error));
 }
 
-    </script>
 
+</script>
 </body>
 
 </html>

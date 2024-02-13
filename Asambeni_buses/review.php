@@ -1,5 +1,8 @@
 <?php
 
+// Include the database connection file
+require_once 'db_connect.php';
+
 // Function to check if the name doesn't contain numbers and has at least one alphabet
 function isNameValid($name) {
     return preg_match('/[a-zA-Z]/', $name) && !preg_match('/[0-9]/', $name);
@@ -49,35 +52,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "Asambeni_buses";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
     // Assuming you have a function to retrieve the company_id based on the company name
     $company_id = getCompanyIdByName($company);
 
-    // Prepare and execute SQL query
-    $stmt = $conn->prepare("INSERT INTO reviews (company_id, name, email, rating, review) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("issis", $company_id, $name, $email, $rating, $review);
+    // Prepare and execute SQL query with the current date
+    $stmt = $pdo->prepare("INSERT INTO reviews (company_id, name, email, rating, review, date) VALUES (?, ?, ?, ?, ?, CURDATE())");
+    $stmt->execute([$company_id, $name, $email, $rating, $review]);
 
-    if ($stmt->execute()) {
+    if ($stmt->rowCount() > 0) {
         echo "Thank you for submitting your review!";
+        echo '<meta http-equiv="refresh" content="10;url=home.html">'; // Redirect after 10 seconds
+        exit();
     } else {
-        echo "Error submitting review: " . $stmt->error;
+        echo "Error submitting review.";
     }
-
-    $stmt->close();
-    $conn->close();
 
 } else {
     // If the form is not submitted, redirect to the review page
@@ -88,35 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Function to get company_id based on company name
 function getCompanyIdByName($companyName)
 {
-    // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "Asambeni_buses";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    global $pdo;
 
     // Prepare and execute SQL query
-    $stmt = $conn->prepare("SELECT company_id FROM BusCompanies WHERE company_name = ?");
-    $stmt->bind_param("s", $companyName);
-
-    $stmt->execute();
-
-    // Bind the result variable
-    $stmt->bind_result($companyId);
+    $stmt = $pdo->prepare("SELECT company_id FROM BusCompanies WHERE company_name = ?");
+    $stmt->execute([$companyName]);
 
     // Fetch the result
-    $stmt->fetch();
-
-    // Close statement and connection
-    $stmt->close();
-    $conn->close();
+    $companyId = $stmt->fetchColumn();
 
     // Return the company_id
     return $companyId;

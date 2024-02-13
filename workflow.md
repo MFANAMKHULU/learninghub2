@@ -69,3 +69,7 @@ moved contact and about us to home.html
 02/09/2024
 retrived comments from the database
 update scripts 
+
+
+02/13/2024
+displayed comments on the relevant page

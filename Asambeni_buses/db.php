@@ -101,8 +101,10 @@ class BusBookingSystem
                     email VARCHAR(255) NOT NULL,
                     rating INT NOT NULL,
                     review TEXT NOT NULL,
+                    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Added date column with default value
                     FOREIGN KEY (company_id) REFERENCES BusCompanies(company_id)
                 )",
+                
                 
                 
                 
