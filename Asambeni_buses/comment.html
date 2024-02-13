@@ -63,17 +63,23 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
-                <!-- Add other navigation links here -->
             </ul>
         </div>
     </nav>
 
-    <div class="container comment-container">
-        <h2>View Comments</h2>
-
-        <!-- Section to display comments -->
-        <div id="commentsSection"></div>
+    <!-- Add this inside your comment-dropdown div -->
+    <div class="comment-dropdown">
+        <label>Select Coach Company:</label>
+        <select class="form-control" id="companySelect" onchange="fetchComments()">
+            <option value="0" selected>Select Company</option>
+            <option value="1">Greyhound</option>
+            <option value="2">InterCape</option>
+            <option value="3">InterCity</option>
+        </select>
     </div>
+
+    <!-- Section to display comments -->
+    <div id="commentsSection" class="comment-container"></div>
 
     <!-- Footer -->
     <footer>
@@ -87,36 +93,47 @@
     <script>
         // Fetch comments when the page loads
         document.addEventListener('DOMContentLoaded', fetchComments);
-    
-        // Function to fetch and display all comments
+
         function fetchComments() {
-            console.log('Fetching comments...');
-    
-            // Fetch all comments
-            fetch('getreview.php')
-                .then(response => response.json())
-                .then(comments => {
-                    console.log('Fetched comments:', comments);
-    
-                    // Display comments in the comments section
-                    const commentsSection = document.getElementById('commentsSection');
-                    commentsSection.innerHTML = ''; // Clear previous content
-    
-                    if (comments.length === 0) {
-                        commentsSection.innerHTML = '<p>No comments available.</p>';
-                    } else {
-                        comments.forEach(comment => {
-                            const commentElement = document.createElement('div');
-                            commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
-                            commentsSection.appendChild(commentElement);
-                        });
-                    }
-                })
-                .catch(error => console.error('Fetch error:', error));
-        }
+    console.log('Fetching comments...');
+
+    const selectedCompanyId = document.getElementById('companySelect').value;
+
+    if (selectedCompanyId === '0') {
+        console.error('No company selected');
+        return;
+    }
+
+    // Fetch comments for the selected company
+    fetch(`getreview.php?companyId=${selectedCompanyId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(comments => {
+            console.log('Fetched comments:', comments);
+
+            // Display comments in the comments section
+            const commentsSection = document.getElementById('commentsSection');
+            commentsSection.innerHTML = ''; // Clear previous content
+
+            if (comments.length === 0) {
+                commentsSection.innerHTML = `<p>No comments available for this company.</p>`;
+            } else {
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
+                    commentsSection.appendChild(commentElement);
+                });
+            }
+        })
+        .catch(error => console.error('Fetch error:', error));
+}
+
     </script>
-    
-    
+
 </body>
 
 </html>
