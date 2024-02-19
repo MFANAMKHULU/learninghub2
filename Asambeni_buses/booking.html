@@ -165,7 +165,8 @@
                 <input type="text" class="form-control" id="totalPrice" readonly>
             </div>
 
-            <button type="button" onclick="validateForm()">Payment</button>
+            <button type="button" onclick="validateForm()">Proceed</button>
+
         </form>
 
     </div>
@@ -263,7 +264,7 @@
             return /^\d{13}$/.test(id);
         }
 
-       // Function to validate the form and redirect to confirmation.html
+       // Function to validate the form
 function validateForm() {
     var busType = $('#busType').val();
     var route = $('#routeDropdown').val();
@@ -275,51 +276,29 @@ function validateForm() {
     var id = $('#id').val();
     var email = $('#email').val();
 
-    // Validate name
-    if (!isValidName(name)) {
-        alert("Invalid name. Please enter a valid name.");
-        return false;
-    }
+    // Validate name, surname, ID, and other form fields...
 
-    // Validate surname
-    if (!isValidName(surname)) {
-        alert("Invalid surname. Please enter a valid surname.");
-        return false;
-    }
+    // Assuming all validations pass, store the booking details in localStorage
+    var bookingDetails = {
+        busType: busType,
+        route: route,
+        date: date,
+        numChildren: numChildren,
+        numAdults: numAdults,
+        name: name,
+        surname: surname,
+        id: id,
+        email: email
+    };
 
-    // Validate South African ID number
-    if (!isValidSAID(id)) {
-        alert("Invalid South African ID number. Please enter a valid ID number.");
-        return false;
-    }
-
-    // Validate the number of adults
-    if (numAdults < 1) {
-        alert("Number of adults must be at least 1.");
-        return false;
-    }
-
-     // Save booking details to localStorage
-     saveBookingDetailsToStorage({
-            busType: busType,
-            route: route,
-            date: date,
-            departureTime: departureTime,
-            arrivalTime: arrivalTime,
-            numChildren: numChildren,
-            numAdults: numAdults,
-            name: name,
-            surname: surname,
-            id: id,
-            email: email,
-            totalPrice: totalPrice
-        });
-
+    // Store booking details in localStorage
+    localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
 
     // Redirect to confirmation.html
     window.location.href = "confirmation.html";
-    return true;
 }
+
+
 
     </script>
 
