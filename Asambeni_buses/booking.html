@@ -215,7 +215,7 @@
                             pricePerChild = 1750;
                             pricePerAdult = 1300;
                             break;
-                        // Add more cases as needed
+                        
                     }
                     break;
                 case 'intercape':
@@ -228,7 +228,7 @@
                             pricePerChild = 1500;
                             pricePerAdult = 1150;
                             break;
-                        // Add more cases as needed
+                        
                     }
                     break;
                 case 'intercity':
@@ -241,7 +241,7 @@
                             pricePerChild = 1450;
                             pricePerAdult = 1100;
                             break;
-                        // Add more cases as needed
+            
                     }
                     break;
             }
@@ -263,46 +263,64 @@
             return /^\d{13}$/.test(id);
         }
 
-        // Function to validate the form
-        function validateForm() {
-            var busType = $('#busType').val();
-            var route = $('#routeDropdown').val();
-            var date = $('#date').val();
-            var numChildren = $('#numChildren').val();
-            var numAdults = $('#numAdults').val();
-            var name = $('#name').val();
-            var surname = $('#surname').val();
-            var id = $('#id').val();
-            var email = $('#email').val();
+       // Function to validate the form and redirect to confirmation.html
+function validateForm() {
+    var busType = $('#busType').val();
+    var route = $('#routeDropdown').val();
+    var date = $('#date').val();
+    var numChildren = $('#numChildren').val();
+    var numAdults = $('#numAdults').val();
+    var name = $('#name').val();
+    var surname = $('#surname').val();
+    var id = $('#id').val();
+    var email = $('#email').val();
 
-            // Validate name
-            if (!isValidName(name)) {
-                alert("Invalid name. Please enter a valid name.");
-                return false;
-            }
+    // Validate name
+    if (!isValidName(name)) {
+        alert("Invalid name. Please enter a valid name.");
+        return false;
+    }
 
-            // Validate surname
-            if (!isValidName(surname)) {
-                alert("Invalid surname. Please enter a valid surname.");
-                return false;
-            }
+    // Validate surname
+    if (!isValidName(surname)) {
+        alert("Invalid surname. Please enter a valid surname.");
+        return false;
+    }
 
-            // Validate South African ID number
-            if (!isValidSAID(id)) {
-                alert("Invalid South African ID number. Please enter a valid ID number.");
-                return false;
-            }
+    // Validate South African ID number
+    if (!isValidSAID(id)) {
+        alert("Invalid South African ID number. Please enter a valid ID number.");
+        return false;
+    }
 
-            // Validate the number of adults
-            if (numAdults < 1) {
-                alert("Number of adults must be at least 1.");
-                return false;
-            }
+    // Validate the number of adults
+    if (numAdults < 1) {
+        alert("Number of adults must be at least 1.");
+        return false;
+    }
 
-            // Redirect to payment.html
-            window.location.href = "payment.html";
-            return true;
-        }
+     // Save booking details to localStorage
+     saveBookingDetailsToStorage({
+            busType: busType,
+            route: route,
+            date: date,
+            departureTime: departureTime,
+            arrivalTime: arrivalTime,
+            numChildren: numChildren,
+            numAdults: numAdults,
+            name: name,
+            surname: surname,
+            id: id,
+            email: email,
+            totalPrice: totalPrice
+        });
+
+
+    // Redirect to confirmation.html
+    window.location.href = "confirmation.html";
+    return true;
+}
+
     </script>
 
 </body>
