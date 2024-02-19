@@ -2,7 +2,6 @@ $(document).ready(function () {
     // Fetch booking details after payment (this could be done server-side)
     fetchBookingDetails();
 
-    // You can add additional logic or API calls here
 });
 
 function fetchBookingDetails() {

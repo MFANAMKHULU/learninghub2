@@ -15,7 +15,8 @@
         <h2>Booking Confirmation</h2>
 
         <!-- Display the user's ticket details here -->
-        <div id="ticketDetailsContainer"></div>
+        <div id="userDetailsContainer"></div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -23,6 +24,50 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="fetchroutes.js"></script>
     <script src="confirmation.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Event listener for form submission
+            $('form').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+    
+                // Capture form values
+                var busType = $('#busType').val();
+                var route = $('#routeDropdown').val();
+                var date = $('#date').val();
+                var departureTime = $('#departureTime').text();
+                var arrivalTime = $('#arrivalTime').text();
+                var numChildren = $('#numChildren').val();
+                var numAdults = $('#numAdults').val();
+                var name = $('#name').val();
+                var surname = $('#surname').val();
+                var id = $('#id').val();
+                var email = $('#email').val();
+                var totalPrice = $('#totalPrice').val();
+    
+                // Create HTML content with user details
+                var userDetailsHTML = `
+                    <h3>User Details</h3>
+                    <p><strong>Coach Company:</strong> ${busType}</p>
+                    <p><strong>Bus Route:</strong> ${route}</p>
+                    <p><strong>Date of Travel:</strong> ${date}</p>
+                    <p><strong>Departure Time:</strong> ${departureTime}</p>
+                    <p><strong>Arrival Time:</strong> ${arrivalTime}</p>
+                    <p><strong>Number of Children:</strong> ${numChildren}</p>
+                    <p><strong>Number of Adults:</strong> ${numAdults}</p>
+                    <p><strong>Name:</strong> ${name} ${surname}</p>
+                    <p><strong>ID Number:</strong> ${id}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Total Price:</strong> ${totalPrice}</p>
+                `;
+    
+                // Update the userDetailsContainer with the captured information
+                $('#userDetailsContainer').html(userDetailsHTML);
+            });
+        });
+    </script>
+    
+    
 
 </body>
 

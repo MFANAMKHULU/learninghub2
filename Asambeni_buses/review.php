@@ -60,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute([$company_id, $name, $email, $rating, $review]);
 
     if ($stmt->rowCount() > 0) {
-        // Payment successful, redirect to confirmation.html
-        header("Location: confirmation.html");
+        echo "Thank you for submitting your review!";
+        echo '<meta http-equiv="refresh" content="10;url=home.html">'; // Redirect after 10 seconds
         exit();
     } else {
         echo "Error submitting review.";

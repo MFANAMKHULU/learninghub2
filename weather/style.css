@@ -1,0 +1,69 @@
+/* Global styling for the entire page */
+body {
+    font-family: Arial, sans-serif; /* Set the font family for the entire page */
+    background-color: #f5f5f5; /* Set the background color for the page */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Use flexbox for centering content */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    height: 100vh; /* Set height to 100% of the viewport height */
+}
+
+/* Styling for the main container */
+.container {
+    text-align: center; /* Center text within the container */
+}
+
+/* Styling for the button */
+button {
+    padding: 10px; /* Add padding to the button */
+    margin-top: 10px; /* Add top margin to the button */
+    cursor: pointer; /* Set cursor to pointer on hover */
+    background-color: #4CAF50; /* Set button background color */
+    color: white; /* Set button text color */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Add border radius to the button */
+}
+
+/* Styling for the container of weather cards */
+.weather-cards {
+    display: flex; /* Use flexbox for weather cards */
+    justify-content: space-around; /* Space around weather cards */
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    margin-top: 20px; /* Add top margin to the weather cards */
+}
+
+/* Styling for each individual weather card */
+.weather-card {
+    background-color: #f8f8f8; /* Set background color for the card */
+    padding: 15px; /* Add padding to the card */
+    margin: 10px; /* Add margin to the card */
+    border-radius: 10px; /* Add border radius to the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow to the card */
+    width: 200px; /* Set fixed width for the card */
+    text-align: center; /* Center text within the card */
+    transition: transform 0.3s ease-in-out; /* Add transition effect on hover */
+}
+
+/* Styling for strong elements within weather cards */
+.weather-card strong {
+    display: block; /* Make strong element a block-level element */
+    margin-bottom: 10px; /* Add bottom margin to the strong element */
+    font-size: 18px; /* Set font size for the strong element */
+}
+
+/* Styling for paragraph elements within weather cards */
+.weather-card p {
+    margin: 0; /* Remove margin for paragraph elements */
+}
+
+/* Hover effect for weather cards */
+.weather-card:hover {
+    transform: scale(1.05); /* Scale the card on hover */
+}
+
+/* Styling for images within weather cards */
+.weather-card img {
+    max-width: 80px; /* Set maximum width for images within cards */
+}
+

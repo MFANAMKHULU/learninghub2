@@ -25,23 +25,19 @@
         .nav-link:hover {
             color: #007bff !important; /* Blue color from home.html */
         }
+
         .container {
-            color: #000000;
-            /* Black text color for the container content */
-            margin-top: 20px;
-            /* Add some space at the top */
+            color: #000000; /* Black text color for the container content */
+            margin-top: 20px; /* Add some space at the top */
         }
 
         .btn-success {
-            background-color: #0079e7;
-            /* Barcelona blue background for success buttons */
-            color: #ffffff;
-            /* White text color for success buttons */
+            background-color: #0079e7; /* Barcelona blue background for success buttons */
+            color: #ffffff; /* White text color for success buttons */
         }
 
         .btn-success:hover {
-            background-color: #00529f;
-            /* Darker blue background on hover for success buttons */
+            background-color: #00529f; /* Darker blue background on hover for success buttons */
         }
 
         #priceDisplay {
@@ -66,16 +62,19 @@
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="booking.html">Booking </a>
+                    <a class="nav-link" href="booking.html">Booking</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="aboutpage.html">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="review.html">Review coach company </a>
+                    <a class="nav-link" href="hirebus.html">Hire bus</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="comment.html">view comments </a>
+                    <a class="nav-link" href="review.html">Review coach company</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="comment.html">View comments</a>
                 </li>
             </ul>
         </div>
@@ -96,8 +95,16 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="route">Bus Route</label>
-                    <select class="form-control" id="routeDropdown"></select>
+                    <label for="routeDropdown">Route</label>
+                    <select class="form-control" id="routeDropdown">
+                        <!-- Options for Greyhound -->
+                        <option value="1">Route 1</option>
+                        <option value="2">Route 2</option>
+
+                        <!-- Options for Intercape -->
+                        <option value="3">Route 3</option>
+                        <option value="4">Route 4</option>
+                    </select>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -152,14 +159,13 @@
                 </div>
             </div>
 
-            <div id="routeContainer"></div>
             <!-- Display calculated price -->
             <div class="form-group">
                 <label for="priceDisplay">Total Price</label>
                 <input type="text" class="form-control" id="totalPrice" readonly>
             </div>
 
-            <button type="submit">Payment</button>
+            <button type="button" onclick="validateForm()">Payment</button>
         </form>
 
     </div>
@@ -170,77 +176,82 @@
             $('#busType').on('change', function () {
                 var selectedBus = $(this).val();
                 fetchRoutes(selectedBus); // Fetch routes based on the selected bus
+                calculateTotalPrice(); // Recalculate total price when bus type changes
             });
 
             // Clear and hide the price display when the bus company changes
             $('#priceDisplay').empty().hide();
+
+            // Event listener for route selection
+            $('#routeDropdown').on('change', function () {
+                calculateTotalPrice(); // Recalculate total price when route changes
+            });
+
+            // Event listener for the number of children and adults changes
+            $('#numChildren, #numAdults').on('change', function () {
+                calculateTotalPrice(); // Recalculate total price when the number of passengers changes
+            });
         });
 
         // Function to calculate total price
-        function calculateTotalPrice(numChildren, numAdults, busCompany, routeId) {
-    var pricePerChild;
-    var pricePerAdult;
-
-    // Set pricing based on bus company and route 
-    switch (busCompany) {
-        case 'greyhound':
-            switch (routeId) {
-                case '1':
-                    pricePerChild = 1650;
-                    pricePerAdult = 1200;
-                    break;
-                
-            }
-            break;
-        case 'intercape':
-            switch (routeId) {
-                case '2':
-                    pricePerChild = 1400;
-                    pricePerAdult = 1050;
-                    break;
-               
-            }
-            break;
-        case 'intercity':
-            switch (routeId) {
-                case '3':
-                    pricePerChild = 1350;
-                    pricePerAdult = 1000;
-                    break;
-                
-            }
-        
-            break;
-        
-    }
-
-    var totalPrice = (numChildren * pricePerChild) + (numAdults * pricePerAdult);
-
-    // Display the total price
-    $('#totalPrice').val(totalPrice);
-    $('#priceDisplay').html('Total Price: $' + totalPrice).show();
-}
-
-
-        // Event listener for route selection
-        $('#routeDropdown').on('change', function () {
+        function calculateTotalPrice() {
             var numChildren = parseInt($('#numChildren').val()) || 0;
             var numAdults = parseInt($('#numAdults').val()) || 0;
             var busCompany = $('#busType').val();
-            var routeId = $(this).val();
+            var routeId = $('#routeDropdown').val(); // Fetch routeId directly from the dropdown
 
-            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-        });
+            var pricePerChild;
+            var pricePerAdult;
 
-        // Event listener for the number of children and adults changes
-        $('#numChildren, #numAdults').on('change', function () {
-            var numChildren = parseInt($('#numChildren').val()) || 0;
-            var numAdults = parseInt($('#numAdults').val()) || 0;
-            var busCompany = $('#busType').val();
-            var routeId = $('#routeDropdown').val();
+            // Set pricing based on bus company and route 
+            switch (busCompany) {
+                case 'greyhound':
+                    switch (routeId) {
+                        case '1':
+                            pricePerChild = 1650;
+                            pricePerAdult = 1200;
+                            break;
+                        case '2':
+                            pricePerChild = 1750;
+                            pricePerAdult = 1300;
+                            break;
+                        // Add more cases as needed
+                    }
+                    break;
+                case 'intercape':
+                    switch (routeId) {
+                        case '3':
+                            pricePerChild = 1400;
+                            pricePerAdult = 1050;
+                            break;
+                        case '4':
+                            pricePerChild = 1500;
+                            pricePerAdult = 1150;
+                            break;
+                        // Add more cases as needed
+                    }
+                    break;
+                case 'intercity':
+                    switch (routeId) {
+                        case '5':
+                            pricePerChild = 1350;
+                            pricePerAdult = 1000;
+                            break;
+                        case '6':
+                            pricePerChild = 1450;
+                            pricePerAdult = 1100;
+                            break;
+                        // Add more cases as needed
+                    }
+                    break;
+            }
 
-            calculateTotalPrice(numChildren, numAdults, busCompany, routeId);
-        });
+            var totalPrice = numChildren * pricePerChild + numAdults * pricePerAdult;
+
+            // Display the total price
+            $('#totalPrice').val(totalPrice);
+            $('#priceDisplay').html('Total Price: $' + totalPrice).show();
+        }
 
         // Function to validate name
         function isValidName(name) {
@@ -292,12 +303,6 @@
             window.location.href = "payment.html";
             return true;
         }
-
-        // Attach the validateForm function to the form's submit event
-        $('form').on('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting
-            validateForm(); // Call the validation function
-        });
     </script>
 
 </body>

@@ -75,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Display a success message
     echo "Payment successful! Thank you for your purchase.";
 
-    // Redirect to home.html
-   /* header("Location: home.html");
-    exit();*/
+    // Redirect to confirmation.html
+    header("Location: confirmation.html");
+    exit();
     
 } else {
     // If the form is not submitted, redirect to the payment page
