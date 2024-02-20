@@ -1,11 +1,11 @@
+<!-- confirmation.html -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Comment page</title>
+    <title>Confirmation</title>
 
     <style>
         body {
@@ -53,123 +53,50 @@
         }
     </style>
 </head>
-
 <body>
+    <h2>Booking Confirmation</h2>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="home.html">Asambeni mkhaya</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="comment-dropdown">
-        <label>Select Coach Company:</label>
-        <select class="form-control" id="companySelect" onchange="fetchComments()">
-            <option value="0" selected>Select Company</option>
-            <option value="1">Greyhound</option>
-            <option value="2">InterCape</option>
-            <option value="3">InterCity</option>
-        </select>
+    <div id="bookingDetails">
+        <!-- Booking details will be dynamically inserted here -->
     </div>
 
-    <div class="form-group">
-        <label for="sortComments">Sort Comments By:</label>
-        <select class="form-control" id="sortComments" onchange="fetchComments()">
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-        </select>
+    <div>
+        <button class="btn-primary" onclick="goToPayment()">Go to Payment</button>
+        <button class="btn-primary" onclick="goBackToBooking()">Go Back to Booking</button>
     </div>
-
-    <div class="form-group">
-        <label for="sortOrder">Sort Order:</label>
-        <select class="form-control" id="sortOrder" onchange="fetchComments()">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
-    </div>
-    
-
-    <!-- Section to display comments -->
-    <div id="commentsSection" class="comment-container"></div>
-
-    <!-- Footer -->
-    <footer>
-        &copy; 2024 Asambeni mkhaya Bus Booking System
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-// Fetch comments when the page loads
-document.addEventListener('DOMContentLoaded', fetchComments);
+        // Retrieve booking details from localStorage
+        var bookingDetails = JSON.parse(localStorage.getItem('bookingDetails'));
 
-// Function to fetch and display comments for the selected company
-function fetchComments() {
-    console.log('Fetching comments...');
+        // Display booking details on the page
+        if (bookingDetails) {
+            var bookingHtml = '<p><strong>Bus Type:</strong> ' + bookingDetails.busType + '</p>' +
+                              '<p><strong>Route:</strong> ' + bookingDetails.route + '</p>' +
+                              '<p><strong>Date:</strong> ' + bookingDetails.date + '</p>' +
+                              '<p><strong>Number of Children:</strong> ' + bookingDetails.numChildren + '</p>' +
+                              '<p><strong>Number of Adults:</strong> ' + bookingDetails.numAdults + '</p>' +
+                              '<p><strong>Name:</strong> ' + bookingDetails.name + '</p>' +
+                              '<p><strong>Surname:</strong> ' + bookingDetails.surname + '</p>' +
+                              '<p><strong>ID:</strong> ' + bookingDetails.id + '</p>' +
+                              '<p><strong>Email:</strong> ' + bookingDetails.email + '</p>';
 
-    const selectedCompanyId = document.getElementById('companySelect').value;
-    const selectedSortOption = document.getElementById('sortComments').value;
-    const selectedSortOrder = document.getElementById('sortOrder').value;
+            // Insert the HTML into the #bookingDetails element
+            document.getElementById('bookingDetails').innerHTML = bookingHtml;
+        } else {
+            // If no booking details found, display a message
+            document.getElementById('bookingDetails').innerHTML = '<p>No booking details found.</p>';
+        }
 
-    if (selectedCompanyId === '0') {
-        console.error('No company selected');
-        return;
-    }
+        // Function to go to payment.html
+        function goToPayment() {
+            window.location.href = "payment.html";
+        }
 
-    // Fetch comments for the selected company and sorting option
-    fetch(`getreview.php?companyId=${selectedCompanyId}&sort=${selectedSortOption}&order=${selectedSortOrder}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(comments => {
-            console.log('Fetched comments:', comments);
-
-            // Sorting logic
-            comments.sort((a, b) => {
-                let result = 0;
-
-                if (selectedSortOption === 'date') {
-                    result = selectedSortOrder === 'asc'
-                        ? new Date(a.date) - new Date(b.date)
-                        : new Date(b.date) - new Date(a.date);
-                } else if (selectedSortOption === 'name') {
-                    result = selectedSortOrder === 'asc'
-                        ? a.name.localeCompare(b.name)
-                        : b.name.localeCompare(a.name);
-                }
-
-                return result;
-            });
-
-            // Display comments in the comments section
-            const commentsSection = document.getElementById('commentsSection');
-            commentsSection.innerHTML = ''; // Clear previous content
-
-            if (comments.length === 0) {
-                commentsSection.innerHTML = '<p>No comments available for this company.</p>';
-            } else {
-                comments.forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    const formattedDate = new Date(comment.date).toLocaleDateString(); // Format the date
-                    commentElement.innerHTML = `<strong>${comment.name} (${formattedDate}):</strong> ${comment.review}`;
-                    commentsSection.appendChild(commentElement);
-                });
-            }
-        })
-        .catch(error => console.error('Fetch error:', error));
-}
-
-</script>
+        // Function to go back to booking.html
+        function goBackToBooking() {
+            window.location.href = "booking.html";
+        }
+    </script>
 </body>
-
 </html>
