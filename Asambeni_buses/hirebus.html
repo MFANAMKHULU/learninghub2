@@ -1,3 +1,5 @@
+<!-- hirebus.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +10,7 @@
     <title>Hire a Bus</title>
     <style>
         /* Navbar styles */
-         .navbar {
+        .navbar {
             background-color: #343a40 !important; /* Dark background color from home.html */
         }
 
@@ -21,13 +23,14 @@
         .nav-link:hover {
             color: #007bff !important; /* Blue color from home.html */
         }
+
         /* Container styles */
         .container {
             color: #000000; /* Black text color for the container content */
             margin-top: 20px; /* Add some space at the top */
         }
 
-       /* Button styles */
+        /* Button styles */
         .btn-primary {
             background-color: #343a40 !important; /* Dark background color from home.html */
             color: #ffc107;
@@ -130,15 +133,15 @@
             </div>
 
             <!-- Submit button -->
-            <a href="payment.html" class="btn btn-primary">Submit</a>
+           <button type="button" class="btn btn-primary" onclick="confirmBooking()">Submit</button>
+
         </form>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function calculatePrice() {
+       function calculatePrice() {
             // Get the selected bus type
             const busType = document.getElementById('busType').value;
 
@@ -186,7 +189,41 @@
             }
         }
 
-     
+        function confirmBooking() {
+    // Get form data
+    const formData = {
+        company: document.getElementById('company').value,
+        busType: document.getElementById('busType').value,
+        source: document.getElementById('source').value,
+        destination: document.getElementById('destination').value,
+        distance: document.getElementById('distance').value,
+        departureDate: document.getElementById('departureDate').value,
+        returnDate: document.getElementById('returnDate').value,
+        estimatedPrice: document.getElementById('priceDisplay').value
+    };
+
+    // Create confirmation message
+    const confirmationMessage = `
+        Please confirm the following details:
+        Company: ${formData.company}
+        Bus Type: ${formData.busType}
+        Source: ${formData.source}
+        Destination: ${formData.destination}
+        Distance: ${formData.distance} km
+        Departure Date: ${formData.departureDate}
+        Return Date: ${formData.returnDate}
+        Estimated Price: ${formData.estimatedPrice}`;
+
+    // Ask for confirmation
+    if (confirm(confirmationMessage)) {
+        // Proceed to payment page
+        window.location.href = "payment.html";
+    } else {
+        // Go back to hirebus
+        window.location.href = "hirebus.html";
+    }
+}
+
     </script>
 </body>
 
