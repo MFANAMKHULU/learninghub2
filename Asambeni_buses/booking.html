@@ -179,31 +179,37 @@
                 fetchRoutes(selectedBus); // Fetch routes based on the selected bus
                 calculateTotalPrice(); // Recalculate total price when bus type changes
             });
-
+    
             // Clear and hide the price display when the bus company changes
             $('#priceDisplay').empty().hide();
-
+    
             // Event listener for route selection
             $('#routeDropdown').on('change', function () {
                 calculateTotalPrice(); // Recalculate total price when route changes
             });
-
+    
             // Event listener for the number of children and adults changes
             $('#numChildren, #numAdults').on('change', function () {
                 calculateTotalPrice(); // Recalculate total price when the number of passengers changes
             });
+    
+            // Attach the validateForm function to the form's submit event
+            $('form').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+                validateForm(); // Call the validation function
+            });
         });
-
+    
         // Function to calculate total price
         function calculateTotalPrice() {
             var numChildren = parseInt($('#numChildren').val()) || 0;
             var numAdults = parseInt($('#numAdults').val()) || 0;
             var busCompany = $('#busType').val();
             var routeId = $('#routeDropdown').val(); // Fetch routeId directly from the dropdown
-
+    
             var pricePerChild;
             var pricePerAdult;
-
+    
             // Set pricing based on bus company and route 
             switch (busCompany) {
                 case 'greyhound':
@@ -216,7 +222,6 @@
                             pricePerChild = 1750;
                             pricePerAdult = 1300;
                             break;
-                        
                     }
                     break;
                 case 'intercape':
@@ -229,7 +234,6 @@
                             pricePerChild = 1500;
                             pricePerAdult = 1150;
                             break;
-                        
                     }
                     break;
                 case 'intercity':
@@ -242,65 +246,168 @@
                             pricePerChild = 1450;
                             pricePerAdult = 1100;
                             break;
-            
                     }
                     break;
             }
-
+    
             var totalPrice = numChildren * pricePerChild + numAdults * pricePerAdult;
-
+    
             // Display the total price
             $('#totalPrice').val(totalPrice);
             $('#priceDisplay').html('Total Price: $' + totalPrice).show();
         }
-
-        // Function to validate name
-        function isValidName(name) {
-            return /^[a-zA-Z]+$/.test(name);
+    
+        // Function to validate the form
+        function validateForm() {
+            var busType = $('#busType').val();
+            var route = $('#routeDropdown').val();
+            var date = $('#date').val();
+            var numChildren = $('#numChildren').val();
+            var numAdults = $('#numAdults').val();
+            var name = $('#name').val();
+            var surname = $('#surname').val();
+            var id = $('#id').val();
+            var email = $('#email').val();
+    
+            // Assuming all validations pass, store the booking details in localStorage
+            var bookingDetails = {
+                busType: busType,
+                route: route,
+                date: date,
+                numChildren: numChildren,
+                numAdults: numAdults,
+                name: name,
+                surname: surname,
+                id: id,
+                email: email
+            };
+    
+            // Store booking details in localStorage
+            localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
+    
+            // Redirect to confirmation.html
+            window.location.href = "confirmation.html";
         }
-
-        // Function to validate South African ID number
-        function isValidSAID(id) {
-            return /^\d{13}$/.test(id);
-        }
-
-       // Function to validate the form
-function validateForm() {
-    var busType = $('#busType').val();
-    var route = $('#routeDropdown').val();
-    var date = $('#date').val();
-    var numChildren = $('#numChildren').val();
-    var numAdults = $('#numAdults').val();
-    var name = $('#name').val();
-    var surname = $('#surname').val();
-    var id = $('#id').val();
-    var email = $('#email').val();
-
-    // Validate name, surname, ID, and other form fields...
-
-    // Assuming all validations pass, store the booking details in localStorage
-    var bookingDetails = {
-        busType: busType,
-        route: route,
-        date: date,
-        numChildren: numChildren,
-        numAdults: numAdults,
-        name: name,
-        surname: surname,
-        id: id,
-        email: email
-    };
-
-    // Store booking details in localStorage
-    localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
-
-    // Redirect to confirmation.html
-    window.location.href = "confirmation.html";
-}
-
-
-
     </script>
+    <script>
+        $(document).ready(function () {
+            // Event listener for bus company selection
+            $('#busType').on('change', function () {
+                var selectedBus = $(this).val();
+                fetchRoutes(selectedBus); // Fetch routes based on the selected bus
+                calculateTotalPrice(); // Recalculate total price when bus type changes
+            });
+    
+            // Clear and hide the price display when the bus company changes
+            $('#priceDisplay').empty().hide();
+    
+            // Event listener for route selection
+            $('#routeDropdown').on('change', function () {
+                calculateTotalPrice(); // Recalculate total price when route changes
+            });
+    
+            // Event listener for the number of children and adults changes
+            $('#numChildren, #numAdults').on('change', function () {
+                calculateTotalPrice(); // Recalculate total price when the number of passengers changes
+            });
+    
+            // Attach the validateForm function to the form's submit event
+            $('form').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+                validateForm(); // Call the validation function
+            });
+        });
+    
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            var numChildren = parseInt($('#numChildren').val()) || 0;
+            var numAdults = parseInt($('#numAdults').val()) || 0;
+            var busCompany = $('#busType').val();
+            var routeId = $('#routeDropdown').val(); // Fetch routeId directly from the dropdown
+    
+            var pricePerChild;
+            var pricePerAdult;
+    
+            // Set pricing based on bus company and route 
+            switch (busCompany) {
+                case 'greyhound':
+                    switch (routeId) {
+                        case '1':
+                            pricePerChild = 1650;
+                            pricePerAdult = 1200;
+                            break;
+                        case '2':
+                            pricePerChild = 1750;
+                            pricePerAdult = 1300;
+                            break;
+                    }
+                    break;
+                case 'intercape':
+                    switch (routeId) {
+                        case '3':
+                            pricePerChild = 1400;
+                            pricePerAdult = 1050;
+                            break;
+                        case '4':
+                            pricePerChild = 1500;
+                            pricePerAdult = 1150;
+                            break;
+                    }
+                    break;
+                case 'intercity':
+                    switch (routeId) {
+                        case '5':
+                            pricePerChild = 1350;
+                            pricePerAdult = 1000;
+                            break;
+                        case '6':
+                            pricePerChild = 1450;
+                            pricePerAdult = 1100;
+                            break;
+                    }
+                    break;
+            }
+    
+            var totalPrice = numChildren * pricePerChild + numAdults * pricePerAdult;
+    
+            // Display the total price
+            $('#totalPrice').val(totalPrice);
+            $('#priceDisplay').html('Total Price: $' + totalPrice).show();
+        }
+    
+        // Function to validate the form
+        function validateForm() {
+            var busType = $('#busType').val();
+            var route = $('#routeDropdown').val();
+            var date = $('#date').val();
+            var numChildren = $('#numChildren').val();
+            var numAdults = $('#numAdults').val();
+            var name = $('#name').val();
+            var surname = $('#surname').val();
+            var id = $('#id').val();
+            var email = $('#email').val();
+    
+            // Assuming all validations pass, store the booking details in localStorage
+            var bookingDetails = {
+                busType: busType,
+                route: route,
+                date: date,
+                numChildren: numChildren,
+                numAdults: numAdults,
+                name: name,
+                surname: surname,
+                id: id,
+                email: email
+            };
+    
+            // Store booking details in localStorage
+            localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
+    
+            // Redirect to confirmation.html
+            window.location.href = "confirmation.html";
+        }
+    </script>
+        
 
 </body>
 
