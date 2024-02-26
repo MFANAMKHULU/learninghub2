@@ -82,3 +82,4 @@ created a about page
 02/20/2024
 populated information to confirmation.html
 styled the page
+Added a  message for confirmation on booking.html
