@@ -63,17 +63,27 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
-                <!-- Add other navigation links here -->
             </ul>
         </div>
     </nav>
 
-    <div class="container comment-container">
-        <h2>View Comments</h2>
-
-        <!-- Section to display comments -->
-        <div id="commentsSection"></div>
+    <!-- Add this inside your comment-dropdown div -->
+    <!-- Add this button group inside the comment-dropdown div -->
+<div class="comment-dropdown">
+    <label>Select Coach Company:</label>
+    <select class="form-control" id="companySelect" onchange="fetchComments()">
+        <option value="0" selected>Select Company</option>
+        <option value="1">Greyhound</option>
+        <option value="2">InterCape</option>
+        <option value="3">InterCity</option>
+    </select>
+    
+    <!-- Button group for sorting -->
+    <div class="btn-group" role="group" aria-label="Sort Comments">
+        <button type="button" class="btn btn-secondary" onclick="sortComments('asc')">Sort Ascending</button>
+        <button type="button" class="btn btn-secondary" onclick="sortComments('desc')">Sort Descending</button>
     </div>
+</div>
 
     <!-- Footer -->
     <footer>
@@ -88,31 +98,56 @@
         // Fetch comments when the page loads
         document.addEventListener('DOMContentLoaded', fetchComments);
 
-        // Function to fetch and display all comments
-        function fetchComments() {
-            console.log('Fetching comments...');
+        // Function to fetch and display comments for the selected company
+function fetchComments() {
+    console.log('Fetching comments...');
 
-            // Fetch all comments
-            fetch('getreviews.php')
-                .then(response => response.json())
-                .then(comments => {
-                    // Display comments in the comments section
-                    const commentsSection = document.getElementById('commentsSection');
-                    commentsSection.innerHTML = ''; // Clear previous content
+    const selectedCompanyId = document.getElementById('companySelect').value;
+    const selectedSortOrder = document.getElementById('sortSelect').value;
 
-                    if (comments.length === 0) {
-                        commentsSection.innerHTML = '<p>No comments available.</p>';
-                    } else {
-                        comments.forEach(comment => {
-                            const commentElement = document.createElement('div');
-                            commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.review}`;
-                            commentsSection.appendChild(commentElement);
-                        });
-                    }
-                })
-                .catch(error => console.error('Fetch error:', error));
-        }
+    if (selectedCompanyId === '0') {
+        console.error('No company selected');
+        return;
+    }
+
+    // Fetch comments for the selected company and sort them based on the selected order
+    fetch(`getreview.php?companyId=${selectedCompanyId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(comments => {
+            console.log('Fetched comments:', comments);
+
+            // Sort comments based on the selected order
+            if (selectedSortOrder === 'asc') {
+                comments.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            } else if (selectedSortOrder === 'desc') {
+                comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            }
+
+            // Display sorted comments in the comments section
+            const commentsSection = document.getElementById('commentsSection');
+            commentsSection.innerHTML = ''; // Clear previous content
+
+            if (comments.length === 0) {
+                commentsSection.innerHTML = `<p>No comments available for this company.</p>`;
+            } else {
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.innerHTML = `<strong>${comment.name}:</strong> ${comment.comment}`;
+                    commentsSection.appendChild(commentElement);
+                });
+            }
+        })
+        .catch(error => console.error('Fetch error:', error));
+}
+
+
     </script>
+
 </body>
 
 </html>
