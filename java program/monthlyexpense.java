@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.awt.Color;
 
 public class MonthlyExpensesGUI extends JFrame {
 
@@ -31,26 +33,32 @@ public class MonthlyExpensesGUI extends JFrame {
         // Add components to the panel
         panel.add(new JLabel("Salary: $"));
         salaryField = new JTextField(10);
+        salaryField.setToolTipText("Enter your monthly salary");
         panel.add(salaryField);
 
         panel.add(new JLabel("Rent: $"));
         rentField = new JTextField(10);
+        rentField.setToolTipText("Enter your monthly rent");
         panel.add(rentField);
 
         panel.add(new JLabel("Utilities: $"));
         utilitiesField = new JTextField(10);
+        utilitiesField.setToolTipText("Enter your monthly utilities expenses");
         panel.add(utilitiesField);
 
         panel.add(new JLabel("Groceries: $"));
         groceriesField = new JTextField(10);
+        groceriesField.setToolTipText("Enter your monthly groceries expenses");
         panel.add(groceriesField);
 
         panel.add(new JLabel("Transportation: $"));
         transportationField = new JTextField(10);
+        transportationField.setToolTipText("Enter your monthly transportation expenses");
         panel.add(transportationField);
 
         panel.add(new JLabel("Entertainment: $"));
         entertainmentField = new JTextField(10);
+        entertainmentField.setToolTipText("Enter your monthly entertainment expenses");
         panel.add(entertainmentField);
 
         JButton calculateButton = new JButton("Calculate");
@@ -62,8 +70,17 @@ public class MonthlyExpensesGUI extends JFrame {
         });
         panel.add(calculateButton);
 
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearFields();
+            }
+        });
+        panel.add(clearButton);
+
         // Adjust layout
-        SpringUtilities.makeCompactGrid(panel, 7, 2, 10, 10, 10, 10);
+        SpringUtilities.makeCompactGrid(panel, 8, 2, 10, 10, 10, 10);
 
         // Add panel to the frame
         add(panel);
@@ -97,8 +114,9 @@ public class MonthlyExpensesGUI extends JFrame {
             double remainingAmount = calculator.calculateRemainingAmount();
 
             // Display the result
-            JOptionPane.showMessageDialog(this, "Total Expenses: $" + totalExpenses +
-                    "\nRemaining Amount: $" + remainingAmount, "Calculation Result", JOptionPane.INFORMATION_MESSAGE);
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+            JOptionPane.showMessageDialog(this, "Total Expenses: " + currencyFormat.format(totalExpenses) +
+                    "\nRemaining Amount: " + currencyFormat.format(remainingAmount), "Calculation Result", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -116,6 +134,15 @@ public class MonthlyExpensesGUI extends JFrame {
             throw new NumberFormatException();
         }
         return Double.parseDouble(input);
+    }
+
+    private void clearFields() {
+        salaryField.setText("");
+        rentField.setText("");
+        utilitiesField.setText("");
+        groceriesField.setText("");
+        transportationField.setText("");
+        entertainmentField.setText("");
     }
 
     public static void main(String[] args) {

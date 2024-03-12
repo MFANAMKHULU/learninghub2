@@ -93,4 +93,4 @@ added a history button
 
 12/03//2024
 added a validation function
-
+added a clear button
