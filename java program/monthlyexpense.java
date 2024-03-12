@@ -71,12 +71,18 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private void calculateExpenses() {
         try {
-            double salary = Double.parseDouble(salaryField.getText());
-            double rent = Double.parseDouble(rentField.getText());
-            double utilities = Double.parseDouble(utilitiesField.getText());
-            double groceries = Double.parseDouble(groceriesField.getText());
-            double transportation = Double.parseDouble(transportationField.getText());
-            double entertainment = Double.parseDouble(entertainmentField.getText());
+            // Validate input for empty fields
+            if (isEmptyField(salaryField) || isEmptyField(rentField) || isEmptyField(utilitiesField) ||
+                    isEmptyField(groceriesField) || isEmptyField(transportationField) || isEmptyField(entertainmentField)) {
+                throw new NumberFormatException();
+            }
+
+            double salary = validateInput(salaryField);
+            double rent = validateInput(rentField);
+            double utilities = validateInput(utilitiesField);
+            double groceries = validateInput(groceriesField);
+            double transportation = validateInput(transportationField);
+            double entertainment = validateInput(entertainmentField);
 
             // Set values in the calculator
             calculator.setSalary(salary);
@@ -98,6 +104,20 @@ public class MonthlyExpensesGUI extends JFrame {
         }
     }
 
+    // Helper method to check if a JTextField is empty
+    private boolean isEmptyField(JTextField field) {
+        return field.getText().trim().isEmpty();
+    }
+
+    // Helper method to validate and parse input from a JTextField
+    private double validateInput(JTextField field) throws NumberFormatException {
+        String input = field.getText().trim();
+        if (!input.matches("^\\d*\\.?\\d+$")) {
+            throw new NumberFormatException();
+        }
+        return Double.parseDouble(input);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -108,7 +128,7 @@ public class MonthlyExpensesGUI extends JFrame {
     }
 }
 
-public class MonthlyExpensesCalculator {
+class MonthlyExpensesCalculator {
     private double salary;
     private double rent;
     private double utilities;
