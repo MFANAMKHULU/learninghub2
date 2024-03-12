@@ -99,7 +99,51 @@ public class MonthlyExpensesGUI extends JFrame {
     }
 
     private void calculateExpenses() {
-        // Your calculation logic here
+        try {
+            // Validate input for empty fields
+            if (isEmptyField(salaryField) || isEmptyField(rentField) || isEmptyField(utilitiesField) ||
+                    isEmptyField(groceriesField) || isEmptyField(transportationField) || isEmptyField(entertainmentField)) {
+                throw new NumberFormatException();
+            }
+
+            double salary = validateInput(salaryField);
+            double rent = validateInput(rentField);
+            double utilities = validateInput(utilitiesField);
+            double groceries = validateInput(groceriesField);
+            double transportation = validateInput(transportationField);
+            double entertainment = validateInput(entertainmentField);
+
+            // Set values in the calculator
+            calculator.setSalary(salary);
+            calculator.setRent(rent);
+            calculator.setUtilities(utilities);
+            calculator.setGroceries(groceries);
+            calculator.setTransportation(transportation);
+            calculator.setEntertainment(entertainment);
+
+            // Calculate total expenses and remaining amount
+            double totalExpenses = calculator.calculateTotalExpenses();
+            double remainingAmount = calculator.calculateRemainingAmount();
+
+            // Display the result
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+            JOptionPane.showMessageDialog(this, "Total Expenses: " + currencyFormat.format(totalExpenses) +
+                    "\nRemaining Amount: " + currencyFormat.format(remainingAmount), "Calculation Result", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isEmptyField(JTextField field) {
+        return field.getText().trim().isEmpty();
+    }
+
+    private double validateInput(JTextField field) throws NumberFormatException {
+        String input = field.getText().trim();
+        if (!input.matches("^\\d*\\.?\\d+$")) {
+            throw new NumberFormatException();
+        }
+        return Double.parseDouble(input);
     }
 
     private void clearFields() {
@@ -151,4 +195,61 @@ public class MonthlyExpensesGUI extends JFrame {
     }
 }
 
+class MonthlyExpensesCalculator {
+    private double salary;
+    private double rent;
+    private double utilities;
+    private double groceries;
+    private double transportation;
+    private double entertainment;
 
+    public MonthlyExpensesCalculator() {
+        // Default constructor
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public double getRent() {
+        return rent;
+    }
+
+    public void setRent(double rent) {
+        this.rent = rent;
+    }
+
+    public double getUtilities() {
+        return utilities;
+    }
+
+    public void setUtilities(double utilities) {
+        this.utilities = utilities;
+    }
+
+    public double getGroceries() {
+        return groceries;
+    }
+
+    public void setGroceries(double groceries) {
+        this.groceries = groceries;
+    }
+
+    public double getTransportation() {
+        return transportation;
+    }
+
+    public void setTransportation(double transportation) {
+        this.transportation = transportation;
+    }
+
+    public double getEntertainment() {
+        return entertainment;
+    }
+
+    public void setEntertainment(double entertainment) {
+        this
