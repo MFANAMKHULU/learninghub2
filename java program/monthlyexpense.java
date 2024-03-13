@@ -1,7 +1,9 @@
 import javax.swing.*;
+import javax.swing.SpringLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.text.NumberFormat;
 
 public class MonthlyExpensesGUI extends JFrame {
 
@@ -179,6 +181,8 @@ public class MonthlyExpensesGUI extends JFrame {
             transportationField.setText(reader.readLine());
             entertainmentField.setText(reader.readLine());
             JOptionPane.showMessageDialog(this, "Data loaded successfully.", "Load Data", JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Data file not found.", "Load Data", JOptionPane.WARNING_MESSAGE);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error loading data.", "Load Data", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -252,4 +256,14 @@ class MonthlyExpensesCalculator {
     }
 
     public void setEntertainment(double entertainment) {
-        this
+        this.entertainment = entertainment;
+    }
+
+    public double calculateTotalExpenses() {
+        return salary + rent + utilities + groceries + transportation + entertainment;
+    }
+
+    public double calculateRemainingAmount() {
+        return salary - calculateTotalExpenses();
+    }
+}
