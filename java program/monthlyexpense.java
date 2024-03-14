@@ -100,6 +100,18 @@ public class MonthlyExpensesGUI extends JFrame {
         add(panel);
     }
 
+    private double validateInput(JTextField field, double minValue, double maxValue) throws NumberFormatException {
+        String input = field.getText().trim();
+        if (!input.matches("^\\d*\\.?\\d+$")) {
+            throw new NumberFormatException();
+        }
+        double value = Double.parseDouble(input);
+        if (value < minValue || value > maxValue) {
+            throw new NumberFormatException();
+        }
+        return value;
+    }
+
     private void calculateExpenses() {
         try {
             // Validate input for empty fields
@@ -108,12 +120,15 @@ public class MonthlyExpensesGUI extends JFrame {
                 throw new NumberFormatException();
             }
 
-            double salary = validateInput(salaryField);
-            double rent = validateInput(rentField);
-            double utilities = validateInput(utilitiesField);
-            double groceries = validateInput(groceriesField);
-            double transportation = validateInput(transportationField);
-            double entertainment = validateInput(entertainmentField);
+            // Validate salary as positive number
+            double salary = validateInput(salaryField, 0, Double.MAX_VALUE);
+
+            // Validate expenses not exceeding salary
+            double rent = validateInput(rentField, 0, salary);
+            double utilities = validateInput(utilitiesField, 0, salary);
+            double groceries = validateInput(groceriesField, 0, salary);
+            double transportation = validateInput(transportationField, 0, salary);
+            double entertainment = validateInput(entertainmentField, 0, salary);
 
             // Set values in the calculator
             calculator.setSalary(salary);
@@ -138,14 +153,6 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private boolean isEmptyField(JTextField field) {
         return field.getText().trim().isEmpty();
-    }
-
-    private double validateInput(JTextField field) throws NumberFormatException {
-        String input = field.getText().trim();
-        if (!input.matches("^\\d*\\.?\\d+$")) {
-            throw new NumberFormatException();
-        }
-        return Double.parseDouble(input);
     }
 
     private void clearFields() {
