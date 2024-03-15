@@ -1,19 +1,10 @@
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-
 import javax.swing.*;
-import javax.swing.SpringLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.text.NumberFormat;
 
 public class MonthlyExpensesGUI extends JFrame {
-
-    private MonthlyExpensesCalculator calculator;
 
     private JTextField salaryField;
     private JTextField rentField;
@@ -22,28 +13,15 @@ public class MonthlyExpensesGUI extends JFrame {
     private JTextField transportationField;
     private JTextField entertainmentField;
 
-    private DefaultPieDataset pieDataset;
-    private JFreeChart pieChart;
-
     private JButton themeButton;
 
     public MonthlyExpensesGUI() {
         setTitle("Monthly Expenses Calculator");
-        setSize(800, 600); // Increased size to accommodate the chart
+        setSize(600, 400); // Adjusted size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        calculator = new MonthlyExpensesCalculator();
-
         initUI();
-        loadSavedData();
-
-        // Initialize pie chart
-        pieDataset = new DefaultPieDataset();
-        pieChart = ChartFactory.createPieChart("Expense Distribution", pieDataset, true, true, false);
-        ChartPanel chartPanel = new ChartPanel(pieChart);
-        add(chartPanel);
-        chartPanel.setBounds(400, 0, 400, 600); // Adjust position and size of the chart
 
         // Add a button to open theme settings
         themeButton = new JButton("Theme Settings");
@@ -156,53 +134,20 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private void calculateExpenses() {
         try {
-            // Validate input for empty fields
-            if (isEmptyField(salaryField) || isEmptyField(rentField) || isEmptyField(utilitiesField) ||
-                    isEmptyField(groceriesField) || isEmptyField(transportationField) || isEmptyField(entertainmentField)) {
-                throw new NumberFormatException();
-            }
-
-            // Validate salary as positive number
             double salary = validateInput(salaryField, 0, Double.MAX_VALUE);
-
-            // Validate expenses not exceeding salary
             double rent = validateInput(rentField, 0, salary);
             double utilities = validateInput(utilitiesField, 0, salary);
             double groceries = validateInput(groceriesField, 0, salary);
             double transportation = validateInput(transportationField, 0, salary);
             double entertainment = validateInput(entertainmentField, 0, salary);
 
-            // Set values in the calculator
-            calculator.setSalary(salary);
-            calculator.setRent(rent);
-            calculator.setUtilities(utilities);
-            calculator.setGroceries(groceries);
-            calculator.setTransportation(transportation);
-            calculator.setEntertainment(entertainment);
+            double totalExpenses = rent + utilities + groceries + transportation + entertainment;
+            double remainingAmount = salary - totalExpenses;
 
-            // Update pie chart dataset
-            pieDataset.clear();
-            pieDataset.setValue("Rent", rent);
-            pieDataset.setValue("Utilities", utilities);
-            pieDataset.setValue("Groceries", groceries);
-            pieDataset.setValue("Transportation", transportation);
-            pieDataset.setValue("Entertainment", entertainment);
-
-            // Calculate total expenses and remaining amount
-            double totalExpenses = calculator.calculateTotalExpenses();
-            double remainingAmount = calculator.calculateRemainingAmount();
-
-            // Display the result
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-            JOptionPane.showMessageDialog(this, "Total Expenses: " + currencyFormat.format(totalExpenses) +
-                    "\nRemaining Amount: " + currencyFormat.format(remainingAmount), "Calculation Result", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Total Expenses: $" + totalExpenses + "\nRemaining Amount: $" + remainingAmount, "Expense Calculation", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private boolean isEmptyField(JTextField field) {
-        return field.getText().trim().isEmpty();
     }
 
     private double validateInput(JTextField field, double minValue, double maxValue) throws NumberFormatException {
@@ -335,48 +280,3 @@ public class MonthlyExpensesGUI extends JFrame {
         });
     }
 }
-
-class MonthlyExpensesCalculator {
-    private double salary;
-    private double rent;
-    private double utilities;
-    private double groceries;
-    private double transportation;
-    private double entertainment;
-
-    public MonthlyExpensesCalculator() {
-        // Default constructor
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public double getRent() {
-        return rent;
-    }
-
-    public void setRent(double rent) {
-        this.rent = rent;
-    }
-
-    public double getUtilities() {
-        return utilities;
-    }
-
-    public void setUtilities(double utilities) {
-        this.utilities = utilities;
-    }
-
-    public double getGroceries() {
-        return groceries;
-    }
-
-    public void setGroceries(double groceries) {
-        this.groceries = groceries;
-    }
-
