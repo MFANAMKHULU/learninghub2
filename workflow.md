@@ -97,3 +97,7 @@ added a clear button
 
 14/03/2024
 data validation for minimum and maximum values
+added themes
+
+15/03/2024
+ organizing and intuitive interface
