@@ -1,3 +1,4 @@
+
 package Monthlyexpense;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ public class ExpenseCalculatorPanel extends JPanel {
     private JTextField groceriesField;
     private JTextField transportationField;
     private JTextField entertainmentField;
+
+    private JButton themeButton;
 
     private ThemeSettingsDialog themeSettingsDialog;
 
@@ -31,8 +34,39 @@ public class ExpenseCalculatorPanel extends JPanel {
         add(salaryField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 9;
-        JButton themeButton = new JButton("Theme Settings");
+        gbc.gridy++;
+        add(new JLabel("Rent: $"), gbc);
+        rentField = new JTextField(10);
+        gbc.gridx = 1;
+        add(rentField, gbc);
+
+        gbc.gridy++;
+        add(new JLabel("Utilities: $"), gbc);
+        utilitiesField = new JTextField(10);
+        gbc.gridx = 1;
+        add(utilitiesField, gbc);
+
+        gbc.gridy++;
+        add(new JLabel("Groceries: $"), gbc);
+        groceriesField = new JTextField(10);
+        gbc.gridx = 1;
+        add(groceriesField, gbc);
+
+        gbc.gridy++;
+        add(new JLabel("Transportation: $"), gbc);
+        transportationField = new JTextField(10);
+        gbc.gridx = 1;
+        add(transportationField, gbc);
+
+        gbc.gridy++;
+        add(new JLabel("Entertainment: $"), gbc);
+        entertainmentField = new JTextField(10);
+        gbc.gridx = 1;
+        add(entertainmentField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        themeButton = new JButton("Theme Settings");
         themeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +83,15 @@ public class ExpenseCalculatorPanel extends JPanel {
     private void openThemeSettings() {
         if (themeSettingsDialog != null) {
             themeSettingsDialog.setVisible(true);
+        }
+    }
+
+    private void validateField(JTextField field) {
+        String fieldValue = field.getText();
+        if (fieldValue.isEmpty()) {
+            JOptionPane.showMessageDialog(this, field.getName() + " cannot be empty.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            // Clear the field if empty
+            field.setText("");
         }
     }
 }
