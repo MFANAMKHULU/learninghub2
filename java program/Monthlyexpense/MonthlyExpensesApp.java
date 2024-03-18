@@ -1,3 +1,5 @@
+package Monthlyexpense;
+
 import javax.swing.*;
 
 public class MonthlyExpensesApp {

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MonthlyExpensesApp",
+            "request": "launch",
+            "mainClass": "Monthlyexpense.MonthlyExpensesApp",
+            "projectName": "learninghub2_e3269320"
+        },
+        {
+            "type": "java",
             "name": "SimpleCalculator",
             "request": "launch",
             "mainClass": "SimpleCalculator",

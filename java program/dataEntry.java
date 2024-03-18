@@ -3,19 +3,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class dataEntry extends JFrame {
+public class DataEntry extends JFrame {
     private JTextField firstNameEntry;
     private JTextField lastNameEntry;
-    private JComboBox<String> titleComboBox;ss
+    private JComboBox<String> titleComboBox;
     private JCheckBox registeredCheckBox;
     private JSpinner numSemestersSpinner;
     private JCheckBox termsCheckBox;
 
-    public dataEntry() {
+    public DataEntry() {
         setTitle("Data Entry Form");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel userInfoFrame = new JPanel(new GridLayout(5, 2));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        JPanel userInfoFrame = new JPanel(new GridLayout(3, 2));
         firstNameEntry = new JTextField();
         lastNameEntry = new JTextField();
         titleComboBox = new JComboBox<>(new String[]{"Mr.", "Mrs.", "Ms."});
@@ -27,8 +30,10 @@ public class dataEntry extends JFrame {
         userInfoFrame.add(new JLabel("Title"));
         userInfoFrame.add(titleComboBox);
 
+        mainPanel.add(userInfoFrame);
+
         // Course info
-        JPanel courseInfoFrame = new JPanel(new GridLayout(3, 2));
+        JPanel courseInfoFrame = new JPanel(new GridLayout(2, 2));
         registeredCheckBox = new JCheckBox("Currently Registered");
         numSemestersSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
         courseInfoFrame.add(new JLabel("Registration Status"));
@@ -36,10 +41,11 @@ public class dataEntry extends JFrame {
         courseInfoFrame.add(new JLabel("Number of Semesters"));
         courseInfoFrame.add(numSemestersSpinner);
 
+        mainPanel.add(courseInfoFrame);
+
         // Terms and Conditions
-        JPanel termsFrame = new JPanel();
         termsCheckBox = new JCheckBox("I accept the terms and conditions.");
-        termsFrame.add(termsCheckBox);
+        mainPanel.add(termsCheckBox);
 
         // Button
         JButton button = new JButton("Enter Data");
@@ -50,11 +56,9 @@ public class dataEntry extends JFrame {
             }
         });
 
-        userInfoFrame.add(button);  // Add button to userInfoFrame
+        mainPanel.add(button);  // Add button to mainPanel
 
-        add(userInfoFrame);  // Add userInfoFrame to JFrame
-        add(courseInfoFrame);  // Add courseInfoFrame to JFrame
-        add(termsFrame);  // Add termsFrame to JFrame
+        add(mainPanel);  // Add mainPanel to JFrame
 
         pack();
         setLocationRelativeTo(null);
@@ -85,5 +89,3 @@ public class dataEntry extends JFrame {
         });
     }
 }
-
-    
