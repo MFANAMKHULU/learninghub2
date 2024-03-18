@@ -1,3 +1,5 @@
+package Monthlyexpense;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -48,5 +50,5 @@ public class ExpenseCalculatorPanel extends JPanel {
         if (themeSettingsDialog != null) {
             themeSettingsDialog.setVisible(true);
         }
-
+    }
 }

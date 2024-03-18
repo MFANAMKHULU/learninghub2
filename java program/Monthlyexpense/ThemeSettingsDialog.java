@@ -1,7 +1,7 @@
+package Monthlyexpense;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ThemeSettingsDialog extends JDialog {
 
@@ -15,10 +15,10 @@ public class ThemeSettingsDialog extends JDialog {
         JLabel label = new JLabel("Choose Theme:");
         panel.add(label);
 
-        
+        // Add more components or settings for the theme settings dialog
 
         add(panel);
     }
 
-    
+    // Add more methods or settings for the theme settings dialog if needed
 }
