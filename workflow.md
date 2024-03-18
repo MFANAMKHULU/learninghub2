@@ -101,3 +101,7 @@ added themes
 
 15/03/2024
  organizing and intuitive interface
+ Added Padding Custom Fonts Label and TextField Alignment Button Font
+ 
+ 18/03/2024
+ attempting to organizing code into a more readable format
