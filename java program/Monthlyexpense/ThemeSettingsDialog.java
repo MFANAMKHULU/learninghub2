@@ -15,10 +15,21 @@ public class ThemeSettingsDialog extends JDialog {
         JLabel label = new JLabel("Choose Theme:");
         panel.add(label);
 
-        // Add more components or settings for the theme settings dialog
+        // Define your theme colors
+        Color backgroundColor = Color.WHITE; 
+        Color textColor = Color.BLACK; 
+        Color buttonColor = Color.LIGHT_GRAY; 
+
+        // Apply theme colors to components
+        panel.setBackground(backgroundColor);
+        label.setForeground(textColor);
+
+        // Optionally, you can customize other components as well, such as buttons
+        JButton closeButton = new JButton("Close");
+        closeButton.setBackground(buttonColor);
+        closeButton.setForeground(textColor);
+        panel.add(closeButton);
 
         add(panel);
     }
-
-    // Add more methods or settings for the theme settings dialog if needed
 }
