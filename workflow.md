@@ -107,4 +107,6 @@ added themes
  attempting to organizing code into a more readable format
 
  19/03/2024
- Adjjusting theme colours
+ Adjusting theme colours
+ Adding a validation method
+ added action listeners to the buttons

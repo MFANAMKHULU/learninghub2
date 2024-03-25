@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MonthlyExpensesGUI",
+            "request": "launch",
+            "mainClass": "Monthlyexpense.MonthlyExpensesGUI",
+            "projectName": "learninghub2_e3269320"
+        },
+        {
+            "type": "java",
             "name": "MonthlyExpensesApp",
             "request": "launch",
             "mainClass": "Monthlyexpense.MonthlyExpensesApp",
