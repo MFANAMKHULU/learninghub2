@@ -110,3 +110,7 @@ added themes
  Adjusting theme colours
  Adding a validation method
  added action listeners to the buttons
+
+ 25/03/2024
+ adding total expenses
+ adding delete expense button

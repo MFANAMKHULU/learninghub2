@@ -12,10 +12,12 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private ArrayList<String> descriptions;
     private ArrayList<Double> amounts;
+    private ArrayList<JButton> deleteButtons; // List to store delete buttons
 
     public MonthlyExpensesGUI() {
         descriptions = new ArrayList<>();
         amounts = new ArrayList<>();
+        deleteButtons = new ArrayList<>();
 
         setTitle("Monthly Expenses");
         setSize(400, 300);
@@ -72,6 +74,22 @@ public class MonthlyExpensesGUI extends JFrame {
         descriptions.add(description);
         amounts.add(amount);
 
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = deleteButtons.indexOf(deleteButton); // Get index of the delete button clicked
+                if (index != -1) {
+                    descriptions.remove(index);
+                    amounts.remove(index);
+                    deleteButtons.remove(index); // Remove the delete button from the list
+                    updateExpensesTextArea();
+                    updateTotalExpenses();
+                }
+            }
+        });
+        deleteButtons.add(deleteButton); // Add the delete button to the list
+
         updateExpensesTextArea();
         updateTotalExpenses();
 
@@ -87,7 +105,10 @@ public class MonthlyExpensesGUI extends JFrame {
     private void updateExpensesTextArea() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < descriptions.size(); i++) {
-            sb.append(descriptions.get(i)).append(": $").append(amounts.get(i)).append("\n");
+            sb.append(descriptions.get(i)).append(": $").append(amounts.get(i));
+            sb.append("    "); // Add some space for better formatting
+            sb.append(deleteButtons.get(i).getText()); // Append delete button text
+            sb.append("\n");
         }
         expensesTextArea.setText(sb.toString());
     }
