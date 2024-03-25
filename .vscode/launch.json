@@ -8,6 +8,13 @@
             "type": "java",
             "name": "MonthlyExpensesGUI",
             "request": "launch",
+            "mainClass": "MonthlyExpensesGUI",
+            "projectName": "learninghub2_e3269320"
+        },
+        {
+            "type": "java",
+            "name": "MonthlyExpensesGUI",
+            "request": "launch",
             "mainClass": "Monthlyexpense.MonthlyExpensesGUI",
             "projectName": "learninghub2_e3269320"
         },

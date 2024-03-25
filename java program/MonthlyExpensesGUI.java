@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -101,7 +102,8 @@ public class MonthlyExpensesGUI extends JFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index = deleteButtons.indexOf(deleteButton);
+                JButton clickedButton = (JButton) e.getSource();
+                int index = deleteButtons.indexOf(clickedButton);
                 if (index != -1) {
                     descriptions.remove(index);
                     amounts.remove(index);
@@ -171,11 +173,29 @@ public class MonthlyExpensesGUI extends JFrame {
                 String line;
                 descriptions.clear();
                 amounts.clear();
+                deleteButtons.clear();
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(",");
                     if (parts.length == 2) {
                         descriptions.add(parts[0]);
                         amounts.add(Double.parseDouble(parts[1]));
+
+                        JButton deleteButton = new JButton("Delete");
+                        deleteButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JButton clickedButton = (JButton) e.getSource();
+                                int index = deleteButtons.indexOf(clickedButton);
+                                if (index != -1) {
+                                    descriptions.remove(index);
+                                    amounts.remove(index);
+                                    deleteButtons.remove(index);
+                                    updateExpensesTextArea();
+                                    updateTotalExpenses();
+                                }
+                            }
+                        });
+                        deleteButtons.add(deleteButton);
                     }
                 }
                 updateExpensesTextArea();
