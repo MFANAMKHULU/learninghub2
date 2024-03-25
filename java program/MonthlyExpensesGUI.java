@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MonthlyExpensesGUI extends JFrame {
@@ -12,7 +15,7 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private ArrayList<String> descriptions;
     private ArrayList<Double> amounts;
-    private ArrayList<JButton> deleteButtons; // List to store delete buttons
+    private ArrayList<JButton> deleteButtons;
 
     public MonthlyExpensesGUI() {
         descriptions = new ArrayList<>();
@@ -47,6 +50,14 @@ public class MonthlyExpensesGUI extends JFrame {
             }
         });
 
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveExpensesToFile();
+            }
+        });
+
         expensesTextArea = new JTextArea();
         expensesTextArea.setEditable(false);
 
@@ -58,6 +69,7 @@ public class MonthlyExpensesGUI extends JFrame {
         panel.add(amountField);
         panel.add(addButton);
         panel.add(clearButton);
+        panel.add(saveButton);
         panel.add(totalExpensesLabel);
 
         JScrollPane scrollPane = new JScrollPane(expensesTextArea);
@@ -78,17 +90,17 @@ public class MonthlyExpensesGUI extends JFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index = deleteButtons.indexOf(deleteButton); // Get index of the delete button clicked
+                int index = deleteButtons.indexOf(deleteButton);
                 if (index != -1) {
                     descriptions.remove(index);
                     amounts.remove(index);
-                    deleteButtons.remove(index); // Remove the delete button from the list
+                    deleteButtons.remove(index);
                     updateExpensesTextArea();
                     updateTotalExpenses();
                 }
             }
         });
-        deleteButtons.add(deleteButton); // Add the delete button to the list
+        deleteButtons.add(deleteButton);
 
         updateExpensesTextArea();
         updateTotalExpenses();
@@ -106,8 +118,8 @@ public class MonthlyExpensesGUI extends JFrame {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < descriptions.size(); i++) {
             sb.append(descriptions.get(i)).append(": $").append(amounts.get(i));
-            sb.append("    "); // Add some space for better formatting
-            sb.append(deleteButtons.get(i).getText()); // Append delete button text
+            sb.append("    ");
+            sb.append(deleteButtons.get(i).getText());
             sb.append("\n");
         }
         expensesTextArea.setText(sb.toString());
@@ -119,6 +131,31 @@ public class MonthlyExpensesGUI extends JFrame {
             total += amount;
         }
         totalExpensesLabel.setText("Total Expenses: $" + String.format("%.2f", total));
+    }
+
+    private void saveExpensesToFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try (FileWriter writer = new FileWriter(file)) {
+                for (int i = 0; i < descriptions.size(); i++) {
+                    writer.write(descriptions.get(i) + "," + amounts.get(i) + "\n");
+                }
+                writer.write("Total Expenses," + getTotalExpenses() + "\n");
+                JOptionPane.showMessageDialog(this, "Expenses saved successfully.");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "An error occurred while saving expenses: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private double getTotalExpenses() {
+        double total = 0.0;
+        for (Double amount : amounts) {
+            total += amount;
+        }
+        return total;
     }
 
     public static void main(String[] args) {
