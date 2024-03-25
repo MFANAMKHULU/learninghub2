@@ -1,9 +1,11 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -58,6 +60,14 @@ public class MonthlyExpensesGUI extends JFrame {
             }
         });
 
+        JButton loadButton = new JButton("Load");
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadExpensesFromFile();
+            }
+        });
+
         expensesTextArea = new JTextArea();
         expensesTextArea.setEditable(false);
 
@@ -70,6 +80,7 @@ public class MonthlyExpensesGUI extends JFrame {
         panel.add(addButton);
         panel.add(clearButton);
         panel.add(saveButton);
+        panel.add(loadButton);
         panel.add(totalExpensesLabel);
 
         JScrollPane scrollPane = new JScrollPane(expensesTextArea);
@@ -146,6 +157,32 @@ public class MonthlyExpensesGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Expenses saved successfully.");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "An error occurred while saving expenses: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void loadExpensesFromFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv"));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                descriptions.clear();
+                amounts.clear();
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 2) {
+                        descriptions.add(parts[0]);
+                        amounts.add(Double.parseDouble(parts[1]));
+                    }
+                }
+                updateExpensesTextArea();
+                updateTotalExpenses();
+                JOptionPane.showMessageDialog(this, "Expenses loaded successfully.");
+            } catch (IOException | NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "An error occurred while loading expenses: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
