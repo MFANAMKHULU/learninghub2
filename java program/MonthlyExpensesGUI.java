@@ -3,11 +3,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class MonthlyExpensesGUI extends JFrame {
@@ -93,15 +89,23 @@ public class MonthlyExpensesGUI extends JFrame {
 
     private void addExpense() {
         String description = descriptionField.getText();
-        double amount = Double.parseDouble(amountField.getText());
+        String amountText = amountField.getText();
+        
+        // Validate amount input
+        try {
+            double amount = Double.parseDouble(amountText);
+            
+            // Ensure amount is not negative
+            if (amount < 0) {
+                JOptionPane.showMessageDialog(this, "Amount cannot be negative.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            descriptions.add(description);
+            amounts.add(amount);
 
-        descriptions.add(description);
-        amounts.add(amount);
-
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            JButton deleteButton = new JButton("Delete");
+            deleteButton.addActionListener(e -> {
                 JButton clickedButton = (JButton) e.getSource();
                 int index = deleteButtons.indexOf(clickedButton);
                 if (index != -1) {
@@ -111,15 +115,17 @@ public class MonthlyExpensesGUI extends JFrame {
                     updateExpensesTextArea();
                     updateTotalExpenses();
                 }
-            }
-        });
-        deleteButtons.add(deleteButton);
+            });
+            deleteButtons.add(deleteButton);
 
-        updateExpensesTextArea();
-        updateTotalExpenses();
+            updateExpensesTextArea();
+            updateTotalExpenses();
 
-        descriptionField.setText("");
-        amountField.setText("");
+            descriptionField.setText("");
+            amountField.setText("");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric amount.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void clearFields() {
@@ -181,18 +187,15 @@ public class MonthlyExpensesGUI extends JFrame {
                         amounts.add(Double.parseDouble(parts[1]));
 
                         JButton deleteButton = new JButton("Delete");
-                        deleteButton.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                JButton clickedButton = (JButton) e.getSource();
-                                int index = deleteButtons.indexOf(clickedButton);
-                                if (index != -1) {
-                                    descriptions.remove(index);
-                                    amounts.remove(index);
-                                    deleteButtons.remove(index);
-                                    updateExpensesTextArea();
-                                    updateTotalExpenses();
-                                }
+                        deleteButton.addActionListener(e -> {
+                            JButton clickedButton = (JButton) e.getSource();
+                            int index = deleteButtons.indexOf(clickedButton);
+                            if (index != -1) {
+                                descriptions.remove(index);
+                                amounts.remove(index);
+                                deleteButtons.remove(index);
+                                updateExpensesTextArea();
+                                updateTotalExpenses();
                             }
                         });
                         deleteButtons.add(deleteButton);
@@ -216,11 +219,6 @@ public class MonthlyExpensesGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MonthlyExpensesGUI();
-            }
-        });
+        SwingUtilities.invokeLater(MonthlyExpensesGUI::new);
     }
 }

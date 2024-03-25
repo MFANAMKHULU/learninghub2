@@ -116,3 +116,4 @@ added themes
  adding delete expense button
  adding save to a file 
  adding load  a file
+ adding error handling
