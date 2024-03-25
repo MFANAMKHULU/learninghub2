@@ -8,6 +8,7 @@ public class MonthlyExpensesGUI extends JFrame {
     private JTextField descriptionField;
     private JTextField amountField;
     private JTextArea expensesTextArea;
+    private JLabel totalExpensesLabel;
 
     private ArrayList<String> descriptions;
     private ArrayList<Double> amounts;
@@ -21,7 +22,7 @@ public class MonthlyExpensesGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 2));
+        panel.setLayout(new GridLayout(5, 2));
 
         JLabel descriptionLabel = new JLabel("Description:");
         descriptionField = new JTextField();
@@ -47,12 +48,15 @@ public class MonthlyExpensesGUI extends JFrame {
         expensesTextArea = new JTextArea();
         expensesTextArea.setEditable(false);
 
+        totalExpensesLabel = new JLabel("Total Expenses: $0.00");
+
         panel.add(descriptionLabel);
         panel.add(descriptionField);
         panel.add(amountLabel);
         panel.add(amountField);
         panel.add(addButton);
         panel.add(clearButton);
+        panel.add(totalExpensesLabel);
 
         JScrollPane scrollPane = new JScrollPane(expensesTextArea);
         panel.add(scrollPane);
@@ -69,6 +73,7 @@ public class MonthlyExpensesGUI extends JFrame {
         amounts.add(amount);
 
         updateExpensesTextArea();
+        updateTotalExpenses();
 
         descriptionField.setText("");
         amountField.setText("");
@@ -85,6 +90,14 @@ public class MonthlyExpensesGUI extends JFrame {
             sb.append(descriptions.get(i)).append(": $").append(amounts.get(i)).append("\n");
         }
         expensesTextArea.setText(sb.toString());
+    }
+
+    private void updateTotalExpenses() {
+        double total = 0.0;
+        for (Double amount : amounts) {
+            total += amount;
+        }
+        totalExpensesLabel.setText("Total Expenses: $" + String.format("%.2f", total));
     }
 
     public static void main(String[] args) {
